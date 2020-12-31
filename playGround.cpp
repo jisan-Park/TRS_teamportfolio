@@ -43,6 +43,7 @@ void playGround::render()
 	RECT jhrc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 - 300, 100, 100);
 	IMAGEMANAGER->findImage("배경")->render(getMemDC());
 	Rectangle(getMemDC(),rc);
+	Rectangle(getMemDC(), jhrc);
 	//================= 아래도 건들지 마라 ==============================
 	_backBuffer->render(getHDC());
 }
