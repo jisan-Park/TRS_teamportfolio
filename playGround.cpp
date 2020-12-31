@@ -39,14 +39,15 @@ void playGround::render()
 {
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	//================ 위에 건들지 마라 ==============================
+	RECT jhrc = RectMakeCenter(WINSIZEX / 2 -50, WINSIZEY / 2 - 50, 100, 100);
 	RECT rc = RectMakeCenter(WINSIZEX/2, WINSIZEY/2,100,100);
-	RECT jhrc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 - 300, 100, 100);
-	RECT lhx = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 200, 100, 100);
+	RECT lhx = RectMakeCenter(WINSIZEX / 2+50, WINSIZEY / 2 + 50, 100, 100);
+	RECT nmrc = RectMakeCenter(WINSIZEX / 2+100, WINSIZEY / 2 + 100, 100, 100);
 	IMAGEMANAGER->findImage("배경")->render(getMemDC());
-	Rectangle(getMemDC(),rc);
 	Rectangle(getMemDC(), jhrc);
+	Rectangle(getMemDC(),rc);
 	Rectangle(getMemDC(), lhx);
-
+	Rectangle(getMemDC(), nmrc);
 
 	//================= 아래도 건들지 마라 ==============================
 	_backBuffer->render(getHDC());
