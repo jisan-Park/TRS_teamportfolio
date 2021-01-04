@@ -8,15 +8,16 @@ class progressBar;
 class loadingScene : public gameNode
 {
 private:
-	progressBar* _loadingBar;
 	image* _background;
-
+	image* _loadingCharacter;
 
 public:
 	loadingScene();
 	~loadingScene();
 
+	//스레드 사용 변수
 	int _currentCount;
+	float _currentX;
 
 	HRESULT init();
 	void release();

@@ -1,10 +1,9 @@
 #include "stdafx.h"
 #include "loadingScene.h"
-#include "progressBar.h"
 
 loadingScene::loadingScene()
-	: _background(nullptr), _loadingBar(nullptr),
-	_currentCount(0)
+	: _background(nullptr),
+	_currentCount(0), _currentX(0.0f)
 {
 }
 
@@ -15,11 +14,10 @@ loadingScene::~loadingScene()
 
 HRESULT loadingScene::init()
 {
-	_background = IMAGEMANAGER->addImage("로딩배경", "image/리그오브레전드로딩.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("selectScene배경", "image/selectScene배경.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 
-	_loadingBar = new progressBar;
-	_loadingBar->init(0, WINSIZEY - 50, WINSIZEX, 50);
-	_loadingBar->setGauge(0, 0);
+	_background = IMAGEMANAGER->addImage("로딩배경", "image/background.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	_loadingCharacter = IMAGEMANAGER->addFrameImage("로딩캐릭터","image/로딩2.bmp",120,34,4,1,true,RGB(255,0,255));
 
 	//쓰레드를 사용해보자
 	CreateThread(
@@ -36,18 +34,19 @@ HRESULT loadingScene::init()
 
 void loadingScene::release()
 {
-	SAFE_DELETE(_loadingBar);
+
 }
 
 void loadingScene::update()
 {
-	_loadingBar->update();
-	_loadingBar->setGauge(_currentCount, LOADINGMAX);
+
+	//frame X 를 계속 변경 - 스레드함수에서 ++ 시켜주는 중
+	_loadingCharacter->setFrameX((int)_currentX);
 
 	//로딩이 다 되면
 	if (_currentCount == LOADINGMAX)
 	{
-		SCENEMANAGER->changeScene("협곡씬");
+		SCENEMANAGER->changeScene("선택씬");
 	}
 }
 
@@ -57,7 +56,9 @@ void loadingScene::render()
 	
 
 	_background->render(getMemDC());
-	_loadingBar->render();
+
+	//_loadingBar->render();
+	_loadingCharacter->frameRender(getMemDC(),WINSIZEX-50,WINSIZEY-50);
 }
 
 DWORD CALLBACK threadFunction(LPVOID lpParameter)
@@ -70,12 +71,17 @@ DWORD CALLBACK threadFunction(LPVOID lpParameter)
 
 	while (loadingHelper->_currentCount != LOADINGMAX)
 	{
-		IMAGEMANAGER->addImage("인게임", "image/시작화면.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 		//여기에 와일문 돌리지말고 이미지랑 사운드 등 리소스 파일 추가해라
 
 		//CPU 잠깐 정지거는건데
 		//이거 안걸면 너무 빨라가지고 눈 깜빡이면 넘어가버림 (1000개여도)
 		Sleep(1);
+
+		//프레임이미지 frame X 변경
+		loadingHelper->_currentX+=0.05;
+		if (loadingHelper->_currentX > 3.0f) {
+			loadingHelper->_currentX = 0.0f;
+		}
 
 		loadingHelper->_currentCount++;
 	}

@@ -17,6 +17,7 @@ HRESULT playGround::init()
 	
 	SCENEMANAGER->addScene("·Îµù¾À", new loadingScene);
 	SCENEMANAGER->addScene("Çù°î¾À", new inGameScene);
+	SCENEMANAGER->addScene("¼±ÅÃ¾À", new selectScene);
 
 	SCENEMANAGER->changeScene("·Îµù¾À");
 
@@ -51,8 +52,9 @@ void playGround::render()
 	
 	
 	SCENEMANAGER->render();
-
-	TIMEMANAGER->render(getMemDC());
+	if (KEYMANAGER->isToggleKey(VK_TAB)) {
+		TIMEMANAGER->render(getMemDC());
+	}
 	//================= ¾Æ·¡µµ °ÇµéÁö ¸¶¶ó ==============================
 	_backBuffer->render(getHDC());
 }

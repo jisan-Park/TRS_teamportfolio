@@ -34,8 +34,8 @@ using namespace TFIVE_UTIL;
 #define WINNAME (LPTSTR)(TEXT("25기 API"))
 #define WINSTARTX 2000		//윈도우 시작좌표 X지점
 #define WINSTARTY 50		//윈도우 시작좌표 Y지점
-#define WINSIZEX 1024		//윈도우 가로크기
-#define WINSIZEY 768		//윈도우 세로크기
+#define WINSIZEX 800		//윈도우 가로크기
+#define WINSIZEY 600		//윈도우 세로크기
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
 
 #define RND randomFunction::getSingleton()
