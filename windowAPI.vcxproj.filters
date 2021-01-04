@@ -75,6 +75,9 @@
     <ClInclude Include="jhtest.h">
       <Filter>playGround</Filter>
     </ClInclude>
+    <ClInclude Include="square.h">
+      <Filter>playGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -102,6 +105,9 @@
       <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
     <ClCompile Include="jhtest.cpp">
+      <Filter>playGround</Filter>
+    </ClCompile>
+    <ClCompile Include="square.cpp">
       <Filter>playGround</Filter>
     </ClCompile>
   </ItemGroup>
