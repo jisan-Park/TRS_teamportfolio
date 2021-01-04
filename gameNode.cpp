@@ -27,9 +27,14 @@ HRESULT gameNode::init(bool managerInit)
 
 	if (_managerInit)
 	{
-		SetTimer(_hWnd, 1, 10, NULL);
+		//SetTimer(_hWnd, 1, 10, NULL);
 		KEYMANAGER->init();
 		IMAGEMANAGER->init();
+		TIMEMANAGER->init();
+		EFFECTMANAGER->init();
+		SCENEMANAGER->init();
+		SOUNDMANAGER->init();
+		KEYANIMANAGER->init();
 	}
 
 	return S_OK;
@@ -39,18 +44,29 @@ void gameNode::release()
 {
 	if (_managerInit)
 	{
-		KillTimer(_hWnd, 1);
+		//KillTimer(_hWnd, 1);
 
 		KEYMANAGER->releaseSingleton();
 		IMAGEMANAGER->release();
 		IMAGEMANAGER->releaseSingleton();
+		TIMEMANAGER->release();
+		TIMEMANAGER->releaseSingleton();
+		EFFECTMANAGER->release();
+		EFFECTMANAGER->releaseSingleton();
+		SCENEMANAGER->release();
+		SCENEMANAGER->releaseSingleton();
+		SOUNDMANAGER->release();
+		SOUNDMANAGER->releaseSingleton();
+		KEYANIMANAGER->release();
+		KEYANIMANAGER->releaseSingleton();
 	}
 	ReleaseDC(_hWnd, _hdc);
 }
 
 void gameNode::update()
 {
-	InvalidateRect(_hWnd, NULL, false);
+	SOUNDMANAGER->update();
+
 }
 
 void gameNode::render()
@@ -66,25 +82,12 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
 	switch (iMessage)
 	{
-		case WM_TIMER:
-			this->update();
+		
+		case WM_MOUSEMOVE:
+		_ptMouse.x = static_cast<float>(LOWORD(lParam));
+		_ptMouse.y = static_cast<float>(HIWORD(lParam));
+
 		break;
-		case WM_PAINT:
-		{
-			hdc = BeginPaint(_hWnd, &ps);
-
-			this->render();
-
-			EndPaint(_hWnd, &ps);
-		}
-		break;
-
-
-			case WM_MOUSEMOVE:
-			_ptMouse.x = static_cast<float>(LOWORD(lParam));
-			_ptMouse.y = static_cast<float>(HIWORD(lParam));
-
-			break;
 
 
 		case WM_KEYDOWN:

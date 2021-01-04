@@ -1,4 +1,6 @@
 #pragma once
+#include "animation.h"
+
 class image
 {
 public:
@@ -55,6 +57,9 @@ private:
 	CHAR*			_fileName;		//파일 이름
 	BOOL			_trans;			//특정 픽셀값을 제거할지 유무
 	COLORREF		_transColor;	//제거할 픽셀값
+
+	BLENDFUNCTION	_blendFunc;		//알파 블렌드에 관한 함쓔
+	LPIMAGE_INFO	_blendImage;	//알파 블렌드 먹일 이미지
 public:
 
 	image();
@@ -87,6 +92,12 @@ public:
 
 	void frameRender(HDC hdc, int destX, int destY,
 		int currentFrameX, int currentFrameY);
+
+	void alphaRender(HDC hdc, BYTE alpha);
+	void alphaRender(HDC hdc, int destX, int destY, BYTE alpha);
+	void alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
+
+	void aniRender(HDC hdc, int destX, int destY, animation* ani);
 
 	void loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);
 

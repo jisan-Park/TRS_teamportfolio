@@ -11,6 +11,13 @@ inline void LineMake(HDC hdc, int x1, int y1, int x2, int y2)
 	LineTo(hdc, x2, y2);
 }
 
+inline POINT PointMake(int x, int y)
+{
+	POINT pt = { x,y };
+
+	return pt;
+}
+
 //RECT
 inline RECT RectMake(int x, int y, int width, int height)
 {

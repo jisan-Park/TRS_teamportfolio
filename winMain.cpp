@@ -56,13 +56,31 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCla
 		return NULL;
 	}
 
-
+	/*
 	while (GetMessage(&message, 0, 0, 0))
 	{
 		TranslateMessage(&message);
 		DispatchMessage(&message);
 	}
+	*/
 
+	while (true)
+	{
+		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
+		{
+			if (message.message == WM_QUIT) break;
+			TranslateMessage(&message);
+			DispatchMessage(&message);
+		}
+		else
+		{
+			//60푸레임 원하는 입맛대로 바꾸시길
+			TIMEMANAGER->update(60.0f);
+			_pg.update();
+			_pg.render();
+		}
+	}
+	
 
 	_pg.release();
 
