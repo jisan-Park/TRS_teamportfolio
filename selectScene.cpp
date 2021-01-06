@@ -19,8 +19,8 @@ HRESULT selectScene::init()
 	KEYANIMANAGER->addDefaultFrameAnimation("RamonaLeftIdle", "RAMONA_LEFT_IDLE", 8, false, true);
 	KEYANIMANAGER->addDefaultFrameAnimation("RamonaLeftDash", "RAMONA_LEFT_DASH", 8, false, true);
 
-	_scott = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
-	_scottMotion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
+	_scott = IMAGEMANAGER->findImage("SCOTT_LEFT_DASH");
+	_scottMotion = KEYANIMANAGER->findAnimation("ScottLeftDash");
 	_scottMotion->start();
 
 	_ramona = IMAGEMANAGER->findImage("RAMONA_LEFT_IDLE");
@@ -86,6 +86,9 @@ void selectScene::update()
 	}
 	_rc = RectMake( 170 + (_selectPosition * 270), 250, 160, 250);
 
+
+	
+	
 
 	KEYANIMANAGER->update();
 }
