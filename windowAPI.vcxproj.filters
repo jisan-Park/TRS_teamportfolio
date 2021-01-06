@@ -52,6 +52,9 @@
     <Filter Include="2DGameFramework\player">
       <UniqueIdentifier>{3ef66eb9-e2e9-4f8a-93b9-6896a96b71cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\player">
+      <UniqueIdentifier>{f9d1e03f-52bb-4429-8428-fae81ced72a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
