@@ -55,6 +55,9 @@
     <Filter Include="playGround\player">
       <UniqueIdentifier>{f9d1e03f-52bb-4429-8428-fae81ced72a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\item">
+      <UniqueIdentifier>{49a73403-6e0d-47c0-8945-9079746cd380}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -141,6 +144,12 @@
     <ClInclude Include="Player.h">
       <Filter>2DGameFramework\player</Filter>
     </ClInclude>
+    <ClInclude Include="shopScene.h">
+      <Filter>playGround\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>2DGameFramework\item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -211,6 +220,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>2DGameFramework\player</Filter>
+    </ClCompile>
+    <ClCompile Include="shopScene.cpp">
+      <Filter>playGround\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>2DGameFramework\item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
