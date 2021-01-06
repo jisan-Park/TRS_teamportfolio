@@ -36,18 +36,18 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_DASH","image/player/scott/RIHGT_DASH.bmp",2000,250,8,1,true,RGB(255,0,255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_C_YATK","image/player/scott/LEFT_C_YATK.bmp",2250,500,9,2, true, RGB(255,0,255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_C_YATK", "image/player/scott/RIGHT_C_YATK.bmp",  2250, 500,9, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_DASH_GATK", "image/player/scott/LEFT_DASH_GATK.bmp",2000,250,8,1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_DASH_GATK", "image/player/scott/RIGHT_DASH_GATK.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_DASH_GATK", "image/player/scott/LEFT_DASH_GATK.bmp",2250,250,9,1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_DASH_GATK", "image/player/scott/RIGHT_DASH_GATK.bmp", 2250, 250, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_DASH_YATK", "image/player/scott/LEFT_DASH_YATK.bmp",1750,250,7,1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_DASH_YATK", "image/player/scott/RIGHT_DASH_YATK.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_DEF", "image/player/scott/LEFT_DEF.bmp",1750,250,7,1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_DEF", "image/player/scott/RIGHT_DEF.bmp", 1750, 250, 7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_DOWN_ATK", "image/player/scott/LEFT_DOWN_ATK.bmp",1250,250,5,1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_DOWN_ATK", "image/player/scott/RIGHT_DOWN_ATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_G_ATK", "image/player/scott/LEFT_G_ATK.bmp",1750,250,7,1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_G_ATK", "image/player/scott/RIGHT_G_ATK.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_G_ATK2", "image/player/scott/LEFT_G_ATK2.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_G_ATK2", "image/player/scott/RIGHT_G_ATK2.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_GATK", "image/player/scott/LEFT_GATK.bmp",1750,250,7,1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_GATK", "image/player/scott/RIGHT_GATK.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_GATK2", "image/player/scott/LEFT_GATK2.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_GATK2", "image/player/scott/RIGHT_GATK2.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_HITTED", "image/player/scott/LEFT_HITTED.bmp",  1250, 250,5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_HITTED", "image/player/scott/RIGHT_HITTED.bmp",  1250, 250,5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_HITTED2", "image/player/scott/LEFT_HITTED2.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
@@ -115,12 +115,15 @@ void Player::setImage()
 
 	//RAMONA
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_IDLE", "image/player/ramona/LEFT_IDLE.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_IDLE", "image/player/ramona/RIGHT_IDLE.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DASH", "image/player/ramona/LEFT_DASH.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_DASH", "image/player/ramona/RIGHT_DASH.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_C_ATK", "image/player/ramona/LEFT_C_ATK.bmp", 2000, 750, 8, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_C_ATK", "image/player/ramona/RIGHT_C_ATK.bmp", 2000, 750, 8, 3, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("RAMONA_LEFT__ATK", "image/player/ramona/LEFT_C_ATK.bmp", 2000, 750, 8, 3, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DASH_YATK", "image/player/ramona/LEFT_DASH_YATK.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_DASH_TATK", "image/player/ramona/RIGHT_DASH_YATK.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_ATK", "image/player/ramona/LEFT_C_ATK.bmp", 2000, 750, 8, 3, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_ATK", "image/player/ramona/LEFT_C_ATK.bmp", 2000, 750, 8, 3, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DASH_YATK", "image/player/ramona/LEFT_DASH_YATK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_DASH_TATK", "image/player/ramona/RIGHT_DASH_YATK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DEF", "image/player/ramona/LEFT_DEF.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_DEF", "image/player/ramona/RIGHT_DEF.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DOWN_GATK", "image/player/ramona/LEFT_DOWN_GATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
