@@ -3,6 +3,8 @@
 #include "inGameScene.h"
 #include "loadingScene.h"
 #include "selectScene.h"
+#include "startScene.h"
+#include "difficultyScene.h"
 class playGround : public gameNode
 {
 private:

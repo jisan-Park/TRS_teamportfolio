@@ -1,7 +1,7 @@
 #pragma once
 #include "gameNode.h"
 
-#define LOADINGMAX 1000
+#define LOADINGMAX 500
 
 class progressBar;
 

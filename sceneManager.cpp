@@ -6,6 +6,7 @@ gameNode* sceneManager::_currentScene = NULL;
 
 HRESULT sceneManager::init()
 {
+	_isVideoPlay = false;
 	_currentScene = NULL;
 
 	return S_OK;

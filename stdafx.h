@@ -22,6 +22,8 @@
 #include "sceneManager.h"
 #include "soundManager.h"
 #include "keyAniManager.h"
+#include "gameManager.h"
+#include "Player.h"
 #include "utils.h"
 
 using namespace std;
@@ -32,7 +34,7 @@ using namespace TFIVE_UTIL;
 //==================================
 
 #define WINNAME (LPTSTR)(TEXT("25기 API"))
-#define WINSTARTX 2000		//윈도우 시작좌표 X지점
+#define WINSTARTX 50		//윈도우 시작좌표 X지점
 #define WINSTARTY 50		//윈도우 시작좌표 Y지점
 #define WINSIZEX 800		//윈도우 가로크기
 #define WINSIZEY 600		//윈도우 세로크기
@@ -46,7 +48,8 @@ using namespace TFIVE_UTIL;
 #define SCENEMANAGER sceneManager::getSingleton()
 #define SOUNDMANAGER soundManager::getSingleton()
 #define KEYANIMANAGER keyAniManager::getSingleton()
-
+#define GAMEMANAGER gameManager::getSingleton()
+#define PLAYER Player::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p)=NULL;}}
