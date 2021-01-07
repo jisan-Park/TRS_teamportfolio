@@ -5,6 +5,8 @@
 #include "selectScene.h"
 #include "startScene.h"
 #include "difficultyScene.h"
+#include "Player.h"
+
 class playGround : public gameNode
 {
 private:

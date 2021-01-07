@@ -33,6 +33,10 @@ HRESULT selectScene::init()
 
 	_isChanged = false;
 
+
+
+
+
 	return S_OK;
 }
 

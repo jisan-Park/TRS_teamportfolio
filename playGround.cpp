@@ -18,10 +18,9 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("·Îµù¾À", new loadingScene);
 	SCENEMANAGER->addScene("³­ÀÌµµ¾À", new difficultyScene);
 	SCENEMANAGER->addScene("¼±ÅÃ¾À", new selectScene);
-
 	SCENEMANAGER->changeScene("½ÃÀÛ¾À");
 
-	
+
 	return S_OK;
 }
 
@@ -39,7 +38,8 @@ void playGround::update()
 
 
 	SCENEMANAGER->update();
-	
+
+
 }
 
 
@@ -53,6 +53,7 @@ void playGround::render()
 
 
 		SCENEMANAGER->render();
+
 
 		if (KEYMANAGER->isToggleKey(VK_TAB)) {
 			TIMEMANAGER->render(getMemDC());

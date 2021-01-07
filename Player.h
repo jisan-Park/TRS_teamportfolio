@@ -4,6 +4,8 @@
 #define JUMP_POWER 10
 #define START_X 120
 #define START_Y 300
+#define PLAYER_X_SPEED 6
+#define PLAYER_Y_SPEED 3
 
 enum PLAYER_DIRECTION
 {
@@ -11,7 +13,7 @@ enum PLAYER_DIRECTION
 	RIGHT
 };
 
-enum Player_STATE
+enum PLAYER_STATE
 {
 	IDLE,
 	WALK,
@@ -34,29 +36,32 @@ enum Player_STATE
 struct tagPlayer
 {
 	RECT rc;
-	int jumpCount;
+	image* img;
+	animation* motion;
+
 	float x;
 	float y;
-
 	float hp;
 	float gp;
-
 	//float money;
 	//SNACK snack;
-
 	float str;
 	float def;
 	float wp;
 	float spd;
+
+	bool jump;
+	bool dash;
 };
 
-class Player:public singletonBase<Player>
+class Player :public singletonBase<Player>
 {
 private:
 	tagPlayer _player;
 	PLAYER_DIRECTION _direction;
-	Player_STATE _state;
+	PLAYER_STATE _state;
 
+	int p;
 
 public:
 	Player();
@@ -65,9 +70,42 @@ public:
 	HRESULT init();
 	void release();
 	void update();
-	void render();
+	void render(HDC hdc);
 
 	void setImage();
+	void setAny();
+
+	void sMoveManage();
+	void sAtkManage();
+	void sHittedManage();
+
+	void lMoveManage();
+	void lAtkManage();
+	void lHittedManage();
+
+	//콜백함수
+
+	static void rightJump(void* obj);
+	static void leftJump(void* obj);
+
+
+
+	// 게터 세터
+	PLAYER_DIRECTION getDirection() { return _direction; }
+	void setDirection(PLAYER_DIRECTION direction) { _direction = direction; }
+
+	PLAYER_STATE getState() { return _state; }
+	void setState(PLAYER_STATE state) { _state = state; }
+
+	image* getImage() { return _player.img; }
+	void setImage(image* img) { _player.img = img; };
+
+	animation* getMotion() { return _player.motion; }
+	void setMotion(animation* any) { _player.motion = any; }
+
+
+	//스콧인지 라모나인지 게터 1이면 스콧 2면 라모나
+	int wPlayer(int x) { p = x; }
 };
 
 
