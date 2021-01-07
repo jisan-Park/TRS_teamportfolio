@@ -69,3 +69,5 @@ public:
 
 	void setImage();
 };
+
+
