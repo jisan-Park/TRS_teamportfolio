@@ -97,8 +97,8 @@ void selectScene::render()
 {
 	IMAGEMANAGER->findImage("selectScene¹è°æ")->render(getMemDC(),0,0);
 
-	_scott->aniRender(getMemDC(), 125, 150, _scottMotion); 
-	_ramona->aniRender(getMemDC(), 400, 150, _ramonaMotion);
+	_scott->aniRender(getMemDC(), 140, 150, _scottMotion); 
+	_ramona->aniRender(getMemDC(), 415, 150, _ramonaMotion);
 
 	_img->render(getMemDC(),_rc.left,_rc.top);
 }

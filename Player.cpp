@@ -11,6 +11,26 @@ Player::~Player()
 
 HRESULT Player::init()
 {
+
+	_player.x = START_X;
+	_player.y = START_Y;
+
+	_player.jumpCount = 0;
+
+	_player.hp = 100;
+	_player.gp = 100;
+
+	_player.str = 1;
+	_player.def = 1;
+	_player.wp = 1;
+	_player.spd = 1;
+
+	_direction = RIGHT;
+	_state = IDLE;
+
+	_player.rc = RectMakeCenter(START_X+125, START_Y+125, 100, 100);
+
+
 	setImage();
 	return S_OK;
 }
