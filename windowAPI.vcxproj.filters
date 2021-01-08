@@ -58,6 +58,12 @@
     <Filter Include="2DGameFramework\item">
       <UniqueIdentifier>{49a73403-6e0d-47c0-8945-9079746cd380}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\mapObject">
+      <UniqueIdentifier>{ec0d8818-d3a9-444c-8eb0-f3b216d5c203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\mapObject\lines">
+      <UniqueIdentifier>{8ef99762-c127-4be1-ae9a-ea504e0c8f06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -150,8 +156,29 @@
     <ClInclude Include="item.h">
       <Filter>2DGameFramework\item</Filter>
     </ClInclude>
-    <ClInclude Include="shadow.h">
+    <ClInclude Include="characterInfo.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="line.h">
+      <Filter>playGround\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="mapObject.h">
+      <Filter>playGround\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cube.h">
+      <Filter>playGround\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="botLine.h">
+      <Filter>playGround\mapObject\lines</Filter>
+    </ClInclude>
+    <ClInclude Include="leftLine.h">
+      <Filter>playGround\mapObject\lines</Filter>
+    </ClInclude>
+    <ClInclude Include="rightLine.h">
+      <Filter>playGround\mapObject\lines</Filter>
+    </ClInclude>
+    <ClInclude Include="topLine.h">
+      <Filter>playGround\mapObject\lines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +256,27 @@
     </ClCompile>
     <ClCompile Include="item.cpp">
       <Filter>2DGameFramework\item</Filter>
+    </ClCompile>
+    <ClCompile Include="line.cpp">
+      <Filter>playGround\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="mapObject.cpp">
+      <Filter>playGround\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cube.cpp">
+      <Filter>playGround\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="botLine.cpp">
+      <Filter>playGround\mapObject\lines</Filter>
+    </ClCompile>
+    <ClCompile Include="leftLine.cpp">
+      <Filter>playGround\mapObject\lines</Filter>
+    </ClCompile>
+    <ClCompile Include="rightLine.cpp">
+      <Filter>playGround\mapObject\lines</Filter>
+    </ClCompile>
+    <ClCompile Include="topLine.cpp">
+      <Filter>playGround\mapObject\lines</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

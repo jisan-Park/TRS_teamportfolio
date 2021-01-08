@@ -148,7 +148,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
+    <ClInclude Include="botLine.h" />
+    <ClInclude Include="characterInfo.h" />
     <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="cube.h" />
     <ClInclude Include="difficultyScene.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
@@ -160,14 +163,17 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="leftLine.h" />
+    <ClInclude Include="line.h" />
     <ClInclude Include="loadingScene.h" />
+    <ClInclude Include="mapObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="rightLine.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="selectScene.h" />
-    <ClInclude Include="shadow.h" />
     <ClInclude Include="shopScene.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
@@ -176,11 +182,14 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="topLine.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="windowAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="botLine.cpp" />
+    <ClCompile Include="cube.cpp" />
     <ClCompile Include="difficultyScene.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
@@ -192,9 +201,13 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="leftLine.cpp" />
+    <ClCompile Include="line.cpp" />
     <ClCompile Include="loadingScene.cpp" />
+    <ClCompile Include="mapObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playGround.cpp" />
+    <ClCompile Include="rightLine.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="selectScene.cpp" />
     <ClCompile Include="shopScene.cpp" />
@@ -208,6 +221,7 @@
     </ClCompile>
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="topLine.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="winMain.cpp" />
   </ItemGroup>
