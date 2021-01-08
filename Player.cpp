@@ -12,7 +12,7 @@ Player::~Player()
 HRESULT Player::init()
 {
 	setImage();
-
+	setAny();
 
 	_player.x = START_X;
 	_player.y = START_Y;
@@ -43,6 +43,7 @@ HRESULT Player::init()
 	}
 
 	_player.rc = RectMakeCenter(START_X+125, START_Y+125, 100, 100);
+
 
 	return S_OK;
 }
@@ -80,7 +81,7 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_IDLE", "image/player/scott/LEFT_IDLE.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_IDLE", "image/player/scott/RIGHT_IDLE.bmp",2000,250,8,1,true,RGB(255,0,255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_DASH","image/player/scott/LEFT_DASH.bmp",2000,250,8,1,true,RGB(255,0,255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_DASH","image/player/scott/RIHGT_DASH.bmp",2000,250,8,1,true,RGB(255,0,255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_DASH","image/player/scott/RIGHT_DASH.bmp",2000,250,8,1,true,RGB(255,0,255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_C_YATK","image/player/scott/LEFT_C_YATK.bmp",2250,500,9,2, true, RGB(255,0,255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_C_YATK", "image/player/scott/RIGHT_C_YATK.bmp",  2250, 500,9, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_DASH_GATK", "image/player/scott/LEFT_DASH_GATK.bmp",2250,250,9,1, true, RGB(255, 0, 255));
@@ -95,6 +96,8 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_GATK", "image/player/scott/RIGHT_GATK.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_GATK2", "image/player/scott/LEFT_GATK2.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_GATK2", "image/player/scott/RIGHT_GATK2.bmp",  1750, 250,7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_G_HITTED", "image/player/scott/LEFT_G_HITTED.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_G_HITTED", "image/player/scott/RIGHT_G_HITTED.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_HITTED", "image/player/scott/LEFT_HITTED.bmp",  1250, 250,5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_HITTED", "image/player/scott/RIGHT_HITTED.bmp",  1250, 250,5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_HITTED2", "image/player/scott/LEFT_HITTED2.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
@@ -120,13 +123,13 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_LOBJ_IDLE", "image/player/scott/LEFT_LOBJ_IDLE.bmp",  1000, 250,4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_IDLE", "image/player/scott/RIGHT_LOBJ_IDLE.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_LOBJ_JUMP", "image/player/scott/LEFT_LOBJ_JUMP.bmp",  2000, 500,8, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_JUMP", "image/player/scott/RIGHT_LOBJ_JUMP.bmp",  2000, 500,8, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_JUMP", "image/player/scott/RIGHT_LOBJ_JUMP.bmp",  2000, 250,8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_LOBJ_JUMPATK", "image/player/scott/LEFT_LOBJ_JUMPATK.bmp",  1250, 250,5, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_JUMPATK", "image/player/scott/RIGHT_LOBJ_JUMPATK.bmp",  1250, 250,5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_JUMPATK", "image/player/scott/RIGHT_LOBJ_JUMP_ATK.bmp",  1250, 250,5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_LOBJ_THROW", "image/player/scott/LEFT_LOBJ_THROW.bmp",  1250, 250,5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_THROW", "image/player/scott/RIGHT_LOBJ_THROW.bmp",  1250, 250,5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_LOBJ_WALK", "image/player/scott/LEFT_LOBJ_WALK.bmp",  1500, 250,6, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIGHTT_LOBJ_WALK", "image/player/scott/RIGHT_LOBJ_WALK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_WALK", "image/player/scott/RIGHT_LOBJ_WALK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_OBJ_IDLE", "image/player/scott/LEFT_OBJ_IDLE.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_OBJ_IDLE", "image/player/scott/RIGHT_OBJ_IDLE.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_OBJ_JUMP", "image/player/scott/LEFT_OBJ_JUMP.bmp",  2250, 500,9, 2, true, RGB(255, 0, 255));
@@ -143,10 +146,12 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_R_UP", "image/player/scott/RIGHT_R_UP.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_S_DEF", "image/player/scott/LEFT_S_DEF.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_S_DEF", "image/player/scott/RIGHT_S_DEF.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_SK_ATK", "image/player/scott/LEFT_SK_ATK.bmp", 2250, 750, 9, 3, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_SK_ATK", "image/player/scott/RIGHT_SK_ATK.bmp", 2250, 750, 9, 3, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_SK_ATK", "image/player/scott/LEFT_SK_ATK.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_SK_ATK", "image/player/scott/RIGHT_SK_ATK.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_SK_ATK2", "image/player/scott/LEFT_SK_ATK2.bmp", 2250, 750, 9, 3, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_SK_ATK2", "image/player/scott/RIGHT_SK_ATK2.bmp", 2250, 750, 9, 3, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_STUN", "image/player/scott/LEFT_STUN.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIHGT_STUN", "image/player/scott/RIGHT_STUN.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_STUN", "image/player/scott/RIGHT_STUN.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_THROW", "image/player/scott/LEFT_THROW.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_THROW", "image/player/scott/RIGHT_THROW.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_TIRED", "image/player/scott/LEFT_TIRED.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
@@ -175,8 +180,10 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_LOBJ_THROW", "image/player/ramona/LEFT_LOBJ_THROW.bmp",1250, 250, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_LOBJ_JUMP_THROW", "image/player/ramona/RIGHT_LOBJ_JUMP_THROW.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_LOBJ_JUMP_THROW", "image/player/ramona/LEFT_LOBJ_JUMP_THROW.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_DOWN_YATK", "image/player/ramona/RIGHT_DWON_GATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DOWN_YATK", "image/player/ramona/LEFT_DOWN_GATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_DOWN_YATK", "image/player/ramona/RIGHT_DOWN_YATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DOWN_YATK", "image/player/ramona/LEFT_DOWN_YATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_DOWN_GATK", "image/player/ramona/RIGHT_DOWN_GATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DOWN_GATK", "image/player/ramona/LEFT_DOWN_GATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_LOBJ_ATK", "image/player/ramona/RIGHT_LOBJ_ATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_LOBJ_ATK", "image/player/ramona/LEFT_LOBJ_ATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_LOBJ_JUMP_ATK", "image/player/ramona/RIGHT_LOBJ_JUMP_ATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
@@ -237,6 +244,8 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_JUMP_YATK", "image/player/ramona/LEFT_DASH_YATK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_HOBJ_WALK", "image/player/ramona/RIGHT_HOBJ_WALK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_HOBJ_WALK", "image/player/ramona/LEFT_HOBJ_WALK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_HOBJ_JUMP_THROW", "image/player/ramona/RIGHT_HOBJ_JUMP_THROW.bmp", 1750, 250, 7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_HOBJ_JUMP_THROW", "image/player/ramona/LEFT_HOBJ_JUMP_THROW.bmp", 1750, 250, 7, 1, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_DASH", "image/player/ramona/RIGHT_DASH.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DASH", "image/player/ramona/LEFT_DASH.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
@@ -269,9 +278,9 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftCAtk", "SCOTT_LEFT_C_YATK", 0, 16, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightCAtk", "SCOTT_RIGHT_C_YATK", 0, 16, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDashGAtk", "SCOTT_LEFT_DASH_GATK", 0, 8, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDashGAtk", "SCOTT_RIGHT_DASH_ATK", 0, 8, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDashGAtk", "SCOTT_RIGHT_DASH_GATK", 0, 8, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDashYAtk", "SCOTT_LEFT_DASH_YATK", 0, 6, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDashYAtk", "SCOTT_RIGHT_DASH_YTK", 0, 6, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDashYAtk", "SCOTT_RIGHT_DASH_YATK", 0, 6, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDownAtk", "SCOTT_LEFT_DOWN_ATK", 0, 4, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDwonAtk", "SCOTT_RIGHT_DOWN_ATK", 0, 4, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGAtk", "SCOTT_LEFT_GATK", 0, 6, 10, false, false);
@@ -286,8 +295,8 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightJumpYAtk", "SCOTT_RIGHT_JUMP_YATK", 0, 7, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjAtk", "SCOTT_LEFT_LOBJ_ATK", 0, 4, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjAtk", "SCOTT_RIGHT_LOBJ_ATK", 0, 4, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjJumpAtk", "SCOTT_LEFT_LOBJ_JUMP_ATK", 0, 4, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjJumpAtk", "SCOTT_RIGHT_LOBJ_JUMP_ATK", 0, 4, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjJumpAtk", "SCOTT_LEFT_LOBJ_JUMPATK", 0, 4, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjJumpAtk", "SCOTT_RIGHT_LOBJ_JUMPATK", 0, 4, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjThrow", "SCOTT_LEFT_LOBJ_THROW", 0, 4, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjThrow", "SCOTT_RIGHT_LOBJ_THROW", 0, 4, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjThrow", "SCOTT_LEFT_OBJ_THROW", 0, 5, 10, false, false);
@@ -315,7 +324,7 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjIdle", "SCOTT_LEFT_LOBJ_IDLE", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjIdle", "SCOTT_RIGHT_LOBJ_IDLE", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjJump", "SCOTT_LEFT_LOBJ_JUMP", 0, 12, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjJump", "SCOTT_RIGHT_LOBJ_JUMP", 0, 12, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjJump", "SCOTT_RIGHT_LOBJ_JUMP", 0, 7, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjWalk", "SCOTT_LEFT_LOBJ_WALK", 0, 5, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjWalk", "SCOTT_RIGHT_LOBJ_WALK", 0, 5, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjWalk", "SCOTT_LEFT_OBJ_IDLE", 0, 3, 10, false, false);
@@ -378,9 +387,9 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjAtk", "RAMONA_LEFT_HOBJ_ATK", 0, 6, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjAtk", "RAMONA_RIGHT_HOBJ_ATK", 0, 6, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjJumpAtk", "RAMONA_LEFT_HOBJ_JUMP_ATK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJumpAtk", "RAMONA_RIGHT_OBJ_JUMP_ATK", 0, 5, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJumpAtk", "RAMONA_RIGHT_HOBJ_JUMP_ATK", 0, 5, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjJumpThrow", "RAMONA_LEFT_HOBJ_JUMP_THROW", 0, 6, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJumpThrow", "RAMONA_RIGHT_OBJ_JUMP_THROW", 0, 6, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJumpThrow", "RAMONA_RIGHT_HOBJ_JUMP_THROW", 0, 6, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjThrow", "RAMONA_LEFT_HOBJ_THROW", 0, 7, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjThrow", "RAMONA_RIGHT_HOBJ_THROW", 0, 7, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftJumpYAtk", "RAMONA_LEFT_JUMP_YATK", 0, 5, 10, false, false);
@@ -404,11 +413,11 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDash", "RAMONA_LEFT_DASH", 0, 7, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDash", "RAMONA_RIGHT_DASH", 0, 7, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjDash", "RAMONA_LEFT_HOBJ_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjDash", "RAMONA_RIGHT_OBJ_DASH", 0, 7, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjDash", "RAMONA_RIGHT_LOBJ_DASH", 0, 7, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjIdle", "RAMONA_LEFT_HOBJ_IDLE", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjIdle", "RAMONA_RIGHT_OBJ_IDLE", 0, 3, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjIdle", "RAMONA_RIGHT_LOBJ_IDLE", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjJump", "RAMONA_LEFT_HOBJ_JUMP", 0, 8, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJump", "RAMONA_RIGHT_OBJ_JUMP", 0, 8, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJump", "RAMONA_RIGHT_LOBJ_JUMP", 0, 8, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjWalk", "RAMONA_LEFT_HOBJ_WALK", 0, 5, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjWalk", "RAMONA_RIGHT_HOBJ_WALK", 0, 5, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftIdle", "RAMONA_LEFT_IDLE", 0, 5, 10, false, false);
@@ -442,7 +451,7 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHitted2", "RAMONA_LEFT_HITTED2", 0, 1, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHitted2", "RAMONA_RIGHT_HITTED2", 0, 1, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjGet", "RAMONA_LEFT_HOBJ_GET", 0, 2, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjGet", "RAMONA_RIGHT_OBJ_GET", 0, 2, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjGet", "RAMONA_RIGHT_LOBJ_GET", 0, 2, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftJumpHitted", "RAMONA_LEFT_JUMP_HITTED", 0, 1, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightJumpHitted", "RAMONA_RIGHT_JUMP_HITTED", 0, 1, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLHitted", "RAMONA_LEFT_L_HITTED", 0, 3, 10, false, false);
@@ -473,27 +482,31 @@ void Player::sMoveManage()
 	{
 		_player.jump = true;
 	}
-	if (KEYMANAGER->isOnceKeyUp(VK_SPACE))
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 		_player.jump = false;
 	}
 
-
 	//ÀÌµ¿
 	if (!_player.jump)
 	{
+
 		if (!_player.dash)
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 			{
 				_player.x += PLAYER_X_SPEED;
 				_direction = RIGHT;
+				_state = WALK;
+				_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_WALK");
 				_player.motion = KEYANIMANAGER->findAnimation("ScottRightWalk");
 				_player.motion->start();
 			}
 			if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
 			{
 				_direction = RIGHT;
+				_state = IDLE;
+				_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
 				_player.motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
 				_player.motion->start();
 			}
@@ -502,12 +515,16 @@ void Player::sMoveManage()
 			{
 				_player.x -= PLAYER_X_SPEED;
 				_direction = LEFT;
+				_state = WALK;
+				_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_WALK");
 				_player.motion = KEYANIMANAGER->findAnimation("ScottLeftWalk");
 				_player.motion->start();
 			}
 			if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
 			{
 				_direction = LEFT;
+				_state = IDLE;
+				_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
 				_player.motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
 				_player.motion->start();
 			}
@@ -517,6 +534,8 @@ void Player::sMoveManage()
 				{
 					_player.y -= PLAYER_Y_SPEED;
 					_direction = RIGHT;
+					_state = WALK;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_WALK");
 					_player.motion = KEYANIMANAGER->findAnimation("ScootRightWalk");
 					_player.motion->start();
 				}
@@ -525,6 +544,8 @@ void Player::sMoveManage()
 				{
 					_player.y -= PLAYER_Y_SPEED;
 					_direction = LEFT;
+					_state = WALK;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_WALK");
 					_player.motion = KEYANIMANAGER->findAnimation("ScottLeftWalk");
 					_player.motion->start();
 				}
@@ -534,6 +555,8 @@ void Player::sMoveManage()
 				if (_direction == RIGHT)
 				{
 					_direction = RIGHT;
+					_state = IDLE;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
 					_player.motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
 					_player.motion->start();
 				}
@@ -541,6 +564,8 @@ void Player::sMoveManage()
 				if (_direction == LEFT)
 				{
 					_direction = LEFT;
+					_state = IDLE;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
 					_player.motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
 					_player.motion->start();
 				}
@@ -551,6 +576,8 @@ void Player::sMoveManage()
 				{
 					_player.y += PLAYER_Y_SPEED;
 					_direction = RIGHT;
+					_state = WALK;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_WALK");
 					_player.motion = KEYANIMANAGER->findAnimation("ScootRightWalk");
 					_player.motion->start();
 				}
@@ -559,6 +586,8 @@ void Player::sMoveManage()
 				{
 					_player.y += PLAYER_Y_SPEED;
 					_direction = LEFT;
+					_state = WALK;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_WALK");
 					_player.motion = KEYANIMANAGER->findAnimation("ScottLeftWalk");
 					_player.motion->start();
 				}
@@ -568,6 +597,8 @@ void Player::sMoveManage()
 				if (_direction == RIGHT)
 				{
 					_direction = RIGHT;
+					_state = IDLE;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
 					_player.motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
 					_player.motion->start();
 				}
@@ -575,23 +606,29 @@ void Player::sMoveManage()
 				if (_direction == LEFT)
 				{
 					_direction = LEFT;
+					_state = IDLE;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
 					_player.motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
 					_player.motion->start();
 				}
 			}
 		}
-		else if(_player.dash) 
+		else if (_player.dash)
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 			{
 				_player.x += PLAYER_X_SPEED * 1.3;
 				_direction = RIGHT;
+				_state = RUN;
+				_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_DASH");
 				_player.motion = KEYANIMANAGER->findAnimation("ScottRightDash");
 				_player.motion->start();
 			}
 			if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
 			{
 				_direction = RIGHT;
+				_state = IDLE;
+				_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
 				_player.motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
 				_player.motion->start();
 			}
@@ -600,12 +637,16 @@ void Player::sMoveManage()
 			{
 				_player.x -= PLAYER_X_SPEED * 1.3;
 				_direction = LEFT;
+				_state = RUN;
+				_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_DASH");
 				_player.motion = KEYANIMANAGER->findAnimation("ScottLeftDash");
 				_player.motion->start();
 			}
 			if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
 			{
 				_direction = LEFT;
+				_state = IDLE;
+				_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
 				_player.motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
 				_player.motion->start();
 			}
@@ -615,6 +656,8 @@ void Player::sMoveManage()
 				{
 					_player.y += PLAYER_Y_SPEED * 1.3;
 					_direction = RIGHT;
+					_state = RUN;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_DASH");
 					_player.motion = KEYANIMANAGER->findAnimation("ScootRightDash");
 					_player.motion->start();
 				}
@@ -623,6 +666,8 @@ void Player::sMoveManage()
 				{
 					_player.y += PLAYER_Y_SPEED * 1.3;
 					_direction = LEFT;
+					_state = RUN;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_DASH");
 					_player.motion = KEYANIMANAGER->findAnimation("ScottLeftDash");
 					_player.motion->start();
 				}
@@ -632,6 +677,8 @@ void Player::sMoveManage()
 				if (_direction == RIGHT)
 				{
 					_direction = RIGHT;
+					_state = IDLE;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
 					_player.motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
 					_player.motion->start();
 				}
@@ -639,6 +686,8 @@ void Player::sMoveManage()
 				if (_direction == LEFT)
 				{
 					_direction = LEFT;
+					_state = IDLE;
+					_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
 					_player.motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
 					_player.motion->start();
 				}
@@ -648,7 +697,7 @@ void Player::sMoveManage()
 	else if (_player.jump)
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
-		{	
+		{
 			_player.x += 3;
 		}
 		else if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
@@ -658,11 +707,13 @@ void Player::sMoveManage()
 
 		if (_direction == RIGHT)
 		{
+			_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_JUMP");
 			_player.motion == KEYANIMANAGER->findAnimation("ScottRightJump");
 			_player.motion->start();
 		}
 		else if (_direction == LEFT)
 		{
+			_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_JUMP");
 			_player.motion == KEYANIMANAGER->findAnimation("ScottLeftJump");
 			_player.motion->start();
 		}
@@ -695,10 +746,22 @@ void Player::rightJump(void * obj)
 {
 	Player* p = (Player*)obj;
 
+	p->setDirection(RIGHT);
+	p->setState(IDLE);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottRightIdle"));
+	p->getMotion()->start();
 }
 
 void Player::leftJump(void * obj)
 {
+	Player* p = (Player*)obj;
+
+	p->setDirection(LEFT);
+	p->setState(IDLE);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottLeftIdle"));
+	p->getMotion()->start();
 }
 
 
