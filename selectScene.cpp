@@ -11,13 +11,14 @@ selectScene::~selectScene()
 
 HRESULT selectScene::init()
 {
+
+	PLAYER->init();
+
+
+
 	IMAGEMANAGER->addImage("selectScene배경", "image/selectScene배경.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("characterSelectBox","image/characterSelectBox.bmp",160,250,true,RGB(255,0,255));
 
-	KEYANIMANAGER->addDefaultFrameAnimation("ScottLeftIdle","SCOTT_LEFT_IDLE",8,false,true);
-	KEYANIMANAGER->addDefaultFrameAnimation("ScottLeftDash", "SCOTT_LEFT_DASH", 8, false, true);
-	KEYANIMANAGER->addDefaultFrameAnimation("RamonaLeftIdle", "RAMONA_LEFT_IDLE", 8, false, true);
-	KEYANIMANAGER->addDefaultFrameAnimation("RamonaLeftDash", "RAMONA_LEFT_DASH", 8, false, true);
 
 	_scott = IMAGEMANAGER->findImage("SCOTT_LEFT_DASH");
 	_scottMotion = KEYANIMANAGER->findAnimation("ScottLeftDash");
@@ -90,8 +91,6 @@ void selectScene::update()
 	}
 	_rc = RectMake( 170 + (_selectPosition * 270), 250, 160, 250);
 
-
-	
 	
 
 	KEYANIMANAGER->update();

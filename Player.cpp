@@ -31,6 +31,8 @@ HRESULT Player::init()
 	_direction = RIGHT;
 	_state = IDLE;
 
+	p = 1;
+
 	if (p == 1)
 	{
 		_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
@@ -313,30 +315,30 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightUpper", "SCOTT_RIGHT_UPPER", 0, 7, 10, false, false);
 
 	//이동
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDash", "SCOTT_LEFT_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDash", "SCOTT_RIGHT_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjDash", "SCOTT_LEFT_LOBJ_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjDash", "SCOTT_RIGHT_LOBJ_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftIdle", "SCOTT_LEFT_IDLE", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightIdle", "SCOTT_RIGHT_IDLE", 0, 7, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDash", "SCOTT_LEFT_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDash", "SCOTT_RIGHT_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjDash", "SCOTT_LEFT_LOBJ_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjDash", "SCOTT_RIGHT_LOBJ_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftIdle", "SCOTT_LEFT_IDLE", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightIdle", "SCOTT_RIGHT_IDLE", 0, 7, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftJump", "SCOTT_LEFT_JUMP", 0, 12, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightJump", "SCOTT_RIGHT_JUMP", 0, 12, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjIdle", "SCOTT_LEFT_LOBJ_IDLE", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjIdle", "SCOTT_RIGHT_LOBJ_IDLE", 0, 3, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjIdle", "SCOTT_LEFT_LOBJ_IDLE", 0, 3, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjIdle", "SCOTT_RIGHT_LOBJ_IDLE", 0, 3, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjJump", "SCOTT_LEFT_LOBJ_JUMP", 0, 12, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjJump", "SCOTT_RIGHT_LOBJ_JUMP", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjWalk", "SCOTT_LEFT_LOBJ_WALK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjWalk", "SCOTT_RIGHT_LOBJ_WALK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjWalk", "SCOTT_LEFT_OBJ_IDLE", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjWalk", "SCOTT_RIGHT_OBJ_IDLE", 0, 3, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjWalk", "SCOTT_LEFT_LOBJ_WALK", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjWalk", "SCOTT_RIGHT_LOBJ_WALK", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjWalk", "SCOTT_LEFT_OBJ_IDLE", 0, 3, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjWalk", "SCOTT_RIGHT_OBJ_IDLE", 0, 3, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjJump", "SCOTT_LEFT_OBJ_JUMP", 0, 12, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjJump", "SCOTT_RIGHT_OBJ_JUMP", 0, 12, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjWalk", "SCOTT_LEFT_OBJ_WALK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjWalk", "SCOTT_RIGHT_OBJ_WALK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjectDash", "SCOTT_LEFT_OBJECT_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjectDash", "SCOTT_RIGHT_OBJECT_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftWalk", "SCOTT_LEFT_WALK", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightWalk", "SCOTT_RIGHT_WALK", 0, 7, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjWalk", "SCOTT_LEFT_OBJ_WALK", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjWalk", "SCOTT_RIGHT_OBJ_WALK", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjectDash", "SCOTT_LEFT_OBJECT_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjectDash", "SCOTT_RIGHT_OBJECT_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftWalk", "SCOTT_LEFT_WALK", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightWalk", "SCOTT_RIGHT_WALK", 0, 7, 10, false, true);
 
 	//그 외
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGHitted", "SCOTT_LEFT_G_HITTED", 0, 13, 10, false, false);
@@ -410,36 +412,36 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk", "RAMONA_RIGHT_YATK", 0, 8, 10, false, false);
 
 	//이동
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDash", "RAMONA_LEFT_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDash", "RAMONA_RIGHT_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjDash", "RAMONA_LEFT_HOBJ_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjDash", "RAMONA_RIGHT_LOBJ_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjIdle", "RAMONA_LEFT_HOBJ_IDLE", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjIdle", "RAMONA_RIGHT_LOBJ_IDLE", 0, 3, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDash", "RAMONA_LEFT_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDash", "RAMONA_RIGHT_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjDash", "RAMONA_LEFT_HOBJ_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjDash", "RAMONA_RIGHT_LOBJ_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjIdle", "RAMONA_LEFT_HOBJ_IDLE", 0, 3, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjIdle", "RAMONA_RIGHT_LOBJ_IDLE", 0, 3, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjJump", "RAMONA_LEFT_HOBJ_JUMP", 0, 8, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJump", "RAMONA_RIGHT_LOBJ_JUMP", 0, 8, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjWalk", "RAMONA_LEFT_HOBJ_WALK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjWalk", "RAMONA_RIGHT_HOBJ_WALK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftIdle", "RAMONA_LEFT_IDLE", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightIdle", "RAMONA_RIGHT_IDLE", 0, 5, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjWalk", "RAMONA_LEFT_HOBJ_WALK", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjWalk", "RAMONA_RIGHT_HOBJ_WALK", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftIdle", "RAMONA_LEFT_IDLE", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightIdle", "RAMONA_RIGHT_IDLE", 0, 5, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftJump", "RAMONA_LEFT_JUMP", 0, 8, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightJump", "RAMONA_RIGHT_JUMP", 0, 8, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftJumpGAtk", "RAMONA_LEFT_JUMP_GATK", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightJumpGAtk", "RAMONA_RIGHT_JUMP_GATK", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjDash", "RAMONA_LEFT_LOBJ_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjDash", "RAMONA_RIGHT_LOBJ_DASH", 0, 7, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjIdle", "RAMONA_LEFT_LOBJ_IDLE", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjIdle", "RAMONA_RIGHT_LOBJ_IDLE", 0, 3, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjDash", "RAMONA_LEFT_LOBJ_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjDash", "RAMONA_RIGHT_LOBJ_DASH", 0, 7, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjIdle", "RAMONA_LEFT_LOBJ_IDLE", 0, 3, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjIdle", "RAMONA_RIGHT_LOBJ_IDLE", 0, 3, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjJump", "RAMONA_LEFT_LOBJ_JUMP", 0, 8, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjJump", "RAMONA_RIGHT_LOBJ_JUMP", 0, 8, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjIdle", "RAMONA_LEFT_LOBJ_IDLE", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjIdle", "RAMONA_RIGHT_LOBJ_IDLE", 0, 3, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjIdle", "RAMONA_LEFT_LOBJ_IDLE", 0, 3, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjIdle", "RAMONA_RIGHT_LOBJ_IDLE", 0, 3, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjJump", "RAMONA_LEFT_LOBJ_JUMP", 0, 8, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjJump", "RAMONA_RIGHT_LOBJ_JUMP", 0, 8, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjWalk", "RAMONA_LEFT_LOBJ_WALK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjWalk", "RAMONA_RIGHT_LOBJ_WALK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftWalk", "RAMONA_LEFT_WALK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightWalk", "RAMONA_RIGHT_WALK", 0, 5, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjWalk", "RAMONA_LEFT_LOBJ_WALK", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjWalk", "RAMONA_RIGHT_LOBJ_WALK", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftWalk", "RAMONA_LEFT_WALK", 0, 5, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightWalk", "RAMONA_RIGHT_WALK", 0, 5, 10, false, true);
 
 	//그 외
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDef", "RAMONA_LEFT_DEF", 0, 2, 10, false, false);
@@ -481,10 +483,12 @@ void Player::sMoveManage()
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 		_player.jump = true;
+		_state = JUMP;
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 		_player.jump = false;
+		_state = IDLE;
 	}
 
 	//이동
@@ -707,12 +711,14 @@ void Player::sMoveManage()
 
 		if (_direction == RIGHT)
 		{
+			_state - JUMP;
 			_player.img = IMAGEMANAGER->findImage("SCOTT_RIGHT_JUMP");
 			_player.motion == KEYANIMANAGER->findAnimation("ScottRightJump");
 			_player.motion->start();
 		}
 		else if (_direction == LEFT)
 		{
+			_state - JUMP;
 			_player.img = IMAGEMANAGER->findImage("SCOTT_LEFT_JUMP");
 			_player.motion == KEYANIMANAGER->findAnimation("ScottLeftJump");
 			_player.motion->start();
