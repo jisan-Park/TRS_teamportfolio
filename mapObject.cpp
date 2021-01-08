@@ -113,7 +113,7 @@ HRESULT mapObject::init()
 	_cube18->init(7282, 180, 30, 20, FIXEDRANGE);
 	_vCube.push_back(_cube18);
 
-	cube* _cube18;
+	cube* _cube23;
 	_cube18 = new cube;
 	_cube18->init(7376, 180, 30, 20, FIXEDRANGE);
 	_vCube.push_back(_cube18);
