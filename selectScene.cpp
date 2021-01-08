@@ -62,6 +62,9 @@ void selectScene::update()
 			_selectPosition = 0;
 		}
 	}
+	if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) {
+		SCENEMANAGER->changeScene("¿Œ∞‘¿”æ¿");
+	}
 
 	if (_selectPosition == 0) {
 		//scott select

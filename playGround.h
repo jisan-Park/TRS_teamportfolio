@@ -5,6 +5,7 @@
 #include "selectScene.h"
 #include "startScene.h"
 #include "difficultyScene.h"
+#include "inGameScene.h"
 #include "Player.h"
 
 class playGround : public gameNode

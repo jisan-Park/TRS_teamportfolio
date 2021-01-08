@@ -68,9 +68,6 @@ public:
 	void update();
 	void render(HDC hdc);
 
-	void setImage();
-	void setAny();
-
 	void sMoveManage();
 	void sAtkManage();
 	void sHittedManage();
@@ -99,9 +96,12 @@ public:
 	animation* getMotion() { return _motion; }
 	void setMotion(animation* any) { _motion = any; }
 
+	characterInfo& getInfo() { return _info; }
 
 	//스콧인지 라모나인지 게터 1이면 스콧 2면 라모나
 	int cChracter(int x) { _chracterNum = x; }
+	void setImage();
+	void setAny();
 };
 
 

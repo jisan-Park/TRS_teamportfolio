@@ -12,6 +12,8 @@ class cube : public gameNode
 	leftLine* ll;
 	rightLine* rl;
 public:
+	cube();
+	~cube();
 	virtual void init(float x, float y, float width, float height, float passrange);
 	virtual void collision(characterInfo &info);
 	virtual void render();

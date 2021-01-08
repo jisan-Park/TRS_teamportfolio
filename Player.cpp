@@ -55,9 +55,6 @@ void Player::release()
 
 void Player::update()
 {
-
-	_info.physics();
-
 	KEYANIMANAGER->update();
 
 	if (_chracterNum == 0)
@@ -72,7 +69,7 @@ void Player::update()
 		lAtkManage();
 		lHittedManage();
 	}
-
+	_info.physics();
 }
 
 void Player::render(HDC hdc)
@@ -80,7 +77,211 @@ void Player::render(HDC hdc)
 	Rectangle(hdc, _info.chr_rc);
 	Rectangle(hdc, _shad);
 	_img->aniRender(hdc, _info.chr_rc.left - 100, _info.chr_rc.top - 140, _motion);
+
+	RECT temp = RectMakeCenter(_info.pt_x, _info.pt_y,10,10);
+	Rectangle(hdc,temp);
 }
+
+void Player::sMoveManage()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	{
+		_state = WALK;
+		_direction = RIGHT;
+		_info.hPushPower = PLAYER_X_SPEED;
+		_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_WALK");
+		_motion = KEYANIMANAGER->findAnimation("ScottRightWalk");
+		_motion->start();
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+	{
+		_state = IDLE;
+		_direction = RIGHT;
+		_info.hPushPower = 0;
+		_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
+		_motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
+		_motion->start();
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	{
+		_state = WALK;
+		_direction = LEFT;
+		_info.hPushPower = -PLAYER_X_SPEED;
+		_img = IMAGEMANAGER->findImage("SCOTT_LEFT_WALK");
+		_motion = KEYANIMANAGER->findAnimation("ScottLeftWalk");
+		_motion->start();
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+	{
+		_state = IDLE;
+		_direction = LEFT;
+		_info.hPushPower = 0;
+		_img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
+		_motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
+		_motion->start();
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_UP))
+	{
+		_info.vPushPower = -PLAYER_Y_SPEED;
+
+		if (_direction == RIGHT)
+		{
+			_state = WALK;
+			_direction = RIGHT;
+			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_WALK");
+			_motion = KEYANIMANAGER->findAnimation("ScottRightWalk");
+			_motion->start();
+		}
+		else if (_direction == LEFT)
+		{
+			_state = WALK;
+			_direction = LEFT;
+			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_WALK");
+			_motion = KEYANIMANAGER->findAnimation("ScottLeftWalk");
+			_motion->start();
+
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyUp(VK_UP))
+	{
+		_info.vPushPower = 0;
+
+		if (_direction == RIGHT)
+		{
+			_state = IDLE;
+			_direction = RIGHT;
+			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
+			_motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
+			_motion->start();
+		}
+		else if (_direction == LEFT)
+		{
+			_state = IDLE;
+			_direction = LEFT;
+			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
+			_motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
+			_motion->start();
+		}
+	}
+
+
+
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	{
+		_info.vPushPower = PLAYER_Y_SPEED;
+
+		if (_direction == RIGHT)
+		{
+			_state = WALK;
+			_direction = RIGHT;
+			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_WALK");
+			_motion = KEYANIMANAGER->findAnimation("ScottRightWalk");
+			_motion->start();
+		}
+		else if (_direction == LEFT)
+		{
+			_state = WALK;
+			_direction = LEFT;
+			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_WALK");
+			_motion = KEYANIMANAGER->findAnimation("ScottLeftWalk");
+			_motion->start();
+
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+	{
+		_info.vPushPower = 0;
+
+		if (_direction == RIGHT)
+		{
+			_state = IDLE;
+			_direction = RIGHT;
+			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
+			_motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
+			_motion->start();
+		}
+		else if (_direction == LEFT)
+		{
+			_state = IDLE;
+			_direction = LEFT;
+			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
+			_motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
+			_motion->start();
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		_info.jumpPower = PLAYER_JUMPPOWER;
+
+		if (_direction == RIGHT)
+		{
+			_state = JUMP;
+			_direction = RIGHT;
+			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_JUMP");
+			_motion = KEYANIMANAGER->findAnimation("ScottRightJump");
+			_motion->start();
+		}
+		else if (_direction == LEFT)
+		{
+			_state = IDLE;
+			_direction = LEFT;
+			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_JUMP");
+			_motion = KEYANIMANAGER->findAnimation("ScottLeftJump");
+			_motion->start();
+		}
+	}
+}
+
+void Player::sAtkManage()
+{
+}
+
+void Player::sHittedManage()
+{
+}
+
+
+
+void Player::lMoveManage()
+{
+}
+
+void Player::lAtkManage()
+{
+}
+
+void Player::lHittedManage()
+{
+}
+
+void Player::rightStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->setDirection(RIGHT);
+	p->setState(IDLE);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottRightIdle"));
+	p->getMotion()->start();
+}
+
+void Player::leftStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->setDirection(LEFT);
+	p->setState(IDLE);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottLeftIdle"));
+	p->getMotion()->start();
+}
+
+
 
 void Player::setImage()
 {
@@ -472,205 +673,3 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftWin", "RAMONA_LEFT_WIN", 0, 26, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightWin", "RAMONA_RIGHT_WIN", 0, 26, 10, false, false);
 }
-
-
-void Player::sMoveManage()
-{
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
-	{
-		_state = WALK;
-		_direction = RIGHT;
-		_info.hPushPower = PLAYER_X_SPEED;
-		_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_WALK");
-		_motion = KEYANIMANAGER->findAnimation("ScottRightWalk");
-		_motion->start();
-	}
-	if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
-	{
-		_state = IDLE;
-		_direction = RIGHT;
-		_info.hPushPower = 0;
-		_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
-		_motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
-		_motion->start();
-	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
-	{
-		_state = WALK;
-		_direction = LEFT;
-		_info.hPushPower = -PLAYER_X_SPEED;
-		_img = IMAGEMANAGER->findImage("SCOTT_LEFT_WALK");
-		_motion = KEYANIMANAGER->findAnimation("ScottLeftWalk");
-		_motion->start();
-	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
-	{
-		_state = IDLE;
-		_direction = LEFT;
-		_info.hPushPower = 0;
-		_img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
-		_motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
-		_motion->start();
-	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_UP))
-	{
-		_info.vPushPower = -PLAYER_Y_SPEED;
-
-		if (_direction == RIGHT)
-		{
-			_state = WALK;
-			_direction = RIGHT;
-			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_WALK");
-			_motion = KEYANIMANAGER->findAnimation("ScottRightWalk");
-			_motion->start();
-		}
-		else if (_direction == LEFT)
-		{
-			_state = WALK;
-			_direction = LEFT;
-			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_WALK");
-			_motion = KEYANIMANAGER->findAnimation("ScottLeftWalk");
-			_motion->start();
-
-		}
-	}
-
-	if (KEYMANAGER->isOnceKeyUp(VK_UP))
-	{
-		_info.vPushPower = 0;
-
-		if (_direction == RIGHT)
-		{
-			_state = IDLE;
-			_direction = RIGHT;
-			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
-			_motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
-			_motion->start();
-		}
-		else if (_direction == LEFT)
-		{
-			_state = IDLE;
-			_direction = LEFT;
-			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
-			_motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
-			_motion->start();
-		}
-	}
-
-
-
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-	{
-		_info.vPushPower = PLAYER_Y_SPEED;
-
-		if (_direction == RIGHT)
-		{
-			_state = WALK;
-			_direction = RIGHT;
-			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_WALK");
-			_motion = KEYANIMANAGER->findAnimation("ScottRightWalk");
-			_motion->start();
-		}
-		else if (_direction == LEFT)
-		{
-			_state = WALK;
-			_direction = LEFT;
-			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_WALK");
-			_motion = KEYANIMANAGER->findAnimation("ScottLeftWalk");
-			_motion->start();
-
-		}
-	}
-
-	if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
-	{
-		_info.vPushPower = 0;
-
-		if (_direction == RIGHT)
-		{
-			_state = IDLE;
-			_direction = RIGHT;
-			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
-			_motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
-			_motion->start();
-		}
-		else if (_direction == LEFT)
-		{
-			_state = IDLE;
-			_direction = LEFT;
-			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE");
-			_motion = KEYANIMANAGER->findAnimation("ScottLeftIdle");
-			_motion->start();
-		}
-	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-	{
-		_info.jumpPower = PLAYER_JUMPPOWER;
-
-		if (_direction == RIGHT)
-		{
-			_state = JUMP;
-			_direction = RIGHT;
-			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_JUMP");
-			_motion = KEYANIMANAGER->findAnimation("ScottRightJump");
-			_motion->start();
-		}
-		else if (_direction == LEFT)
-		{
-			_state = IDLE;
-			_direction = LEFT;
-			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_JUMP");
-			_motion = KEYANIMANAGER->findAnimation("ScottLeftJump");
-			_motion->start();
-		}
-	}
-}
-
-void Player::sAtkManage()
-{
-}
-
-void Player::sHittedManage()
-{
-}
-
-
-
-void Player::lMoveManage()
-{
-}
-
-void Player::lAtkManage()
-{
-}
-
-void Player::lHittedManage()
-{
-}
-
-void Player::rightStop(void * obj)
-{
-	Player* p = (Player*)obj;
-
-	p->setDirection(RIGHT);
-	p->setState(IDLE);
-	p->setImage(IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE"));
-	p->setMotion(KEYANIMANAGER->findAnimation("ScottRightIdle"));
-	p->getMotion()->start();
-}
-
-void Player::leftStop(void * obj)
-{
-	Player* p = (Player*)obj;
-
-	p->setDirection(LEFT);
-	p->setState(IDLE);
-	p->setImage(IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE"));
-	p->setMotion(KEYANIMANAGER->findAnimation("ScottLeftIdle"));
-	p->getMotion()->start();
-}
-
-

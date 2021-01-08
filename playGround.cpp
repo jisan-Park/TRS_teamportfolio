@@ -18,6 +18,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("∑Œµ˘æ¿", new loadingScene);
 	SCENEMANAGER->addScene("≥≠¿Ãµµæ¿", new difficultyScene);
 	SCENEMANAGER->addScene("º±≈√æ¿", new selectScene);
+	SCENEMANAGER->addScene("¿Œ∞‘¿”æ¿", new inGameScene);
 	SCENEMANAGER->changeScene("Ω√¿€æ¿");
 
 

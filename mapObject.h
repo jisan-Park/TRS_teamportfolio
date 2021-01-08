@@ -26,5 +26,6 @@ public:
 
 	HRESULT init();
 	virtual void collision(characterInfo &info);
+	virtual void render();
 };
 

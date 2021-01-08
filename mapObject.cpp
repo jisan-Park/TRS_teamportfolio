@@ -153,3 +153,15 @@ void mapObject::collision(characterInfo & info)
 		(*_viCube)->collision(info);
 	}
 }
+
+void mapObject::render()
+{
+	for (_viLine = _vLine.begin(); _viLine != _vLine.end(); ++_viLine)
+	{
+		(*_viLine)->render();
+	}
+	for (_viCube = _vCube.begin(); _viCube != _vCube.end(); ++_viCube)
+	{
+		(*_viCube)->render();
+	}
+}
