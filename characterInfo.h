@@ -19,10 +19,13 @@ struct characterInfo
 
 	void init(float x, float y, float width, float height)
 	{
-		pt_x = shd_x = x;
-		pt_y = shd_y = y;
+		pt_x = x;
+		shd_x = x;
+		pt_y = y;
+		shd_y = y;
 		chr_x = x;
 		chr_y = y - height / 2;
+		shd_height = 0;
 		chr_width = width;
 		chr_height = height;
 		chr_rc = RectMakeCenter(chr_x, chr_y, chr_width, chr_height);
@@ -37,9 +40,15 @@ struct characterInfo
 		chr_y -= jumpPower;
 		chr_y += vPushPower;
 		chr_rc = RectMakeCenter(chr_x, chr_y, chr_width, chr_height);
-		distance = shd_y - chr_rc.bottom;
+		distance = shd_y - chr_rc.bottom + 1;
 
-		if (jumpPower < 0 && distance <= 0) jumpPower = 0;
+		if (jumpPower <= 0 && distance <= 0)
+		{
+			chr_y += distance;
+			jumpPower = 0;
+		}
 		else jumpPower -= gravity;
+
+
 	}
 };
