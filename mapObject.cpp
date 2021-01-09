@@ -11,6 +11,9 @@ mapObject::~mapObject()
 
 HRESULT mapObject::init()
 {
+	IMAGEMANAGER->addImage("box1", "image/box1.bmp", 124, 112, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("box2", "image/box2.bmp", 124, 189, true, RGB(255, 0, 255));
+
 	botLine* _bl1;
 	_bl1 = new botLine;
 	_bl1->init(PointMake(0, 360), PointMake(19240, 360), FIXEDRANGE);
@@ -138,6 +141,16 @@ HRESULT mapObject::init()
 	_cube22->init(16464, 360, 40, 40, FIXEDRANGE);
 	_vCube.push_back(_cube22);
 
+
+	cube* testbox1;
+	testbox1 = new cube;
+	testbox1->init(365, 465, 95, 35, 75);
+	_vCube.push_back(testbox1);
+	cube* testbox2;
+	testbox2 = new cube;
+	testbox2->init(455, 465, 85, 35, 150);
+	_vCube.push_back(testbox2);
+
 	return S_OK;
 }
 
@@ -155,6 +168,10 @@ void mapObject::collisionMo(characterInfo & info)
 
 void mapObject::render()
 {
+
+	IMAGEMANAGER->findImage("box2")->render(getMemDC(), 450, 315);
+	IMAGEMANAGER->findImage("box1")->render(getMemDC(), 365, 390);
+
 	for (_viLine = _vLine.begin(); _viLine != _vLine.end(); ++_viLine)
 	{
 		(*_viLine)->render();

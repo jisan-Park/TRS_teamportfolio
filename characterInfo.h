@@ -11,8 +11,10 @@ struct characterInfo
 	RECT ptrc; // 충돌판정 할 때 쓸 기준렉트
 	float shd_x, shd_y; // 그림자 x, y 좌표(렌더링해주는 좌표)
 	float shd_height; // 그림자 높이(z값이라 생각하면댐)
+	RECT shdrc; // 그림자렉트
 
-	float distance; // 그림자 y와 플레이어 y 사이의 거리
+	float shdDistance; // 그림자 y와 플레이어 y 사이의 거리
+	float ptDistance; // pt와 플레이어 사이의 거리
 	float jumpPower; // 플레이어 점프파워
 	float gravity = 0.89f; // 중력임
 
@@ -42,13 +44,19 @@ struct characterInfo
 		chr_y -= jumpPower;
 		chr_y += vPushPower;
 		chr_rc = RectMakeCenter(chr_x, chr_y, chr_width, chr_height);
-		distance = shd_y - chr_rc.bottom + 1;
+		shdDistance = shd_y - chr_rc.bottom - 1;
+		ptDistance = pt_y - chr_rc.bottom - 1;
 
-		if (jumpPower <= 0 && distance <= 0)
+
+		if (jumpPower <= 0 && shdDistance <= 0)
 		{
-			chr_y += distance;
+			chr_y += shdDistance;
 			jumpPower = 0;
 		}
 		else jumpPower -= gravity;
+	}
+	void shdRender(HDC hdc)
+	{
+		EllipseMakeCenter(hdc, shd_x, shd_y, 70 - shdDistance / 10, 30 - shdDistance / 10);
 	}
 };

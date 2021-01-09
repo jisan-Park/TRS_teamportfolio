@@ -74,8 +74,10 @@ void Player::update()
 
 void Player::render(HDC hdc)
 {
+	_info.shdRender(hdc);
 	Rectangle(hdc, _info.chr_rc);
 	_img->aniRender(hdc, _info.chr_rc.left - 100, _info.chr_rc.top - 140, _motion);
+	Rectangle(hdc, _info.shdrc);
 	Rectangle(hdc, _info.ptrc);
 }
 
@@ -503,7 +505,7 @@ void Player::sMoveManage()
 	}
 
 
-	if (_info.jumpPower <= 0 && _info.distance <= 0)// 땅에 붙었을경우
+	if (_info.jumpPower <= 0 && _info.shdDistance <= 0)// 땅에 붙었을경우
 	{
 		if (_state == JUMP)
 		{
@@ -1079,7 +1081,7 @@ void Player::lMoveManage()
 		_motion->start();
 	}
 
-	if (_info.jumpPower <= 0 && _info.distance <= 0)// 땅에 붙었을경우
+	if (_info.jumpPower <= 0 && _info.shdDistance <= 0)// 땅에 붙었을경우
 	{
 		if (_state == JUMP)
 		{
