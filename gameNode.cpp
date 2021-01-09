@@ -36,7 +36,9 @@ HRESULT gameNode::init(bool managerInit)
 		SOUNDMANAGER->init();
 		KEYANIMANAGER->init();
 		GAMEMANAGER->init();
+		CAMERAMANAGER->init();
 		PLAYER->init();
+		MAPOBJECT->init();
 	}
 
 	return S_OK;
@@ -63,8 +65,11 @@ void gameNode::release()
 		KEYANIMANAGER->releaseSingleton();
 		GAMEMANAGER->release();
 		GAMEMANAGER->releaseSingleton();
+		CAMERAMANAGER->release();
+		CAMERAMANAGER->releaseSingleton();
 		PLAYER->release();
 		PLAYER->releaseSingleton();
+		MAPOBJECT->releaseSingleton();
 	}
 	ReleaseDC(_hWnd, _hdc);
 }
@@ -82,32 +87,32 @@ void gameNode::render()
 
 LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	
+
 	PAINTSTRUCT ps;
 	HDC			hdc;	//<-- 얘 진짜 중요함
 
 	switch (iMessage)
 	{
-		
-		case WM_MOUSEMOVE:
+
+	case WM_MOUSEMOVE:
 		_ptMouse.x = static_cast<float>(LOWORD(lParam));
 		_ptMouse.y = static_cast<float>(HIWORD(lParam));
 
 		break;
 
 
-		case WM_KEYDOWN:
-			switch (wParam)
-			{
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
 
-				case VK_ESCAPE:
-					PostQuitMessage(0);
-				break;
-			}
+		case VK_ESCAPE:
+			PostQuitMessage(0);
+			break;
+		}
 		break;
 
-		case WM_DESTROY:
-			PostQuitMessage(0);
+	case WM_DESTROY:
+		PostQuitMessage(0);
 		break;
 	}
 

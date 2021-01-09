@@ -154,6 +154,15 @@ HRESULT mapObject::init()
 	return S_OK;
 }
 
+void mapObject::update()
+{
+
+}
+
+void mapObject::release()
+{
+}
+
 void mapObject::collisionMo(characterInfo & info)
 {
 	for (_viLine = _vLine.begin(); _viLine != _vLine.end(); ++_viLine)
@@ -166,18 +175,18 @@ void mapObject::collisionMo(characterInfo & info)
 	}
 }
 
-void mapObject::render()
+void mapObject::render(HDC hdc)
 {
 
-	IMAGEMANAGER->findImage("box2")->render(getMemDC(), 450, 315);
-	IMAGEMANAGER->findImage("box1")->render(getMemDC(), 365, 390);
+	IMAGEMANAGER->findImage("box2")->render(hdc, 450, 315);
+	IMAGEMANAGER->findImage("box1")->render(hdc, 365, 390);
 
 	for (_viLine = _vLine.begin(); _viLine != _vLine.end(); ++_viLine)
 	{
-		(*_viLine)->render();
+		(*_viLine)->render(hdc);
 	}
 	for (_viCube = _vCube.begin(); _viCube != _vCube.end(); ++_viCube)
 	{
-		(*_viCube)->render();
+		(*_viCube)->render(hdc);
 	}
 }

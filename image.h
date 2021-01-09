@@ -53,7 +53,7 @@ public:
 	}IMAGE_INFO, *LPIMAGE_INFO;
 
 private:
-	LPIMAGE_INFO	_imageInfo;	
+	LPIMAGE_INFO	_imageInfo;
 	CHAR*			_fileName;		//파일 이름
 	BOOL			_trans;			//특정 픽셀값을 제거할지 유무
 	COLORREF		_transColor;	//제거할 픽셀값
@@ -73,7 +73,7 @@ public:
 		int width, int height, int frameX, int frameY,
 		BOOL trans = FALSE, COLORREF transColor = FALSE);
 
-	HRESULT init(const char* fileName, int width, int height, 
+	HRESULT init(const char* fileName, int width, int height,
 		int frameX, int frameY,
 		BOOL trans = FALSE, COLORREF transColor = FALSE);
 
@@ -96,6 +96,9 @@ public:
 	void alphaRender(HDC hdc, BYTE alpha);
 	void alphaRender(HDC hdc, int destX, int destY, BYTE alpha);
 	void alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
+
+	//strecthRender (2021-01-09 지산)
+	void stretchRender(HDC hdc, int destX, int destY, int destWidth, int destHeight, int sourX, int sourY, int sourWidth, int sourHeight);
 
 	void aniRender(HDC hdc, int destX, int destY, animation* ani);
 

@@ -7,7 +7,7 @@ image::image()
 	: _imageInfo(NULL),
 	_fileName(NULL),
 	_trans(false),
-	_transColor(RGB(0,0,0))
+	_transColor(RGB(0, 0, 0))
 {
 }
 
@@ -42,7 +42,7 @@ HRESULT image::init(int width, int height)
 	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
 	_blendImage->width = WINSIZEX;
 	_blendImage->height = WINSIZEY;
-	
+
 	if (_imageInfo == NULL)
 	{
 		release();
@@ -353,8 +353,8 @@ void image::frameRender(HDC hdc, int destX, int destY)
 			_imageInfo->frameWidth,		//복사될 크기 (가로)
 			_imageInfo->frameHeight,	//복사될 크기 (세로)
 			_imageInfo->hMemDC,		//복사해올 DC
-			_imageInfo->currentFrameX * _imageInfo->frameWidth, 
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,					
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,
 			_imageInfo->frameWidth,		//복사할 가로크기
 			_imageInfo->frameHeight,	//복사할 세로크기
 			_transColor
@@ -367,9 +367,9 @@ void image::frameRender(HDC hdc, int destX, int destY)
 			destX,						//복사할 좌표 X (left)
 			destY,						//복사할 좌표 Y (top)
 			_imageInfo->frameWidth,			//복사할 크기
-			_imageInfo->frameHeight,	
+			_imageInfo->frameHeight,
 			_imageInfo->hMemDC,			//복사될 DC
-			_imageInfo->currentFrameX * _imageInfo->frameWidth, 
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
 			_imageInfo->currentFrameY * _imageInfo->frameHeight,	//복사될 기준점 (left, top)
 			SRCCOPY);					//변형없이 복사할거임
 	}
@@ -469,6 +469,54 @@ void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int
 	//한 번 공부해보라고~
 }
 
+void image::stretchRender(HDC hdc, int destX, int destY, int destWidth, int destHeight, int sourX, int sourY, int sourWidth, int sourHeight)
+{
+	if (_trans)
+	{
+		GdiTransparentBlt(
+			hdc,					//복사될 영역의  DC
+			destX,					//복사될 좌표 X
+			destY,					//복사될 좌표 Y
+			sourWidth,				//복사될 크기 (가로)
+			sourHeight,				//복사될 크기 (세로)
+			_imageInfo->hMemDC,		//복사해올 DC
+			sourX, sourY,			//복사해올 좌표 X, Y
+			sourWidth,				//복사할 가로크기
+			sourHeight,				//복사할 세로크기
+			_transColor
+		);
+		StretchBlt(
+			hdc,
+			destX,					//대 상 사각형의 left
+			destY,					//대상 사각형의 top
+			destWidth,				//대상 사각형의 너비 = WINSIZEX
+			destHeight,				//대상 사각형의 높이
+			_imageInfo->hMemDC,
+			sourX,					//이미지 소스의 left
+			sourY,					//이미지 소스의 top
+			sourWidth,				//이미지 소스의 너비 = 카메라
+			sourHeight,				//이미지 소스의 높이
+			SRCCOPY
+		);
+	}
+	else
+	{
+		StretchBlt(
+			hdc,
+			destX,					//대 상 사각형의 left
+			destY,					//대상 사각형의 top
+			destWidth,				//대상 사각형의 너비 = WINSIZEX
+			destHeight,				//대상 사각형의 높이
+			_imageInfo->hMemDC,
+			sourX,					//이미지 소스의 left
+			sourY,					//이미지 소스의 top
+			sourWidth,				//이미지 소스의 너비 = 카메라
+			sourHeight,				//이미지 소스의 높이
+			SRCCOPY
+		);
+	}
+}
+
 //애니메이션 렌더용 함수
 void image::aniRender(HDC hdc, int destX, int destY, animation * ani)
 {
@@ -489,7 +537,7 @@ void image::loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY)
 	RECT rcDest;
 	RECT rcSour;
 
-	int drawAreaX = drawArea->left;					
+	int drawAreaX = drawArea->left;
 	int drawAreaY = drawArea->top;
 	int drawAreaW = drawArea->right - drawAreaX;
 	int drawAreaH = drawArea->bottom - drawAreaY;

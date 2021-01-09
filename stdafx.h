@@ -23,7 +23,9 @@
 #include "soundManager.h"
 #include "keyAniManager.h"
 #include "gameManager.h"
+#include "cameraManager.h"
 #include "Player.h"
+#include"mapObject.h"
 #include "utils.h"
 
 using namespace std;
@@ -37,7 +39,7 @@ using namespace TFIVE_UTIL;
 #define WINSTARTX 50		//윈도우 시작좌표 X지점
 #define WINSTARTY 50		//윈도우 시작좌표 Y지점
 #define WINSIZEX 800		//윈도우 가로크기
-#define WINSIZEY 600		//윈도우 세로크기
+#define WINSIZEY 450		//윈도우 세로크기
 #define MAPSIZEX 22220		//맵 가로크기
 #define MAPSIZEY 754		//맵 세로크기
 
@@ -52,7 +54,9 @@ using namespace TFIVE_UTIL;
 #define SOUNDMANAGER soundManager::getSingleton()
 #define KEYANIMANAGER keyAniManager::getSingleton()
 #define GAMEMANAGER gameManager::getSingleton()
+#define CAMERAMANAGER cameraManager::getSingleton()
 #define PLAYER Player::getSingleton()
+#define MAPOBJECT mapObject::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p)=NULL;}}

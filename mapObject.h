@@ -1,10 +1,10 @@
 #pragma once
-#include "gameNode.h"
+#include "singletonBase.h"
 #include "cube.h"
 #include <vector>
 #define FIXEDRANGE 2000
 class mapObject :
-	public gameNode
+	public singletonBase<mapObject>
 {
 private:
 	typedef vector<cube*>vCube;
@@ -25,7 +25,10 @@ public:
 	~mapObject();
 
 	HRESULT init();
+	void update();
+	void release();
+	void render(HDC hdc);
+
 	void collisionMo(characterInfo &info);
-	virtual void render();
 };
 

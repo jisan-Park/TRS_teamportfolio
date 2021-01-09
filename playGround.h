@@ -11,7 +11,7 @@
 class playGround : public gameNode
 {
 private:
-	
+
 
 public:
 	playGround();
@@ -23,4 +23,3 @@ public:
 	virtual void render();	//그리기 전용
 
 };
-

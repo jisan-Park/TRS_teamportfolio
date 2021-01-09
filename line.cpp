@@ -60,8 +60,8 @@ bool line::intersects(RECT rc)
 	return true;
 }
 
-void line::render()
+void line::render(HDC hdc)
 {
-	LineMake(getMemDC(), start.x, start.y, end.x, end.y);
-	LineMake(getMemDC(), start.x, start.y - passRange, end.x, end.y - passRange);
+	LineMake(hdc, start.x, start.y, end.x, end.y);
+	LineMake(hdc, start.x, start.y - passRange, end.x, end.y - passRange);
 }

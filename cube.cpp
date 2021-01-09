@@ -35,10 +35,10 @@ void cube::collisionCube(characterInfo & info)
 	rl->collision(info);
 }
 
-void cube::render()
+void cube::render(HDC hdc)
 {
-	tl->render();
-	bl->render();
-	ll->render();
-	rl->render();
+	tl->render(hdc);
+	bl->render(hdc);
+	ll->render(hdc);
+	rl->render(hdc);
 }

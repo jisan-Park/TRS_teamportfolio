@@ -21,7 +21,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("인게임씬", new inGameScene);
 	SCENEMANAGER->changeScene("시작씬");
 
-
+	CAMERAMANAGER->initCamera(0, 0);
 	return S_OK;
 }
 
@@ -29,18 +29,13 @@ HRESULT playGround::init()
 void playGround::release()
 {
 	gameNode::release();
-
-	
 }
 
 void playGround::update()
 {
 	gameNode::update();
 
-
 	SCENEMANAGER->update();
-
-
 }
 
 
@@ -49,18 +44,14 @@ void playGround::render()
 	if (!SCENEMANAGER->getIsVideoPlay()) {
 		PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 		//================ 위에 건들지 마라 ==============================
-
-		//IMAGEMANAGER->findImage("새배경")->render(getMemDC());
-
-
 		SCENEMANAGER->render();
-
 
 		if (KEYMANAGER->isToggleKey(VK_TAB)) {
 			TIMEMANAGER->render(getMemDC());
 		}
 		//================= 아래도 건들지 마라 ==============================
-		_backBuffer->render(getHDC());
+		//_backBuffer->render(getHDC());
+		_backBuffer->stretchRender(getHDC(), 0, 0, WINSIZEX, WINSIZEY, CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y, WINSIZEX, WINSIZEY);
 	}
 }
 

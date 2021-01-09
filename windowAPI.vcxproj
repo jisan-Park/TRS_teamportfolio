@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="botLine.h" />
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="cameraManager.h" />
     <ClInclude Include="characterInfo.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="cube.h" />
@@ -189,6 +191,8 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="botLine.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="difficultyScene.cpp" />
     <ClCompile Include="effect.cpp" />

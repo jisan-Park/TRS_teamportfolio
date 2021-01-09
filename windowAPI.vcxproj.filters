@@ -64,6 +64,9 @@
     <Filter Include="playGround\mapObject\lines">
       <UniqueIdentifier>{8ef99762-c127-4be1-ae9a-ea504e0c8f06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\subclass\camera">
+      <UniqueIdentifier>{45c6b80e-26d6-4e38-a0ff-cfb090f3a6c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -180,6 +183,12 @@
     <ClInclude Include="topLine.h">
       <Filter>playGround\mapObject\lines</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>2DGameFramework\subclass\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="cameraManager.h">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -277,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="topLine.cpp">
       <Filter>playGround\mapObject\lines</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>2DGameFramework\subclass\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="cameraManager.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
