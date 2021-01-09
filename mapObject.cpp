@@ -75,67 +75,67 @@ HRESULT mapObject::init()
 	////////////////여기까지 두배함//////////////
 	cube* _cube11;
 	_cube11 = new cube;
-	_cube11->init(5740, 180, 60, 20, FIXEDRANGE);
+	_cube11->init(11480, 360, 120, 40, FIXEDRANGE);
 	_vCube.push_back(_cube11);
 
 	cube* _cube12;
 	_cube12 = new cube;
-	_cube12->init(5603, 180, 160, 20, FIXEDRANGE);
+	_cube12->init(11660, 360, 320, 40, FIXEDRANGE);
 	_vCube.push_back(_cube12);
 
 	cube* _cube13;
 	_cube13 = new cube;
-	_cube13->init(5603, 180, 60, 20, FIXEDRANGE);
+	_cube13->init(11486, 360, 120, 40, FIXEDRANGE);
 	_vCube.push_back(_cube13);
 
 	cube* _cube14;
 	_cube14 = new cube;
-	_cube14->init(6775, 180, 40, 20, FIXEDRANGE);
+	_cube14->init(13550, 360, 80, 40, FIXEDRANGE);
 	_vCube.push_back(_cube14);
 
 	cube* _cube15;
 	_cube15 = new cube;
-	_cube15->init(6870, 180, 100, 20, FIXEDRANGE);
+	_cube15->init(13740, 360, 200, 40, FIXEDRANGE);
 	_vCube.push_back(_cube15);
 
 	cube* _cube16;
 	_cube16 = new cube;
-	_cube16->init(7018, 180, 80, 20, FIXEDRANGE);
+	_cube16->init(14036, 360, 160, 40, FIXEDRANGE);
 	_vCube.push_back(_cube16);
 
 	cube* _cube17;
 	_cube17 = new cube;
-	_cube17->init(7153, 180, 40, 20, FIXEDRANGE);
+	_cube17->init(14306, 360, 80, 40, FIXEDRANGE);
 	_vCube.push_back(_cube17);
 
 	cube* _cube18;
 	_cube18 = new cube;
-	_cube18->init(7282, 180, 30, 20, FIXEDRANGE);
+	_cube18->init(14564, 360, 60, 40, FIXEDRANGE);
 	_vCube.push_back(_cube18);
 
 	cube* _cube23;
 	_cube23 = new cube;
-	_cube23->init(7376, 180, 30, 20, FIXEDRANGE);
+	_cube23->init(14752, 360, 60, 40, FIXEDRANGE);
 	_vCube.push_back(_cube23);
 
 	cube* _cube19;
 	_cube19 = new cube;
-	_cube19->init(7488, 180, 57, 20, FIXEDRANGE);
+	_cube19->init(14976, 360, 114, 40, FIXEDRANGE);
 	_vCube.push_back(_cube19);
 
 	cube* _cube20;
 	_cube20 = new cube;
-	_cube20->init(7711, 180, 190, 20, FIXEDRANGE);
+	_cube20->init(15422, 360, 380, 40, FIXEDRANGE);
 	_vCube.push_back(_cube20);
 
 	cube* _cube21;
 	_cube21 = new cube;
-	_cube21->init(7972, 180, 145, 20, FIXEDRANGE);
+	_cube21->init(15944, 360, 290, 40, FIXEDRANGE);
 	_vCube.push_back(_cube21);
 
 	cube* _cube22;
 	_cube22 = new cube;
-	_cube22->init(8232, 180, 20, 20, FIXEDRANGE);
+	_cube22->init(16464, 360, 40, 40, FIXEDRANGE);
 	_vCube.push_back(_cube22);
 
 	return S_OK;
