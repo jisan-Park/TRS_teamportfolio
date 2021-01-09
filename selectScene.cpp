@@ -63,6 +63,9 @@ void selectScene::update()
 		}
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) {
+
+		PLAYER->cChracter(_selectPosition);
+
 		SCENEMANAGER->changeScene("¿Œ∞‘¿”æ¿");
 	}
 
