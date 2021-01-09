@@ -15,7 +15,7 @@ public:
 	cube();
 	~cube();
 	virtual void init(float x, float y, float width, float height, float passrange);
-	virtual void collision(characterInfo &info);
+	void collisionCube(characterInfo &info);
 	virtual void render();
 };
 

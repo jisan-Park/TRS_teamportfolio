@@ -2,7 +2,7 @@
 #include "gameNode.h"
 #include "cube.h"
 #include <vector>
-#define FIXEDRANGE 300
+#define FIXEDRANGE 2000
 class mapObject :
 	public gameNode
 {
@@ -25,7 +25,7 @@ public:
 	~mapObject();
 
 	HRESULT init();
-	virtual void collision(characterInfo &info);
+	void collisionMo(characterInfo &info);
 	virtual void render();
 };
 

@@ -27,9 +27,6 @@ HRESULT Player::init()
 	_direction = RIGHT;
 	_state = IDLE;
 
-	_shad = RectMakeCenter(_info.shd_x, _info.shd_y, 2, 2);
-
-	//
 	_chracterNum = 0;
 
 	if (_chracterNum == 0)
@@ -75,11 +72,8 @@ void Player::update()
 void Player::render(HDC hdc)
 {
 	Rectangle(hdc, _info.chr_rc);
-	Rectangle(hdc, _shad);
 	_img->aniRender(hdc, _info.chr_rc.left - 100, _info.chr_rc.top - 140, _motion);
-
-	RECT temp = RectMakeCenter(_info.pt_x, _info.pt_y,10,10);
-	Rectangle(hdc,temp);
+	Rectangle(hdc, _info.ptrc);
 }
 
 void Player::sMoveManage()

@@ -8,6 +8,7 @@ struct characterInfo
 	float chr_width, chr_height; // 캐릭터 렉트 너비 높이
 
 	float pt_x, pt_y; // 그림자 기준좌표
+	RECT ptrc; // 충돌판정 할 때 쓸 기준렉트
 	float shd_x, shd_y; // 그림자 x, y 좌표(렌더링해주는 좌표)
 	float shd_height; // 그림자 높이(z값이라 생각하면댐)
 
@@ -33,6 +34,7 @@ struct characterInfo
 
 	void physics()
 	{
+		ptrc = RectMakeCenter(pt_x, pt_y, 10, 10);
 		pt_x += hPushPower; // 그림자 기준점 푸시파워로 밀어주기
 		pt_y += vPushPower; // 그림자 기준점 푸시파워로 밀어주기
 		chr_x = shd_x = pt_x; // 
@@ -48,7 +50,5 @@ struct characterInfo
 			jumpPower = 0;
 		}
 		else jumpPower -= gravity;
-
-
 	}
 };

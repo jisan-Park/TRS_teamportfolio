@@ -46,7 +46,6 @@ private:
 	image* _img;
 	animation* _motion;
 	characterInfo _info;
-	RECT _shad;
 
 	float _hp;
 	float _gp;

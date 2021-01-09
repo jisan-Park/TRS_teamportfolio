@@ -4,6 +4,6 @@ class topLine :
 	public line
 {
 public:
-	virtual void collison(characterInfo &info);
+	virtual void collision(characterInfo &info);
 };
 
