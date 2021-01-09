@@ -5,10 +5,10 @@
 #define JUMP_POWER 10
 #define PLAYER_START_X 200
 #define PLAYER_START_Y 300
-#define PLAYER_X_SPEED 5
-#define PLAYER_Y_SPEED 3
-#define PLAYER_JUMPPOWER 15 // 15~20
-
+#define PLAYER_X_SPEED 4
+#define PLAYER_Y_SPEED 2
+#define PLAYER_JUMPPOWER 18 // 15~20
+#define PLAYER_DASH 1.5
 
 
 enum PLAYER_DIRECTION
@@ -23,7 +23,6 @@ enum PLAYER_STATE
 	WALK,
 	RUN,
 	JUMP,
-	DASH,
 	DOWN,
 	LOBJ,
 	HOBJ,
@@ -54,6 +53,7 @@ private:
 	float _def;
 	float _wp;
 	float _spd;
+
 	bool _jump;
 	bool _dash;
 
@@ -78,9 +78,11 @@ public:
 
 	//콜백함수
 
-	static void rightStop(void* obj);
-	static void leftStop(void* obj);
+	static void sRightStop(void* obj);
+	static void sLeftStop(void* obj);
 
+	static void rRightStop(void* obj);
+	static void rLeftStop(void* obj);
 
 
 	// 게터 세터
@@ -99,7 +101,9 @@ public:
 	characterInfo& getInfo() { return _info; }
 
 	//스콧인지 라모나인지 게터 1이면 스콧 2면 라모나
-	int cChracter(int x) { _chracterNum = x; }
+	int cChracter(int x) { return _chracterNum = x; }
+
+	//이미지, 애니메이션
 	void setImage();
 	void setAny();
 };
