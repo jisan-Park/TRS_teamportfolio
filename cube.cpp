@@ -27,7 +27,7 @@ void cube::init(float x, float y, float width, float height, float passrange)
 	rl->init(B, D, passrange);
 }
 
-void cube::collision(characterInfo & info)
+void cube::collisionCube(characterInfo & info)
 {
 	tl->collision(info);
 	bl->collision(info);
