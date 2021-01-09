@@ -151,6 +151,12 @@ HRESULT mapObject::init()
 	testbox2->init(455, 465, 85, 35, 150);
 	_vCube.push_back(testbox2);
 
+
+	cube* sinkhole;
+	sinkhole = new cube;
+	sinkhole->init(2888, 449, 380, 180, -600);
+	_vCube.push_back(sinkhole);
+
 	return S_OK;
 }
 
