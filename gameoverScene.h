@@ -4,7 +4,8 @@
 class gameoverScene : public gameNode
 {
 private:
-
+	RECT _rc;
+	int _selectNum;
 public:
 	gameoverScene();
 	~gameoverScene();
@@ -14,4 +15,3 @@ public:
 	void update();
 	void render();
 };
-

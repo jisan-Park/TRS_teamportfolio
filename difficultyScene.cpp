@@ -11,11 +11,12 @@ difficultyScene::~difficultyScene()
 
 HRESULT difficultyScene::init()
 {
-	IMAGEMANAGER->addImage("difficultyScene배경", "image/difficultyScene배경.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("selectbox","image/selectbox.bmp",300,50,true,RGB(255,0,255));
+	IMAGEMANAGER->addImage("difficultyScene배경", "image/scene/difficultyScene배경.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("difficultySceneBox","image/scene/difficultySceneBox.bmp",300,40,true,RGB(255,0,255));
 
-	_rc = RectMakeCenter(WINSIZEX/2,WINSIZEY/2 + 35,300,50);
 	_difficulty = 0;
+	_rc = RectMake(250, 234 + (_difficulty * 35),300,40);
+	
 
 	return S_OK;
 }
@@ -38,16 +39,16 @@ void difficultyScene::update()
 		}
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN)) {
-		_difficulty ++;
+		_difficulty++;
 		if (_difficulty > 2) {
 			_difficulty = 0;
 		}
 	}
-	_rc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2 + 35 + (_difficulty * 50), 300, 50);
+	_rc = RectMake(250, 234 + (_difficulty * 35), 300, 40);
 }
 
 void difficultyScene::render()
 {
 	IMAGEMANAGER->findImage("difficultyScene배경")->render(getMemDC());
-	IMAGEMANAGER->findImage("selectbox")->render(getMemDC(),_rc.left,_rc.top);
+	IMAGEMANAGER->findImage("difficultySceneBox")->render(getMemDC(),_rc.left,_rc.top);
 }

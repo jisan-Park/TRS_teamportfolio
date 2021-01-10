@@ -1,11 +1,23 @@
 #pragma once
 #include "gameNode.h"
-#include "inGameScene.h"
-#include "loadingScene.h"
-#include "selectScene.h"
+//Scene Ãß°¡//////////////
 #include "startScene.h"
+#include "loadingScene.h"
+#include "mainmenuScene.h"
 #include "difficultyScene.h"
+#include "selectScene.h"
+#include "settingScene.h"
+//InGameScene
 #include "inGameScene.h"
+//
+#include "gameclearScene.h"
+#include "gameoverScene.h"
+//Shop Scene
+#include "shopScene.h"
+//bonus Scene
+#include "rainbowScene.h"
+#include "bonusBoxScene.h"
+//////////////////////////
 #include "Player.h"
 
 class playGround : public gameNode

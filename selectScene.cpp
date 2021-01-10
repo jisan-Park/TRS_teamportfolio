@@ -16,8 +16,8 @@ HRESULT selectScene::init()
 
 
 
-	IMAGEMANAGER->addImage("selectScene배경", "image/selectScene배경.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("characterSelectBox","image/characterSelectBox.bmp",160,250,true,RGB(255,0,255));
+	IMAGEMANAGER->addImage("selectScene배경", "image/scene/selectScene배경.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("selectSceneBox","image/scene/selectSceneBox.bmp",150,200,true,RGB(255,0,255));
 
 
 	_scott = IMAGEMANAGER->findImage("SCOTT_LEFT_DASH");
@@ -28,15 +28,12 @@ HRESULT selectScene::init()
 	_ramonaMotion = KEYANIMANAGER->findAnimation("RamonaLeftIdle");
 	_ramonaMotion->start();
 
-	_img = IMAGEMANAGER->findImage("characterSelectBox");
-	_rc = RectMake(170 + (_selectPosition * 270), 250, 160, 250);
+	_img = IMAGEMANAGER->findImage("selectSceneBox");
+	
 	_selectPosition = 0;
+	_rc = RectMake(190 + (_selectPosition * 263), 170, 150, 200);
 
 	_isChanged = false;
-
-
-
-
 
 	return S_OK;
 }
@@ -95,9 +92,8 @@ void selectScene::update()
 		}
 		_isChanged = false;
 	}
-	_rc = RectMake( 170 + (_selectPosition * 270), 250, 160, 250);
 
-	
+	_rc = RectMake(190 + (_selectPosition * 263), 170, 150, 200);
 
 	KEYANIMANAGER->update();
 }
@@ -106,8 +102,8 @@ void selectScene::render()
 {
 	IMAGEMANAGER->findImage("selectScene배경")->render(getMemDC(),0,0);
 
-	_scott->aniRender(getMemDC(), 140, 150, _scottMotion); 
-	_ramona->aniRender(getMemDC(), 415, 150, _ramonaMotion);
+	_scott->aniRender(getMemDC(), 140, 50, _scottMotion); 
+	_ramona->aniRender(getMemDC(), 415, 50, _ramonaMotion);
 
 	_img->render(getMemDC(),_rc.left,_rc.top);
 }

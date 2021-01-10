@@ -4,7 +4,6 @@ class difficultyScene:public gameNode
 {
 private:
 	RECT _rc;
-	image* _img;
 	int _difficulty;
 public:
 	difficultyScene();

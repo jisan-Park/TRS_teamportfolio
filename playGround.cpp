@@ -16,9 +16,17 @@ HRESULT playGround::init()
 
 	SCENEMANAGER->addScene("½ÃÀÛ¾À", new startScene);
 	SCENEMANAGER->addScene("·Îµù¾À", new loadingScene);
+	SCENEMANAGER->addScene("¸ÞÀÎ¸Þ´º¾À", new mainmenuScene);
 	SCENEMANAGER->addScene("³­ÀÌµµ¾À", new difficultyScene);
 	SCENEMANAGER->addScene("¼±ÅÃ¾À", new selectScene);
+	SCENEMANAGER->addScene("¿É¼Ç¾À", new settingScene);
 	SCENEMANAGER->addScene("ÀÎ°ÔÀÓ¾À", new inGameScene);
+	SCENEMANAGER->addScene("gameover",new gameoverScene);
+	SCENEMANAGER->addScene("gameclear", new gameclearScene);
+	SCENEMANAGER->addScene("»óÁ¡¾À", new shopScene);
+	SCENEMANAGER->addScene("¹«Áö°³´Ù¸®¾À", new rainbowScene);
+	SCENEMANAGER->addScene("º¸³Ê½º¹Ú½º¾À", new bonusBoxScene);
+
 	SCENEMANAGER->changeScene("½ÃÀÛ¾À");
 
 	CAMERAMANAGER->initCamera(0, 0);

@@ -10,7 +10,6 @@ camera::~camera()
 }
 //들어온 것은 이미지의 left top
 void camera::init(float x, float y) {
-	IMAGEMANAGER->addImage("인게임배경", "image/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
 	pt.x = x;
 	pt.y = y;
 }

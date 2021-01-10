@@ -15,7 +15,7 @@ loadingScene::~loadingScene()
 HRESULT loadingScene::init()
 {
 	_background = IMAGEMANAGER->addImage("로딩배경", "image/background.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
-	_loadingCharacter = IMAGEMANAGER->addFrameImage("로딩캐릭터","image/로딩2.bmp",120,34,4,1,true,RGB(255,0,255));
+	_loadingCharacter = IMAGEMANAGER->addFrameImage("로딩캐릭터","image/scene/로딩1.bmp",120,34,4,1,true,RGB(255,0,255));
 
 	//쓰레드를 사용해보자
 	CreateThread(
@@ -44,7 +44,7 @@ void loadingScene::update()
 	//로딩이 다 되면
 	if (_currentCount == LOADINGMAX)
 	{
-		SCENEMANAGER->changeScene("난이도씬");
+		SCENEMANAGER->changeScene("메인메뉴씬");
 	}
 }
 

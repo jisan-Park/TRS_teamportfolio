@@ -11,7 +11,7 @@ startScene::~startScene()
 
 HRESULT startScene::init()
 {
-	IMAGEMANAGER->addImage("start배경","image/start.bmp",WINSIZEX,WINSIZEY,true,RGB(255,0,255));
+	IMAGEMANAGER->addImage("start배경","image/scene/start.bmp",WINSIZEX,WINSIZEY,true,RGB(255,0,255));
 	_isStart = false;
 	//playGround render 처리 하기 위함
 	SCENEMANAGER->setIsVideoPlay(true);

@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
+    <ClInclude Include="bonusBoxScene.h" />
     <ClInclude Include="botLine.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cameraManager.h" />
@@ -157,8 +158,10 @@
     <ClInclude Include="difficultyScene.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
+    <ClInclude Include="gameclearScene.h" />
     <ClInclude Include="gameManager.h" />
     <ClInclude Include="gameNode.h" />
+    <ClInclude Include="gameoverScene.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="inGameScene.h" />
@@ -168,14 +171,17 @@
     <ClInclude Include="leftLine.h" />
     <ClInclude Include="line.h" />
     <ClInclude Include="loadingScene.h" />
+    <ClInclude Include="mainmenuScene.h" />
     <ClInclude Include="mapObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="playGround.h" />
+    <ClInclude Include="rainbowScene.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="rightLine.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="selectScene.h" />
+    <ClInclude Include="settingScene.h" />
     <ClInclude Include="shopScene.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
@@ -190,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="bonusBoxScene.cpp" />
     <ClCompile Include="botLine.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cameraManager.cpp" />
@@ -197,8 +204,10 @@
     <ClCompile Include="difficultyScene.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
+    <ClCompile Include="gameclearScene.cpp" />
     <ClCompile Include="gameManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
+    <ClCompile Include="gameoverScene.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="inGameScene.cpp" />
@@ -208,12 +217,15 @@
     <ClCompile Include="leftLine.cpp" />
     <ClCompile Include="line.cpp" />
     <ClCompile Include="loadingScene.cpp" />
+    <ClCompile Include="mainmenuScene.cpp" />
     <ClCompile Include="mapObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playGround.cpp" />
+    <ClCompile Include="rainbowScene.cpp" />
     <ClCompile Include="rightLine.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="selectScene.cpp" />
+    <ClCompile Include="settingScene.cpp" />
     <ClCompile Include="shopScene.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="startScene.cpp" />

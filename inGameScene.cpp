@@ -14,7 +14,7 @@ inGameScene::~inGameScene()
 
 HRESULT inGameScene::init()
 {
-	//	IMAGEMANAGER->addImage("인게임배경", "image/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("인게임배경", "image/scene/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
 	PLAYER->init();
 	//camera 위치 초기화
 	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
@@ -35,6 +35,13 @@ void inGameScene::update()
 	//camera 위치 초기화
 	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
 	CAMERAMANAGER->update();
+
+	if (KEYMANAGER->isOnceKeyDown(VK_F1)) {
+		SCENEMANAGER->changeScene("gameover");
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F2)) {
+		SCENEMANAGER->changeScene("gameclear");
+	}
 }
 
 void inGameScene::render()
