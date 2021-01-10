@@ -5,8 +5,8 @@
 #define JUMP_POWER 10
 #define PLAYER_START_X 200
 #define PLAYER_START_Y 300
-#define PLAYER_X_SPEED 4
-#define PLAYER_Y_SPEED 2
+#define PLAYER_X_SPEED 4.0f
+#define PLAYER_Y_SPEED 2.5f
 #define PLAYER_JUMPPOWER 18 // 15~20
 #define PLAYER_DASH 1.5
 
@@ -20,9 +20,11 @@ enum PLAYER_DIRECTION
 enum PLAYER_STATE
 {
 	IDLE,
+	ATK,
 	WALK,
 	RUN,
 	JUMP,
+	JUMPATK,
 	DOWN,
 	LOBJ,
 	HOBJ,
@@ -46,6 +48,7 @@ private:
 	animation* _motion;
 	characterInfo _info;
 	RECT _shad;
+	RECT _rcAtk;
 
 	float _hp;
 	float _gp;
@@ -57,7 +60,15 @@ private:
 	bool _jump;
 	bool _dash;
 
+
 	int _chracterNum;
+
+
+	int _xAtk;
+	int _yAtk;
+	int _wAtk;
+	int _hAtk;
+
 
 public:
 	Player();
@@ -72,9 +83,9 @@ public:
 	void sAtkManage();
 	void sHittedManage();
 
-	void lMoveManage();
-	void lAtkManage();
-	void lHittedManage();
+	void rMoveManage();
+	void rAtkManage();
+	void rHittedManage();
 
 	//콜백함수
 
@@ -93,7 +104,7 @@ public:
 	void setState(PLAYER_STATE state) { _state = state; }
 
 	image* getImage() { return _img; }
-	void setImage(image* img) { img = img; };
+	void setImage(image* img) { _img = img; };
 
 	animation* getMotion() { return _motion; }
 	void setMotion(animation* any) { _motion = any; }
@@ -106,6 +117,7 @@ public:
 	//이미지, 애니메이션
 	void setImage();
 	void setAny();
+	void atkRc();
 };
 
 

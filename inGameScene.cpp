@@ -14,6 +14,8 @@ inGameScene::~inGameScene()
 
 HRESULT inGameScene::init()
 {
+	
+
 	IMAGEMANAGER->addImage("인게임배경", "image/scene/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
 	PLAYER->init();
 	//camera 위치 초기화
@@ -29,6 +31,7 @@ void inGameScene::release()
 
 void inGameScene::update()
 {
+	KEYANIMANAGER->update();
 	PLAYER->update();
 	MAPOBJECT->collisionMo(PLAYER->getInfo());
 
