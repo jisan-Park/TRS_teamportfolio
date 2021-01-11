@@ -11,8 +11,6 @@ Player::~Player()
 
 HRESULT Player::init()
 {
-	/*setImage();
-	setAni();*/
 
 	_hp = 100;
 	_gp = 100;
@@ -22,16 +20,14 @@ HRESULT Player::init()
 	_spd = 1;
 
 	_hitted = false;
-
 	_direction = RIGHT;
 	_state = IDLE;
+
 	_enemyDamage = 0;
 	_s_Gatk_Count = 0;
 	_s_Yatk_Count = 0;
 	_n_Yatk_Count = 0;
 	_n_Gatk_Count = 0;
-
-	_shad = RectMakeCenter(_info.shd_x, _info.shd_y, 2, 2);
 
 	if (_chracterNum == 0)
 	{
@@ -46,8 +42,15 @@ HRESULT Player::init()
 		_motion->start();
 	}
 
+
+
+	_shad = RectMakeCenter(_info.shd_x, _info.shd_y, 2, 2);
 	_info.init(GAMEMANAGER->getRenderNum(), PLAYER_START_X, PLAYER_START_Y, 50, 100, 100, 140);
+
+
 	GAMEMANAGER->addPicture(_info, _img, _motion);
+
+
 
 	return S_OK;
 }
@@ -60,30 +63,62 @@ void Player::update()
 {
 	atkRc();
 
-	if (_chracterNum == 0)
+	if (_chracterNum == 0)//스콧
 	{
 		sMoveManage();
 		sAtkManage();
 		sHittedManage();
 	}
-	else if (_chracterNum == 1)
+	else if (_chracterNum == 1)//라모나
 	{
 		rMoveManage();
 		rAtkManage();
 		rHittedManage();
 	}
 
+
 	_info.physics();
+
+
+	if (_state == DOWN)
+	{
+		_count++;
+		_info.chr_width = 100;
+		_info.chr_height = 25;
+		_info._push_width = 75;
+		_info._push_height = 207.5;
+
+		if (_count == 1)
+		{
+			_info.chr_y += 30;
+		}
+
+	}
+	else
+	{
+		_count = 0;
+		_info.chr_width = 50;
+		_info.chr_height = 100;
+		_info._push_width = 100;
+		_info._push_height = 140;
+	}
+
 	//zorder
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
+
 }
 
 void Player::render(HDC hdc)
 {
 	_info.shdRender(hdc);
 	Rectangle(hdc, _rcAtk);
-	Rectangle(hdc, _info.chr_rc);
+
 	_img->aniRender(hdc, _info.chr_rc.left - 100, _info.chr_rc.top - 140, _motion);
+
+
+	Rectangle(hdc, _info.chr_rc);
+
+
 	Rectangle(hdc, _info.shdrc);
 	Rectangle(hdc, _info.ptrc);
 }
@@ -996,7 +1031,10 @@ void Player::sAtkManage()
 				_yAtk = 40;
 				_wAtk = 70;
 				_hAtk = 30;
-				_info.hPushPower -= 1;
+				if (_info.hPushPower != 0)
+				{
+					_info.hPushPower -= 1;
+				}
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_DASH_YATK");
 				_motion = KEYANIMANAGER->findAnimation("ScottRightDashYAtk");
@@ -1009,7 +1047,10 @@ void Player::sAtkManage()
 				_yAtk = 40;
 				_wAtk = 70;
 				_hAtk = 30;
-				_info.hPushPower += 1;
+				if (_info.hPushPower != 0)
+				{
+					_info.hPushPower += 1;
+				}
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_DASH_YATK");
 				_motion = KEYANIMANAGER->findAnimation("ScottLeftDashYAtk");
@@ -1028,7 +1069,10 @@ void Player::sAtkManage()
 				_yAtk = -20;
 				_wAtk = 50;
 				_hAtk = 100;
-				_info.hPushPower -= 3;
+				if (_info.hPushPower != 0)
+				{
+					_info.hPushPower -= 3;
+				}
 				_info.vPushPower = 0;
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_DASH_GATK");
@@ -1042,7 +1086,10 @@ void Player::sAtkManage()
 				_yAtk = -20;
 				_wAtk = 50;
 				_hAtk = 100;
-				_info.hPushPower += 3;
+				if (_info.hPushPower != 0)
+				{
+					_info.hPushPower += 3;
+				}
 				_info.vPushPower = 0;
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_DASH_GATK");
@@ -1176,7 +1223,7 @@ void Player::sHittedManage()
 	}
 
 	// 적에게 맞는 조건
-	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc))
+	if ((IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc)) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER))
 	{
 		_hitted = true;
 	}
@@ -1241,6 +1288,13 @@ void Player::sHittedManage()
 				_motion->start();
 			}
 		}
+	}
+
+	//방어
+	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && _state == DEF)
+	{
+		_state = DEF;
+
 	}
 
 	//다운설정
@@ -2225,7 +2279,10 @@ void Player::rAtkManage()
 				_yAtk = 40;
 				_wAtk = 40;
 				_hAtk = 30;
-				_info.hPushPower -= 1;
+				if (_info.hPushPower != 0)
+				{
+					_info.hPushPower -= 1;
+				}
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_DASH_YATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaRightDashYAtk");
@@ -2238,7 +2295,10 @@ void Player::rAtkManage()
 				_yAtk = 40;
 				_wAtk = 40;
 				_hAtk = 30;
-				_info.hPushPower += 1;
+				if (_info.hPushPower != 0)
+				{
+					_info.hPushPower += 1;
+				}
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_DASH_YATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaLeftDashYAtk");
@@ -2257,7 +2317,10 @@ void Player::rAtkManage()
 				_yAtk = 0;
 				_wAtk = 100;
 				_hAtk = 50;
-				_info.hPushPower -= 3;
+				if (_info.hPushPower != 0)
+				{
+					_info.hPushPower -= 3;
+				}
 				_info.vPushPower = 0;
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_DASH_GATK");
@@ -2271,7 +2334,10 @@ void Player::rAtkManage()
 				_yAtk = 0;
 				_wAtk = 100;
 				_hAtk = 50;
-				_info.hPushPower += 3;
+				if (_info.hPushPower != 0)
+				{
+					_info.hPushPower += 3;
+				}
 				_info.vPushPower = 0;
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_DASH_GATK");
@@ -2404,7 +2470,7 @@ void Player::rHittedManage()
 	}
 
 	// 적에게 맞는 조건
-	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc))
+	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER))
 	{
 		_hitted = true;
 	}

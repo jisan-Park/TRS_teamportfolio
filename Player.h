@@ -36,7 +36,8 @@ enum PLAYER_STATE
 	TIRED,
 	UP,
 	DIE,
-	REVIVER
+	REVIVER,
+	WIN
 };
 
 
@@ -53,7 +54,9 @@ private:
 	RECT _rcAtk;  // 플레이어 공격렉트
 	RECT _enemyAtkRc; // 에너미 공격렉트 
 	RECT _temp; // 비교용
+	RECT _downRc; // 누웠을때 렉트
 	float _enemyDamage; // 에너미 데미지
+	float _atemp;
 
 	//count
 	int _down_Count;
@@ -61,6 +64,7 @@ private:
 	int _n_Yatk_Count;
 	int _s_Gatk_Count;
 	int _n_Gatk_Count;
+	int _count;
 
 	float _hp;
 	float _gp;
@@ -131,7 +135,7 @@ public:
 	inline float getStr() { return _str; }
 
 
-	//스콧인지 라모나인지 게터 1이면 스콧 2면 라모나
+	//스콧인지 라모나인지 게터 0이면 스콧 1이면 라모나
 	int cChracter(int x) { return _chracterNum = x; }
 
 
