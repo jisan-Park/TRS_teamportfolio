@@ -21,11 +21,15 @@ HRESULT Player::init()
 	_wp = 1;
 	_spd = 1;
 
-	_dash = false;
-	_jump = false;
+	_hitted = false;
 
 	_direction = RIGHT;
 	_state = IDLE;
+	_enemyDamage = 0;
+	_s_Gatk_Count = 0;
+	_s_Yatk_Count = 0;
+	_n_Yatk_Count = 0;
+	_n_Gatk_Count = 0;
 
 	_shad = RectMakeCenter(_info.shd_x, _info.shd_y, 2, 2);
 
@@ -614,6 +618,8 @@ void Player::sAtkManage()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN) && KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			_dmg = _str;
+
 			if (_state == WALK)
 			{
 				_info.vPushPower = 0;
@@ -650,6 +656,8 @@ void Player::sAtkManage()
 
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN) && KEYMANAGER->isOnceKeyDown('X'))
 		{
+			_dmg = _str;
+
 			if (_state == WALK)
 			{
 				_info.vPushPower = 0;
@@ -685,35 +693,112 @@ void Player::sAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('Z') && !KEYMANAGER->isStayKeyDown(VK_DOWN))
 		{
+			_dmg = _str;
+
 			if (_state == WALK)
 			{
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
 			}
 
-			if (_direction == RIGHT)
+
+			if (_s_Yatk_Count == 0)
 			{
-				_state = ATK;
-				_xAtk = 50;
-				_yAtk = -15;
-				_wAtk = 70;
-				_hAtk = 30;
-				_direction = RIGHT;
-				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_C_YATK");
-				_motion = KEYANIMANAGER->findAnimation("ScottRightCYAtk1");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_C_YATK");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightCYAtk1");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_C_YATK");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftCYAtk1");
+					_motion->start();
+				}
+				_s_Yatk_Count++;
 			}
-			if (_direction == LEFT)
+			else if (_s_Yatk_Count == 1)
 			{
-				_state = ATK;
-				_xAtk = -50;
-				_yAtk = -15;
-				_wAtk = 70;
-				_hAtk = 30;
-				_direction = LEFT;
-				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_C_YATK");
-				_motion = KEYANIMANAGER->findAnimation("ScottLeftCYAtk1");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_C_YATK");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightCYAtk2");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_C_YATK");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftCYAtk2");
+					_motion->start();
+				}
+				_s_Yatk_Count++;
+			}
+			else if (_s_Yatk_Count == 2)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_C_YATK");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightCYAtk3");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_C_YATK");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftCYAtk3");
+					_motion->start();
+				}
+			}
+
+			if (_s_Yatk_Count == 2)
+			{
+				_s_Yatk_Count = 0;
+			}
+		}
+		else if (_s_Yatk_Count != 0)
+		{
+			_n_Yatk_Count++;
+
+			if (_n_Yatk_Count > 15)
+			{
+				_s_Yatk_Count = 0;
+				_n_Yatk_Count = 0;
 			}
 		}
 
@@ -727,29 +812,83 @@ void Player::sAtkManage()
 				_info.vPushPower = 0;
 			}
 
-			if (_direction == RIGHT)
+
+			if (_s_Gatk_Count == 0)
 			{
-				_state = ATK;
-				_xAtk = 50;
-				_yAtk = 5;
-				_wAtk = 70;
-				_hAtk = 40;
-				_direction = RIGHT;
-				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_GATK");
-				_motion = KEYANIMANAGER->findAnimation("ScottRightGAtk");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = 5;
+					_wAtk = 70;
+					_hAtk = 40;
+					_direction = RIGHT;
+					_dmg = _str;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_GATK");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightGAtk");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = 5;
+					_wAtk = 70;
+					_hAtk = 40;
+					_direction = LEFT;
+					_dmg = _str;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_GATK");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftGAtk");
+					_motion->start();
+				}
+				_s_Gatk_Count++;
 			}
-			if (_direction == LEFT)
+			else if (_s_Gatk_Count == 1)
 			{
-				_state = ATK;
-				_xAtk = -50;
-				_yAtk = 5;
-				_wAtk = 70;
-				_hAtk = 40;
-				_direction = LEFT;
-				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_GATK");
-				_motion = KEYANIMANAGER->findAnimation("ScottLeftGAtk");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = 5;
+					_wAtk = 70;
+					_hAtk = 40;
+					_direction = RIGHT;
+					_dmg = _str * PLAYER_GATK;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_GATK2");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightGAtk2");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = 5;
+					_wAtk = 70;
+					_hAtk = 40;
+					_direction = LEFT;
+					_dmg = _str * PLAYER_GATK;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_GATK2");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftGAtk2");
+					_motion->start();
+				}
+				_s_Gatk_Count++;
+			}
+
+			if (_s_Gatk_Count == 2)
+			{
+				_s_Gatk_Count = 0;
+			}
+
+
+		}
+		else if (_s_Gatk_Count != 0)
+		{
+			_n_Gatk_Count++;
+
+			if (_n_Gatk_Count > 15)
+			{
+				_s_Gatk_Count = 0;
+				_n_Gatk_Count = 0;
 			}
 		}
 
@@ -757,6 +896,8 @@ void Player::sAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('Q'))
 		{
+			_dmg = _str * PLAYER_SK;
+
 			if (_direction == RIGHT)
 			{
 				if (_state == WALK)
@@ -796,6 +937,8 @@ void Player::sAtkManage()
 		}
 		if (KEYMANAGER->isOnceKeyDown('W'))
 		{
+			_dmg = _str * PLAYER_SK;
+
 			if (_direction == RIGHT)
 			{
 				if (_state == WALK)
@@ -833,13 +976,14 @@ void Player::sAtkManage()
 				_motion->start();
 			}
 		}
-
 	}
 
 
 	//대쉬 공격
 	if (_state == RUN)
 	{
+		_dmg = _str;
+
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			if (_direction == RIGHT)
@@ -872,6 +1016,8 @@ void Player::sAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
+			_dmg = _str;
+
 			if (_direction == RIGHT)
 			{
 				_state = ATK;
@@ -908,6 +1054,7 @@ void Player::sAtkManage()
 	{
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			_dmg = _str;
 			_state = JUMPATK;
 
 			if (_direction == RIGHT)
@@ -936,6 +1083,7 @@ void Player::sAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
+			_dmg = _str * PLAYER_GATK;
 			_state = JUMPATK;
 
 			if (_direction == RIGHT)
@@ -1025,28 +1173,114 @@ void Player::sHittedManage()
 	}
 
 	// 적에게 맞는 조건
-	if ((_state == WALK || _state == IDLE || _state == RUN || _state == ATK || _state == JUMP || _state == JUMPATK || _state == LOBJ || _state == HOBJ || _state == STUN || _state == TIRED || _state == DOWN) &&
-		IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc))
+	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc))
 	{
-		if (_direction == RIGHT)
+		_hitted = true;
+	}
+
+	if (_hitted && (_state == WALK || _state == IDLE || _state == RUN || _state == ATK
+		|| _state == JUMP || _state == JUMPATK || _state == LOBJ
+		|| _state == HOBJ || _state == STUN || _state == TIRED))
+	{
+		if (_enemyDamage < 4)
 		{
-			_state = DOWN;
-			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_G_HITTED");
-			_motion = KEYANIMANAGER->findAnimation("ScottRightGHitted");
-			_motion->start();
+			if (_direction == RIGHT)
+			{
+				_state = HITTED;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_HITTED");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightHitted");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = HITTED;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_HITTED");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftHitted");
+				_motion->start();
+			}
+		}
+		else if (_enemyDamage < 7)
+		{
+			if (_direction == RIGHT)
+			{
+				_state = HITTED;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_HITTED2");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightHitted2");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = HITTED;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_HITTED2");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftHitted2");
+				_motion->start();
+			}
+		}
+		else if (_enemyDamage >= 7)
+		{
+			if (_direction == RIGHT)
+			{
+				_state = HITTED;
+				_info.hPushPower = -3;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_G_HITTED");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightGHitted");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = HITTED;
+				_info.hPushPower = 3;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_G_HITTED");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftGHitted");
+				_motion->start();
+			}
+		}
+	}
+
+	//다운설정
+	if (_state == DOWN)
+	{
+		_down_Count++;
+
+		if (_down_Count > (70 - _spd))
+		{
+			_down_Count = 0;
+
+			if (_direction == RIGHT)
+			{
+				_state = UP;
+				_info.hPushPower += 3;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_UP");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightUp");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = UP;
+				_info.hPushPower -= 3;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_UP");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftUp");
+				_motion->start();
+			}
 		}
 
-		if (_direction == LEFT)
+		if (_hitted)
 		{
-			_state = DOWN;
-			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_G_HITTED");
-			_motion = KEYANIMANAGER->findAnimation("ScottLeftGHitted");
-			_motion->start();
+			if (_direction == RIGHT)
+			{
+				_info.chr_x -= 1;
+			}
+			else if (_direction == LEFT)
+			{
+				_info.chr_x += 1;
+			}
 		}
 
 
 	}
-
 
 }
 
@@ -1996,6 +2230,7 @@ void Player::sRightStop(void * obj)
 
 	p->_info.hPushPower = 0;
 	p->_info.vPushPower = 0;
+	p->_hitted = false;
 	p->setDirection(RIGHT);
 	p->setState(IDLE);
 	p->setImage(IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE"));
@@ -2008,10 +2243,36 @@ void Player::sLeftStop(void * obj)
 	Player* p = (Player*)obj;
 	p->_info.hPushPower = 0;
 	p->_info.vPushPower = 0;
+	p->_hitted = false;
 	p->setDirection(LEFT);
 	p->setState(IDLE);
 	p->setImage(IMAGEMANAGER->findImage("SCOTT_LEFT_IDLE"));
 	p->setMotion(KEYANIMANAGER->findAnimation("ScottLeftIdle"));
+	p->getMotion()->start();
+}
+
+void Player::sRightDown(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->setDirection(RIGHT);
+	p->setState(DOWN);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_RIGHT_G_HITTED"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottRightDown"));
+	p->getMotion()->start();
+}
+
+void Player::sLeftDown(void * obj)
+{
+	Player* p = (Player*)obj;
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->setDirection(LEFT);
+	p->setState(DOWN);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_LEFT_G_HITTED"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottLeftDown"));
 	p->getMotion()->start();
 }
 
@@ -2038,6 +2299,33 @@ void Player::rLeftStop(void * obj)
 	p->setState(IDLE);
 	p->setImage(IMAGEMANAGER->findImage("RAMONA_LEFT_IDLE"));
 	p->setMotion(KEYANIMANAGER->findAnimation("RamonaLeftIdle"));
+	p->getMotion()->start();
+}
+
+void Player::rRightDown(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->setDirection(RIGHT);
+	p->setState(DOWN);
+	p->setImage(IMAGEMANAGER->findImage("RAMONA_RIGHT_G_HITTED"));
+	p->setMotion(KEYANIMANAGER->findAnimation("RamonaRightDown"));
+	p->getMotion()->start();
+}
+
+void Player::rLeftDown(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	Player* p = (Player*)obj;
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->setDirection(LEFT);
+	p->setState(DOWN);
+	p->setImage(IMAGEMANAGER->findImage("RAMONA_LEFT_G_HITTED"));
+	p->setMotion(KEYANIMANAGER->findAnimation("RamonaLeftDown"));
 	p->getMotion()->start();
 }
 
@@ -2123,8 +2411,8 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_THROW", "image/player/scott/RIGHT_THROW.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_TIRED", "image/player/scott/LEFT_TIRED.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_TIRED", "image/player/scott/RIGHT_TIRED.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_UP", "image/player/scott/LEFT_UP.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_UP", "image/player/scott/RIGHT_UP.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_UP", "image/player/scott/LEFT_UP.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_UP", "image/player/scott/RIGHT_UP.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_UPPER", "image/player/scott/LEFT_UPPER.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_UPPER", "image/player/scott/RIGHT_UPPER.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_WALK", "image/player/scott/LEFT_WALK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
@@ -2238,8 +2526,6 @@ void Player::setImage()
 
 void Player::setAny()
 {
-	//KEYANIMANAGER->addCoordinateFrameAnimation( 키값, 이미지키값, 시작번호, 끝번호,FPS, 리버스, 루프, 콜백, this  );
-
 	//스콧
 
 	//공격
@@ -2262,8 +2548,8 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGAtk", "SCOTT_LEFT_GATK", 0, 6, 18, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightGAtk", "SCOTT_RIGHT_GATK", 0, 6, 18, false, false, sRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGAtk2", "SCOTT_LEFT_GATK2", 0, 6, 10, false, false, sLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightGAtk2", "SCOTT_RIGHT_GATK2", 0, 6, 10, false, false, sRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGAtk2", "SCOTT_LEFT_GATK2", 0, 6, 15, false, false, sLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightGAtk2", "SCOTT_RIGHT_GATK2", 0, 6, 15, false, false, sRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHobjAtk", "SCOTT_LEFT_HOBJ_ATK", 0, 6, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHobjAtk", "SCOTT_RIGHT_HOBJ_ATK", 0, 6, 10, false, false, sRightStop, this);
@@ -2332,8 +2618,12 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightWalk", "SCOTT_RIGHT_WALK", 0, 5, 10, false, true);
 
 	//그 외
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGHitted", "SCOTT_LEFT_G_HITTED", 0, 13, 10, false, false, sLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightGHitted", "SCOTT_RIGHT_G_HITTED", 0, 13, 10, false, false, sRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGHitted", "SCOTT_LEFT_G_HITTED", 0, 13, 10, false, false, sLeftDown, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightGHitted", "SCOTT_RIGHT_G_HITTED", 0, 13, 10, false, false, sRightDown, this);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDown", "SCOTT_LEFT_G_HITTED", 12, 13, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDown", "SCOTT_RIGHT_G_HITTED", 12, 13, 10, false, false);
+
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHitted", "SCOTT_LEFT_HITTED", 0, 4, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHitted", "SCOTT_RIGHT_HITTED", 0, 4, 10, false, false, sRightStop, this);
@@ -2344,8 +2634,8 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHobjGet", "SCOTT_LEFT_HOBJ_GET", 0, 1, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHobjGet", "SCOTT_RIGHT_HOBJ_GET", 0, 1, 10, false, false);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHobjThrow", "SCOTT_LEFT_HOBJ_THROW", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHobjThrow", "SCOTT_RIGHT_HOBJ_THROW", 0, 5, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHobjThrow", "SCOTT_LEFT_HOBJ_THROW", 0, 5, 10, false, false, sLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHobjThrow", "SCOTT_RIGHT_HOBJ_THROW", 0, 5, 10, false, false, sRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjGet", "SCOTT_LEFT_LOBJ_GET", 0, 2, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjGet", "SCOTT_RIGHT_LOBJ_GET", 0, 2, 10, false, false);
@@ -2362,8 +2652,10 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightStun", "SCOTT_RIGHT_STUN", 0, 1, 10, false, false, sRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftTired", "SCOTT_LEFT_TIRED", 0, 3, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightTired", "SCOTT_RIGHT_TIRED", 0, 3, 10, false, false, sRightStop, this);
+
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftUp", "SCOTT_LEFT_UP", 0, 5, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightUp", "SCOTT_RIGHT_UP", 0, 5, 10, false, false, sRightStop, this);
+
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftWin", "SCOTT_LEFT_WIN", 0, 17, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightWin", "SCOTT_RIGHT_WIN", 0, 17, 10, false, false, sRightStop, this);
 
@@ -2470,8 +2762,14 @@ void Player::setAny()
 	//그 외
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDef", "RAMONA_LEFT_DEF", 0, 2, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDef", "RAMONA_RIGHT_DEF", 0, 2, 10, false, false);
+
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGHitted", "RAMONA_LEFT_G_HITTED", 0, 11, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGHitted", "RAMONA_RIGHT_G_HITTED", 0, 11, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDown", "RAMONA_LEFT_G_HITTED", 11, 11, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDown", "RAMONA_RIGHT_G_HITTED", 11, 11, 10, false, false);
+
+
+
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHitted", "RAMONA_LEFT_HITTED", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHitted", "RAMONA_RIGHT_HITTED", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHitted2", "RAMONA_LEFT_HITTED2", 0, 1, 10, false, false);
