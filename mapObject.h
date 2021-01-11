@@ -5,6 +5,10 @@
 #include "downSlope.h"
 #include <vector>
 #define FIXEDRANGE 2000
+struct box {
+	characterInfo _info;
+	image* _img;
+};
 class mapObject :
 	public singletonBase<mapObject>
 {
@@ -25,6 +29,8 @@ private:
 	upSlope* _us;
 	downSlope* _ds;
 
+	box box1;
+	box box2;
 public:
 	mapObject();
 	~mapObject();
@@ -36,4 +42,3 @@ public:
 
 	void collisionMo(characterInfo &info);
 };
-

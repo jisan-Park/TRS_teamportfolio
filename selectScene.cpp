@@ -12,10 +12,6 @@ selectScene::~selectScene()
 HRESULT selectScene::init()
 {
 
-	PLAYER->init();
-
-
-
 	IMAGEMANAGER->addImage("selectScene배경", "image/scene/selectScene배경.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("selectSceneBox","image/scene/selectSceneBox.bmp",150,200,true,RGB(255,0,255));
 

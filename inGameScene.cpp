@@ -14,10 +14,7 @@ inGameScene::~inGameScene()
 
 HRESULT inGameScene::init()
 {
-	
-
 	IMAGEMANAGER->addImage("인게임배경", "image/scene/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
-	PLAYER->init();
 
 	_em = new enemyManager;
 	_em->init();
@@ -39,7 +36,7 @@ void inGameScene::update()
 	PLAYER->update();
 	_em->update();
 	MAPOBJECT->collisionMo(PLAYER->getInfo());
-
+	GAMEMANAGER->update();
 	//camera 위치 초기화
 	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
 	CAMERAMANAGER->update();
@@ -55,7 +52,9 @@ void inGameScene::update()
 void inGameScene::render()
 {
 	IMAGEMANAGER->findImage("인게임배경")->render(getMemDC(), 0, 0);
-	MAPOBJECT->render(getMemDC());
+	/*MAPOBJECT->render(getMemDC());
 	PLAYER->render(getMemDC());
-	_em->render();
+	_em->render();*/
+
+	GAMEMANAGER->render(getMemDC());
 }

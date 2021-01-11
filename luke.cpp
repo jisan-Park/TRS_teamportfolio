@@ -6,7 +6,7 @@ HRESULT luke::init(const char * imageName, float x, float y)
 {
 	setAnimation();
 
-	_info.init(x, y, 50, 100);
+	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
 	_hp = 100;
 	_def = 5;
 	_spd = 5;
@@ -15,7 +15,7 @@ HRESULT luke::init(const char * imageName, float x, float y)
 	_motion = KEYANIMANAGER->findAnimation("luke_IDLE_RIGHT");
 	_motion->start();
 	_inrange = RectMakeCenter(x, y, 400, 300);
-
+	GAMEMANAGER->addPicture(_info, _img, _motion);
 	return S_OK;
 }
 
@@ -177,6 +177,7 @@ void luke::update()
 	move();
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
+	GAMEMANAGER->updatePicture(_info, _img, _motion);
 }
 
 void luke::setAnimation()

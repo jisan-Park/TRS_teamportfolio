@@ -46,7 +46,8 @@ HRESULT Player::init()
 		_motion->start();
 	}
 
-	_info.init(PLAYER_START_X, PLAYER_START_Y, 50, 100);
+	_info.init(GAMEMANAGER->getRenderNum(), PLAYER_START_X, PLAYER_START_Y, 50, 100, 100, 140);
+	GAMEMANAGER->addPicture(_info, _img, _motion);
 
 	return S_OK;
 }
@@ -73,6 +74,8 @@ void Player::update()
 	}
 
 	_info.physics();
+	//zorder
+	GAMEMANAGER->updatePicture(_info, _img, _motion);
 }
 
 void Player::render(HDC hdc)

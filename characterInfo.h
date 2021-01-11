@@ -3,6 +3,8 @@
 
 struct characterInfo
 {
+	int renderNumber;
+
 	RECT chr_rc; // 캐릭터 렉트
 	float chr_x, chr_y; // 캐릭터 x, y 좌표
 	float chr_width, chr_height; // 캐릭터 렉트 너비 높이
@@ -18,10 +20,14 @@ struct characterInfo
 	float jumpPower; // 플레이어 점프파워
 	float gravity = 0.89f; // 중력임
 
+	float _push_width;
+	float _push_height;
+
 	float hPushPower, vPushPower; // 각각 가로 세로로 밀어주는 힘
 
-	void init(float x, float y, float width, float height)
+	void init(int num, float x, float y, float width, float height, float push_width, float push_height)
 	{
+		renderNumber = num;
 		pt_x = x;
 		shd_x = x;
 		pt_y = y;
@@ -32,6 +38,9 @@ struct characterInfo
 		chr_width = width;
 		chr_height = height;
 		chr_rc = RectMakeCenter(chr_x, chr_y, chr_width, chr_height);
+
+		_push_width = push_width;
+		_push_height = push_height;
 	}
 
 	void physics()

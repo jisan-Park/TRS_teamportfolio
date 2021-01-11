@@ -73,6 +73,9 @@
     <Filter Include="playGround\mapObject\slopes">
       <UniqueIdentifier>{e1d636f4-1fc7-441d-a244-84425efd95b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\subclass\picture">
+      <UniqueIdentifier>{f9dda1c2-a6b5-4f90-9a86-959327b1e6f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -252,6 +255,9 @@
     <ClInclude Include="upSlope.h">
       <Filter>playGround\mapObject\slopes</Filter>
     </ClInclude>
+    <ClInclude Include="picture.h">
+      <Filter>2DGameFramework\subclass\picture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -412,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="upSlope.cpp">
       <Filter>playGround\mapObject\slopes</Filter>
+    </ClCompile>
+    <ClCompile Include="picture.cpp">
+      <Filter>2DGameFramework\subclass\picture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

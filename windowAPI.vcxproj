@@ -182,6 +182,7 @@
     <ClInclude Include="malcolm.h" />
     <ClInclude Include="mapObject.h" />
     <ClInclude Include="mike.h" />
+    <ClInclude Include="picture.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="rainbowScene.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="malcolm.cpp" />
     <ClCompile Include="mapObject.cpp" />
     <ClCompile Include="mike.cpp" />
+    <ClCompile Include="picture.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="rainbowScene.cpp" />
