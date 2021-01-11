@@ -11,6 +11,8 @@ public:
 	virtual void atk();
 	virtual void move();
 	virtual void update();
+	virtual void collsion();
+	virtual void inrange();
 
 	ENEMYDIRECTION getDirection() { return _direction; }
 	void setDirection(ENEMYDIRECTION direction) { _direction = direction; }
@@ -30,6 +32,8 @@ public:
 	//animation ¿ë callbackFunction
 	static void rightAttack(void* obj);
 	static void leftAttack(void* obj);
+	static void rightdown(void* obj);
+	static void leftdown(void* obj);
 
 };
 

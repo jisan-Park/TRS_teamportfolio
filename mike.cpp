@@ -80,7 +80,7 @@ void mike::move()
 {
 	RECT temp;
 	//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
-	if (_img != IMAGEMANAGER->findImage("mike_knockDown") && _state != E_UP && _state != E_HITTED)
+	if (_img != IMAGEMANAGER->findImage("mike_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
 	{
 		if (_inrangeX || _inrangeY)
 		{
@@ -214,57 +214,85 @@ void mike::collsion()
 {
 
 	RECT temp;
-	if (IntersectRect(&temp, &PLAYER->getAttackRc(), &_info.chr_rc) && _state != E_UP && !_inrangeY)
+	if (IntersectRect(&temp, &PLAYER->getAttackRc(), &_info.chr_rc) && !_inrangeY)
 	{
-		_inattack = RectMakeCenter(-100, -100, 0, 0);
-		if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
+
+		if (_state == E_WALK || _state == E_IDLE)
 		{
-			_img = IMAGEMANAGER->findImage("mike_damage");
-			_motion = KEYANIMANAGER->findAnimation("mike_DAMAGE_RIGHT");
-			_motion->start();
-			_direction = E_RIGHT;
-			_state = E_HITTED;
-			_count = 0;
-			_info.hPushPower = 0;
-			_info.vPushPower = 0;
-		}
-		if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
-		{
-			_img = IMAGEMANAGER->findImage("mike_damage");
-			_motion = KEYANIMANAGER->findAnimation("mike_DAMAGE_LEFT");
-			_motion->start();
-			_direction = E_LEFT;
-			_state = E_HITTED;
-			_count = 0;
-			_info.hPushPower = 0;
-			_info.vPushPower = 0;
-		}
-		if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
-		{
-			_img = IMAGEMANAGER->findImage("mike_knockDown");
-			_motion = KEYANIMANAGER->findAnimation("mike_KNOCKDOWN_RIGHT");
-			_motion->start();
-			_direction = E_RIGHT;
-			_state = E_DOWN;
-			_info.vPushPower = 0;
-			_info.jumpPower = 3;
+			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
+			{
+				_img = IMAGEMANAGER->findImage("mike_damage");
+				_motion = KEYANIMANAGER->findAnimation("mike_DAMAGE_RIGHT");
+				_motion->start();
+				_direction = E_RIGHT;
+				_state = E_HITTED;
+				_count = 0;
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+			}
+			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
+			{
+				_img = IMAGEMANAGER->findImage("mike_damage");
+				_motion = KEYANIMANAGER->findAnimation("mike_DAMAGE_LEFT");
+				_motion->start();
+				_direction = E_LEFT;
+				_state = E_HITTED;
+				_count = 0;
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+			}
+			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
+			{
+				_img = IMAGEMANAGER->findImage("mike_knockDown");
+				_motion = KEYANIMANAGER->findAnimation("mike_KNOCKDOWN_RIGHT");
+				_motion->start();
+				_direction = E_RIGHT;
+				_state = E_DOWN;
+				_info.vPushPower = 0;
+				_info.jumpPower = 3;
 
 
+			}
+			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
+			{
+				_img = IMAGEMANAGER->findImage("mike_knockDown");
+				_motion = KEYANIMANAGER->findAnimation("mike_KNOCKDOWN_LEFT");
+				_motion->start();
+				_direction = E_LEFT;
+				_state = E_DOWN;
+				_info.vPushPower = 0;
+				_info.jumpPower = 3;
+
+
+			}
 		}
-		if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
+
+		if (_counttt > 50 && _counttt < 300 && _state == E_DOWN)
 		{
-			_img = IMAGEMANAGER->findImage("mike_knockDown");
-			_motion = KEYANIMANAGER->findAnimation("mike_KNOCKDOWN_LEFT");
-			_motion->start();
-			_direction = E_LEFT;
-			_state = E_DOWN;
-			_info.vPushPower = 0;
-			_info.jumpPower = 3;
-
-
+			if (_direction == E_RIGHT)
+			{
+				_img = IMAGEMANAGER->findImage("mike_damageDown");
+				_motion = KEYANIMANAGER->findAnimation("mike_DOWNDAMAGE_RIGHT");
+				_motion->start();
+				_direction = E_RIGHT;
+				_state = E_DOWNHITTED;
+				_info.vPushPower = 0;
+				_info.jumpPower = 0;
+			}
+			if (_direction == E_LEFT)
+			{
+				_img = IMAGEMANAGER->findImage("mike_damageDown");
+				_motion = KEYANIMANAGER->findAnimation("mike_DOWNDAMAGE_LEFT");
+				_motion->start();
+				_direction = E_LEFT;
+				_state = E_DOWNHITTED;
+				_info.vPushPower = 0;
+				_info.jumpPower = 0;
+			}
 		}
+
 	}
-	if (_state == E_DOWN)
+	if (_state == E_DOWN || _state == E_DOWNHITTED)
 	{
 		_info.chr_width = 100;
 		_info.chr_height = 25;
@@ -285,7 +313,8 @@ void mike::collsion()
 		{
 			_info.hPushPower = 0;
 		}
-		if (_counttt > 200)
+
+		if (_counttt > 300)
 		{
 			if (_direction == E_RIGHT)
 			{
@@ -351,8 +380,10 @@ void mike::setAnimation()
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_ATTACK_LEFT", "mike_attack", 15, 8, 10, false, false, leftAttack, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_DAMAGE_RIGHT", "mike_damage", 0, 2, 10, false, false, rightAttack, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_DAMAGE_LEFT", "mike_damage", 3, 5, 10, false, false, leftAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("mike_DOWNDAMAGE_RIGHT", "mike_damageDown", 0, 2, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("mike_DOWNDAMAGE_LEFT", "mike_damageDown", 3, 5, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("mike_DOWNDAMAGE_RIGHT", "mike_damageDown", 0, 2, 3, false, false, rightdown, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("mike_DOWNDAMAGE_LEFT", "mike_damageDown", 5, 3, 3, false, false, leftdown, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("mike_KNOCKDOWN_RIGHT2", "mike_knockDown", 11, 13, 6, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("mike_KNOCKDOWN_LEFT2", "mike_knockDown", 16, 14, 6, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_KNOCKDOWN_RIGHT", "mike_knockDown", 0, 13, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_KNOCKDOWN_LEFT", "mike_knockDown", 27, 14, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_KNOCKUP_RIGHT", "mike_knockUp", 0, 7, 10, false, false, rightAttack, this);
@@ -361,7 +392,6 @@ void mike::setAnimation()
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_HELD_LEFT", "mike_held", 3, 5, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_HELD_LIGHTATTACK_RIGHT", "mike_held_lightAttack", 0, 2, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_HELD_LIGHTATTACK_LEFT", "mike_held_lightAttack", 3, 5, 10, false, false);
-
 }
 
 
@@ -383,5 +413,24 @@ void mike::leftAttack(void * obj)
 	m->setState(E_IDLE);
 	m->setImage(IMAGEMANAGER->findImage("mike_idle"));
 	m->setteMotion(KEYANIMANAGER->findAnimation("mike_IDLE_LEFT"));
+	m->getMotion()->start();
+}
+void mike::rightdown(void * obj)
+{
+	mike*m = (mike*)obj;
+	m->setDirection(E_RIGHT);
+	m->setState(E_DOWN);
+	m->setImage(IMAGEMANAGER->findImage("mike_knockDown"));
+	m->setteMotion(KEYANIMANAGER->findAnimation("mike_KNOCKDOWN_RIGHT2"));
+	m->getMotion()->start();
+}
+
+void mike::leftdown(void * obj)
+{
+	mike*m = (mike*)obj;
+	m->setDirection(E_LEFT);
+	m->setState(E_DOWN);
+	m->setImage(IMAGEMANAGER->findImage("mike_knockDown"));
+	m->setteMotion(KEYANIMANAGER->findAnimation("mike_KNOCKDOWN_LEFT2"));
 	m->getMotion()->start();
 }

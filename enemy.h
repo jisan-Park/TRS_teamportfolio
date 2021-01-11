@@ -19,6 +19,7 @@ enum ENEMYSTATE
 	E_HITTED,
 	E_HELD,
 	E_DIE,
+	E_DOWNHITTED,
 
 	E_LOBJ_IDLE,
 	E_LOBJ_RUN,
@@ -56,6 +57,8 @@ protected:
 	int _countt; //공격시작전 텀을주는 카운트
 	int _counttt;//날아갈떄 카운트
 	bool _inrangeX, _inrangeY;
+	int _hitcount;
+	bool ison;
 	animation* _motion;
 
 	ENEMYSTATE _state;

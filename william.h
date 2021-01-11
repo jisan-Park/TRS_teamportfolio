@@ -10,6 +10,8 @@ public:
 	virtual void atk();
 	virtual void move();
 	virtual void update();
+	virtual void collsion();
+	virtual void inrange();
 
 	ENEMYDIRECTION getDirection() { return _direction; }
 	void setDirection(ENEMYDIRECTION direction) { _direction = direction; }
@@ -29,5 +31,7 @@ public:
 	//animation 용 callbackFunction
 	static void rightAttack(void* obj); //right idle 로 바꿔주는 콜백함수
 	static void leftAttack(void* obj);  //left idle 로 바꿔주는 콜백함수
+	static void rightdown(void* obj);
+	static void leftdown(void* obj);
 };
 
