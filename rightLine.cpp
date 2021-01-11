@@ -12,7 +12,7 @@ void rightLine::collision(characterInfo &info)
 		else if (info.hPushPower < 0 && info.ptDistance < passRange) // 왼쪽으로 가려고 할 때 허용치보다 낮게 뛰고 있거나 땅에 있으면 못가게 막기
 		{
 			//info.hPushPower = 0;
-			info.pt_x += info.hPushPower;
+			info.pt_x -= info.hPushPower;
 		}
 
 		if (info.hPushPower > 0 && info.shd_height == passRange) // 높이 있을때 오른쪽으로 가면 떨어지게 하기
