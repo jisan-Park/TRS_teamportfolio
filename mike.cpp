@@ -20,21 +20,6 @@ HRESULT mike::init(const char* imageName, float x, float y)
 
 void mike::atk()
 {
-	if (_state == E_PUNCH)
-	{
-		if (_direction == LEFT)
-		{
-			_inattack = RectMakeCenter(_info.chr_x - 50, _info.chr_y - 25, 50, 50);
-		}
-		if (_direction == RIGHT)
-		{
-			_inattack = RectMakeCenter(_info.chr_x + 50, _info.chr_y - 25, 50, 50);
-		}
-	}
-	else
-	{
-		_inattack = RectMakeCenter(-100, -100, 0, 0);
-	}
 	if (_direction == E_LEFT && _state != E_PUNCH)//범위에 들어오면 IDLE상태로
 	{
 		_img = IMAGEMANAGER->findImage("mike_idle");
@@ -197,7 +182,27 @@ void mike::move()
 void mike::update()
 {
 	inrange();
-	//PLAYER->getEnemyAtkRc(_inattack);
+
+	if (_state == E_PUNCH)
+	{
+		if (_direction == E_LEFT)
+		{
+			_inattack = RectMakeCenter(_info.chr_x - 50, _info.chr_y - 25, 50, 50);
+		}
+		if (_direction == E_RIGHT)
+		{
+			_inattack = RectMakeCenter(_info.chr_x + 50, _info.chr_y - 25, 50, 50);
+		}
+	}
+	else
+	{
+		_inattack = RectMakeCenter(-100, -100, 0, 0);
+	}
+
+	//TEST
+	PLAYER->setEnemyAtkRc(_inattack, 8);
+
+
 	move();
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
@@ -212,7 +217,7 @@ void mike::collsion()
 	if (IntersectRect(&temp, &PLAYER->getAttackRc(), &_info.chr_rc) && _state != E_UP && !_inrangeY)
 	{
 		_inattack = RectMakeCenter(-100, -100, 0, 0);
-		if (_direction == E_RIGHT && PLAYER->getAttckDamege() == PLAYER->getStr())
+		if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
 		{
 			_img = IMAGEMANAGER->findImage("mike_damage");
 			_motion = KEYANIMANAGER->findAnimation("mike_DAMAGE_RIGHT");
@@ -223,7 +228,7 @@ void mike::collsion()
 			_info.hPushPower = 0;
 			_info.vPushPower = 0;
 		}
-		if (_direction == E_LEFT && PLAYER->getAttckDamege() == PLAYER->getStr())
+		if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 		{
 			_img = IMAGEMANAGER->findImage("mike_damage");
 			_motion = KEYANIMANAGER->findAnimation("mike_DAMAGE_LEFT");
@@ -234,7 +239,7 @@ void mike::collsion()
 			_info.hPushPower = 0;
 			_info.vPushPower = 0;
 		}
-		if (_direction == E_RIGHT && PLAYER->getAttckDamege() > PLAYER->getStr())
+		if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 		{
 			_img = IMAGEMANAGER->findImage("mike_knockDown");
 			_motion = KEYANIMANAGER->findAnimation("mike_KNOCKDOWN_RIGHT");
@@ -246,7 +251,7 @@ void mike::collsion()
 
 
 		}
-		if (_direction == E_LEFT && PLAYER->getAttckDamege() > PLAYER->getStr())
+		if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 		{
 			_img = IMAGEMANAGER->findImage("mike_knockDown");
 			_motion = KEYANIMANAGER->findAnimation("mike_KNOCKDOWN_LEFT");

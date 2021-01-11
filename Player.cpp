@@ -12,7 +12,7 @@ Player::~Player()
 HRESULT Player::init()
 {
 	setImage();
-	setAny();
+	setAni();
 
 	_hp = 100;
 	_gp = 100;
@@ -1812,10 +1812,10 @@ void Player::rAtkManage()
 	//정지 상태의 공격
 	if (_state == IDLE || _state == WALK)
 	{
-
-		//다운어택
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN) && KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			_dmg = _str;
+
 			if (_state == WALK)
 			{
 				_info.vPushPower = 0;
@@ -1824,7 +1824,6 @@ void Player::rAtkManage()
 
 			if (_direction == RIGHT)
 			{
-
 				_state = ATK;
 				_xAtk = 50;
 				_yAtk = 20;
@@ -1853,6 +1852,8 @@ void Player::rAtkManage()
 
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN) && KEYMANAGER->isOnceKeyDown('X'))
 		{
+			_dmg = _str;
+
 			if (_state == WALK)
 			{
 				_info.vPushPower = 0;
@@ -1863,9 +1864,9 @@ void Player::rAtkManage()
 			{
 				_state = ATK;
 				_xAtk = 50;
-				_yAtk = 30;
+				_yAtk = 20;
 				_wAtk = 70;
-				_hAtk = 50;
+				_hAtk = 40;
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_DOWN_GATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaRightDownGAtk");
@@ -1876,9 +1877,9 @@ void Player::rAtkManage()
 			{
 				_state = ATK;
 				_xAtk = -50;
-				_yAtk = 30;
+				_yAtk = 20;
 				_wAtk = 70;
-				_hAtk = 50;
+				_hAtk = 40;
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_DOWN_GATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaLeftDownGAtk");
@@ -1888,35 +1889,114 @@ void Player::rAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('Z') && !KEYMANAGER->isStayKeyDown(VK_DOWN))
 		{
+			_dmg = _str;
+
 			if (_state == WALK)
 			{
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
 			}
 
-			if (_direction == RIGHT)
+
+			if (_s_Yatk_Count == 0)
 			{
-				_state = ATK;
-				_xAtk = 40;
-				_yAtk = -15;
-				_wAtk = 70;
-				_hAtk = 30;
-				_direction = RIGHT;
-				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_YATK");
-				_motion = KEYANIMANAGER->findAnimation("RamonaRightYAtk");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_YATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightYAtk1");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_YATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftYAtk1");
+					_motion->start();
+				}
+				_s_Yatk_Count++;
 			}
-			if (_direction == LEFT)
+			else if (_s_Yatk_Count == 1)
 			{
-				_state = ATK;
-				_xAtk = -40;
-				_yAtk = -15;
-				_wAtk = 70;
-				_hAtk = 30;
-				_direction = LEFT;
-				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_YATK");
-				_motion = KEYANIMANAGER->findAnimation("RamonaLeftYAtk");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_YATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightYAtk2");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_YATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftYAtk2");
+					_motion->start();
+				}
+				_s_Yatk_Count++;
+			}
+			else if (_s_Yatk_Count == 2)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_YATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightYAtk3");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = -15;
+					_wAtk = 70;
+					_hAtk = 30;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_YATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftYAtk3");
+					_motion->start();
+				}
+				_s_Yatk_Count++;
+			}
+
+			if (_s_Yatk_Count == 3)
+			{
+				_s_Yatk_Count = 0;
+			}
+
+		}
+		else if (_s_Yatk_Count != 0)
+		{
+			_n_Yatk_Count++;
+
+			if (_n_Yatk_Count > 15)
+			{
+				_s_Yatk_Count = 0;
+				_n_Yatk_Count = 0;
 			}
 		}
 
@@ -1930,29 +2010,114 @@ void Player::rAtkManage()
 				_info.vPushPower = 0;
 			}
 
-			if (_direction == RIGHT)
+
+			if (_s_Gatk_Count == 0)
 			{
-				_state = ATK;
-				_xAtk = 60;
-				_yAtk = 5;
-				_wAtk = 120;
-				_hAtk = 80;
-				_direction = RIGHT;
-				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_GATK");
-				_motion = KEYANIMANAGER->findAnimation("RamonaRightGAtk");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = 15;
+					_wAtk = 70;
+					_hAtk = 40;
+					_direction = RIGHT;
+					_dmg = _str;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_GATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightGAtk");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = 15;
+					_wAtk = 70;
+					_hAtk = 40;
+					_direction = LEFT;
+					_dmg = _str;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_GATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftGAtk");
+					_motion->start();
+				}
+				_s_Gatk_Count++;
 			}
-			if (_direction == LEFT)
+			else if (_s_Gatk_Count == 1)
 			{
-				_state = ATK;
-				_xAtk = -60;
-				_yAtk = 5;
-				_wAtk = 120;
-				_hAtk = 80;
-				_direction = LEFT;
-				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_GATK");
-				_motion = KEYANIMANAGER->findAnimation("RamonaLeftGAtk");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 50;
+					_yAtk = -30;
+					_wAtk = 120;
+					_hAtk = 120;
+					_direction = RIGHT;
+					_dmg = _str;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_GATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightGAtk1");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -50;
+					_yAtk = -30;
+					_wAtk = 120;
+					_hAtk = 120;
+					_direction = LEFT;
+					_dmg = _str;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_GATK");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftGAtk1");
+					_motion->start();
+				}
+				_s_Gatk_Count++;
+			}
+			else if (_s_Gatk_Count == 2)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = ATK;
+					_xAtk = 40;
+					_yAtk = -15;
+					_wAtk = 120;
+					_hAtk = 60;
+					_direction = RIGHT;
+					_dmg = _str * PLAYER_GATK;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_GATK2");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightGAtk2");
+					_motion->start();
+				}
+				if (_direction == LEFT)
+				{
+					_state = ATK;
+					_xAtk = -40;
+					_yAtk = -15;
+					_wAtk = 120;
+					_hAtk = 60;
+					_direction = LEFT;
+					_dmg = _str * PLAYER_GATK;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_GATK2");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftGAtk2");
+					_motion->start();
+				}
+
+				_s_Gatk_Count++;
+			}
+
+			if (_s_Gatk_Count == 3)
+			{
+				_s_Gatk_Count = 0;
+			}
+
+
+		}
+		else if (_s_Gatk_Count != 0)
+		{
+			_n_Gatk_Count++;
+
+			if (_n_Gatk_Count > 18)
+			{
+				_s_Gatk_Count = 0;
+				_n_Gatk_Count = 0;
 			}
 		}
 
@@ -1960,6 +2125,8 @@ void Player::rAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('Q'))
 		{
+			_dmg = _str * PLAYER_SK;
+
 			if (_direction == RIGHT)
 			{
 				if (_state == WALK)
@@ -1975,7 +2142,7 @@ void Player::rAtkManage()
 				_hAtk = 200;
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_SK_ATK");
-				_motion = KEYANIMANAGER->findAnimation("RamonaRightSKAtk");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightSKAtk1");
 				_motion->start();
 			}
 			if (_direction == LEFT)
@@ -1993,12 +2160,15 @@ void Player::rAtkManage()
 				_hAtk = 200;
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_SK_ATK");
-				_motion = KEYANIMANAGER->findAnimation("RamonaLeftSKAtk");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftSKAtk1");
 				_motion->start();
 			}
 		}
+
 		if (KEYMANAGER->isOnceKeyDown('W'))
 		{
+			_dmg = _str * PLAYER_SK;
+
 			if (_direction == RIGHT)
 			{
 				if (_state == WALK)
@@ -2036,22 +2206,23 @@ void Player::rAtkManage()
 				_motion->start();
 			}
 		}
-
 	}
-
 
 	//대쉬 공격
 	if (_state == RUN)
 	{
+		_dmg = _str;
+
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			if (_direction == RIGHT)
 			{
 				_state = ATK;
-				_xAtk = 30;
+				_xAtk = 40;
 				_yAtk = 40;
-				_wAtk = 60;
+				_wAtk = 40;
 				_hAtk = 30;
+				_info.hPushPower -= 1;
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_DASH_YATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaRightDashYAtk");
@@ -2060,10 +2231,11 @@ void Player::rAtkManage()
 			if (_direction == LEFT)
 			{
 				_state = ATK;
-				_xAtk = -30;
+				_xAtk = -40;
 				_yAtk = 40;
-				_wAtk = 60;
+				_wAtk = 40;
 				_hAtk = 30;
+				_info.hPushPower += 1;
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_DASH_YATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaLeftDashYAtk");
@@ -2073,13 +2245,17 @@ void Player::rAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
+			_dmg = _str;
+
 			if (_direction == RIGHT)
 			{
 				_state = ATK;
-				_xAtk = 75;
-				_yAtk = 10;
-				_wAtk = 125;
+				_xAtk = 60;
+				_yAtk = 0;
+				_wAtk = 100;
 				_hAtk = 50;
+				_info.hPushPower -= 3;
+				_info.vPushPower = 0;
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_DASH_GATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaRightDashGAtk");
@@ -2088,10 +2264,12 @@ void Player::rAtkManage()
 			if (_direction == LEFT)
 			{
 				_state = ATK;
-				_xAtk = -75;
-				_yAtk = 10;
-				_wAtk = 125;
+				_xAtk = -60;
+				_yAtk = 0;
+				_wAtk = 100;
 				_hAtk = 50;
+				_info.hPushPower += 3;
+				_info.vPushPower = 0;
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_DASH_GATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaLeftDashGAtk");
@@ -2105,6 +2283,7 @@ void Player::rAtkManage()
 	{
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			_dmg = _str;
 			_state = JUMPATK;
 
 			if (_direction == RIGHT)
@@ -2133,12 +2312,13 @@ void Player::rAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
+			_dmg = _str;
 			_state = JUMPATK;
 
 			if (_direction == RIGHT)
 			{
 				_xAtk = 50;
-				_yAtk = 10;
+				_yAtk = 20;
 				_wAtk = 70;
 				_hAtk = 70;
 				_direction = RIGHT;
@@ -2153,7 +2333,7 @@ void Player::rAtkManage()
 			if (_direction == LEFT)
 			{
 				_xAtk = -50;
-				_yAtk = 10;
+				_yAtk = 20;
 				_wAtk = 70;
 				_hAtk = 70;
 				_direction = LEFT;
@@ -2167,7 +2347,6 @@ void Player::rAtkManage()
 			}
 		}
 	}
-
 }
 
 void Player::rHittedManage()
@@ -2219,6 +2398,116 @@ void Player::rHittedManage()
 				_motion->start();
 			}
 		}
+	}
+
+	// 적에게 맞는 조건
+	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc))
+	{
+		_hitted = true;
+	}
+
+	if (_hitted && (_state == WALK || _state == IDLE || _state == RUN || _state == ATK
+		|| _state == JUMP || _state == JUMPATK || _state == LOBJ
+		|| _state == HOBJ || _state == STUN || _state == TIRED))
+	{
+		if (_enemyDamage < 4)
+		{
+			if (_direction == RIGHT)
+			{
+				_state = HITTED;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HITTED");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHitted");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = HITTED;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HITTED");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHitted");
+				_motion->start();
+			}
+		}
+		else if (_enemyDamage < 7)
+		{
+			if (_direction == RIGHT)
+			{
+				_state = HITTED;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HITTED2");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHitted2");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = HITTED;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HITTED2");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHitted2");
+				_motion->start();
+			}
+		}
+		else if (_enemyDamage >= 7)
+		{
+			if (_direction == RIGHT)
+			{
+				_state = HITTED;
+				_info.hPushPower = -3;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_G_HITTED");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightGHitted");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = HITTED;
+				_info.hPushPower = 3;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_G_HITTED");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftGHitted");
+				_motion->start();
+			}
+		}
+	}
+
+	//다운설정
+	if (_state == DOWN)
+	{
+		_down_Count++;
+
+		if (_down_Count > (70 - _spd))
+		{
+			_down_Count = 0;
+
+			if (_direction == RIGHT)
+			{
+				_state = UP;
+				_info.hPushPower += 3;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_UP");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightUp");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = UP;
+				_info.hPushPower -= 3;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_UP");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftUp");
+				_motion->start();
+			}
+		}
+
+		if (_hitted)
+		{
+			if (_direction == RIGHT)
+			{
+				_info.chr_x -= 1;
+			}
+			else if (_direction == LEFT)
+			{
+				_info.chr_x += 1;
+			}
+		}
+
+
 	}
 }
 
@@ -2284,6 +2573,7 @@ void Player::rRightStop(void * obj)
 	p->_info.vPushPower = 0;
 	p->setDirection(RIGHT);
 	p->setState(IDLE);
+	p->_hitted = false;
 	p->setImage(IMAGEMANAGER->findImage("RAMONA_RIGHT_IDLE"));
 	p->setMotion(KEYANIMANAGER->findAnimation("RamonaRightIdle"));
 	p->getMotion()->start();
@@ -2297,6 +2587,7 @@ void Player::rLeftStop(void * obj)
 	p->_info.vPushPower = 0;
 	p->setDirection(LEFT);
 	p->setState(IDLE);
+	p->_hitted = false;
 	p->setImage(IMAGEMANAGER->findImage("RAMONA_LEFT_IDLE"));
 	p->setMotion(KEYANIMANAGER->findAnimation("RamonaLeftIdle"));
 	p->getMotion()->start();
@@ -2523,7 +2814,7 @@ void Player::setImage()
 
 }
 
-void Player::setAny()
+void Player::setAni()
 {
 	//스콧
 
@@ -2664,11 +2955,11 @@ void Player::setAny()
 
 
 	//공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDownGAtk", "RAMONA_LEFT_DOWN_GATK", 0, 4, 10, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDownGAtk", "RAMONA_RIGHT_DOWN_GATK", 0, 4, 10, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDownGAtk", "RAMONA_LEFT_DOWN_GATK", 0, 4, 12, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDownGAtk", "RAMONA_RIGHT_DOWN_GATK", 0, 4, 12, false, false, rRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDownYAtk", "RAMONA_LEFT_DOWN_YATK", 0, 4, 10, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDownYAtk", "RAMONA_RIGHT_DOWN_YATK", 0, 4, 10, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDownYAtk", "RAMONA_LEFT_DOWN_YATK", 0, 4, 12, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDownYAtk", "RAMONA_RIGHT_DOWN_YATK", 0, 4, 12, false, false, rRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDashGAtk", "RAMONA_LEFT_DASH_GATK", 0, 7, 14, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDashGAtk", "RAMONA_RIGHT_DASH_GATK", 0, 7, 14, false, false, rRightStop, this);
@@ -2676,12 +2967,12 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDashYAtk", "RAMONA_LEFT_DASH_YATK", 0, 5, 12, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDashYAtk", "RAMONA_RIGHT_DASH_YATK", 0, 5, 12, false, false, rRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGAtk", "RAMONA_LEFT_GATK", 0, 5, 12, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGAtk", "RAMONA_RIGHT_GATK", 0, 5, 12, false, false, rRightStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGAtk1", "RAMONA_LEFT_GATK", 6, 13, 12, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGAtk1", "RAMONA_RIGHT_GATK", 6, 13, 12, false, false, rRightStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGAtk2", "RAMONA_LEFT_GATK2", 0, 7, 12, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGAtk2", "RAMONA_RIGHT_GATK2", 0, 7, 12, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGAtk", "RAMONA_LEFT_GATK", 0, 5, 15, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGAtk", "RAMONA_RIGHT_GATK", 0, 5, 15, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGAtk1", "RAMONA_LEFT_GATK", 6, 13, 15, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGAtk1", "RAMONA_RIGHT_GATK", 6, 13, 15, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGAtk2", "RAMONA_LEFT_GATK2", 0, 7, 15, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGAtk2", "RAMONA_RIGHT_GATK2", 0, 7, 15, false, false, rRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjAtk", "RAMONA_LEFT_HOBJ_ATK", 0, 6, 10, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjAtk", "RAMONA_RIGHT_HOBJ_ATK", 0, 6, 10, false, false, rRightStop, this);
@@ -2710,18 +3001,18 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjThrow", "RAMONA_LEFT_LOBJ_THROW", 0, 4, 10, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjThrow", "RAMONA_RIGHT_LOBJ_THROW", 0, 4, 10, false, false, rRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftSKAtk", "RAMONA_LEFT_SK_ATK", 0, 9, 10, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightSKAtk", "RAMONA_RIGHT_SK_ATK", 0, 9, 10, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftSKAtk1", "RAMONA_LEFT_SK_ATK", 0, 9, 10, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightSKAtk1", "RAMONA_RIGHT_SK_ATK", 0, 9, 10, false, false, rRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftSKAtk2", "RAMONA_LEFT_SK_ATK2", 0, 30, 18, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightSKAtk2", "RAMONA_RIGHT_SK_ATK2", 0, 30, 18, false, false, rRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftYAtk", "RAMONA_LEFT_YATK", 0, 2, 12, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk", "RAMONA_RIGHT_YATK", 0, 2, 12, false, false, rRightStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftYAtk", "RAMONA_LEFT_YATK", 3, 5, 12, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk", "RAMONA_RIGHT_YATK", 3, 5, 12, false, false, rRightStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftYAtk", "RAMONA_LEFT_YATK", 6, 8, 12, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk", "RAMONA_RIGHT_YATK", 6, 8, 12, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftYAtk1", "RAMONA_LEFT_YATK", 0, 2, 12, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk1", "RAMONA_RIGHT_YATK", 0, 2, 12, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftYAtk2", "RAMONA_LEFT_YATK", 3, 5, 12, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk2", "RAMONA_RIGHT_YATK", 3, 5, 12, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftYAtk3", "RAMONA_LEFT_YATK", 6, 8, 12, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk3", "RAMONA_RIGHT_YATK", 6, 8, 12, false, false, rRightStop, this);
 	//이동
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDash", "RAMONA_LEFT_DASH", 0, 7, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDash", "RAMONA_RIGHT_DASH", 0, 7, 10, false, true);
@@ -2762,17 +3053,16 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDef", "RAMONA_LEFT_DEF", 0, 2, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDef", "RAMONA_RIGHT_DEF", 0, 2, 10, false, false);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGHitted", "RAMONA_LEFT_G_HITTED", 0, 11, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGHitted", "RAMONA_RIGHT_G_HITTED", 0, 11, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDown", "RAMONA_LEFT_G_HITTED", 11, 11, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDown", "RAMONA_RIGHT_G_HITTED", 11, 11, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGHitted", "RAMONA_LEFT_G_HITTED", 0, 11, 10, false, false, rLeftDown, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGHitted", "RAMONA_RIGHT_G_HITTED", 0, 11, 10, false, false, rRightDown, this);
 
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDown", "RAMONA_LEFT_G_HITTED", 10, 11, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDown", "RAMONA_RIGHT_G_HITTED", 10, 11, 10, false, false);
 
-
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHitted", "RAMONA_LEFT_HITTED", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHitted", "RAMONA_RIGHT_HITTED", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHitted2", "RAMONA_LEFT_HITTED2", 0, 1, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHitted2", "RAMONA_RIGHT_HITTED2", 0, 1, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHitted", "RAMONA_LEFT_HITTED", 0, 1, 10, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHitted", "RAMONA_RIGHT_HITTED", 0, 1, 10, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHitted2", "RAMONA_LEFT_HITTED2", 0, 1, 10, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHitted2", "RAMONA_RIGHT_HITTED2", 0, 1, 10, false, false, rRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjGet", "RAMONA_LEFT_HOBJ_GET", 0, 2, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjGet", "RAMONA_RIGHT_LOBJ_GET", 0, 2, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftJumpHitted", "RAMONA_LEFT_JUMP_HITTED", 0, 1, 10, false, false);
@@ -2781,10 +3071,10 @@ void Player::setAny()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLHitted", "RAMONA_RIGHT_L_HITTED", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjGet", "RAMONA_LEFT_LOBJ_GET", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjGet", "RAMONA_RIGHT_LOBJ_GET", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftTired", "RAMONA_LEFT_TIRED", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightTired", "RAMONA_RIGHT_TIRED", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftUp", "RAMONA_LEFT_UP", 0, 8, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightUp", "RAMONA_RIGHT_UP", 0, 8, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftTired", "RAMONA_LEFT_TIRED", 0, 3, 10, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightTired", "RAMONA_RIGHT_TIRED", 0, 3, 10, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftUp", "RAMONA_LEFT_UP", 0, 8, 10, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightUp", "RAMONA_RIGHT_UP", 0, 8, 10, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftWin", "RAMONA_LEFT_WIN", 0, 26, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightWin", "RAMONA_RIGHT_WIN", 0, 26, 10, false, false);
 }
