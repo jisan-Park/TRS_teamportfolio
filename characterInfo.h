@@ -59,7 +59,7 @@ struct characterInfo
 
 		if (jumpPower <= 0 && shdDistance <= 0)
 		{
-			chr_y += shdDistance;
+			if (abs(shdDistance) > 0.5f) chr_y += shdDistance;
 			jumpPower = 0;
 		}
 		else jumpPower -= gravity;
