@@ -4,7 +4,7 @@
 void upSlope::collision(characterInfo &info)
 {
 	RECT temp;
-	if (IntersectRect(&temp, &rc, &info.ptrc))
+	if (IntersectRect(&temp, &rc, &info.shdrc))
 	{
 		if (info.hPushPower > 0)
 		{

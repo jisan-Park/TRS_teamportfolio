@@ -20,8 +20,8 @@ HRESULT settingScene::init()
 	_SFX_volume = IMAGEMANAGER->findImage("volumnFrontBar");
 
 	//각각의 width로 render할 때, 그려줌
-	_SFX_volume_width = 100;
-	_background_volume_width = 100;
+	_SFX_volume_width = 100.0f;
+	_background_volume_width = 100.0f;
 
 	IMAGEMANAGER->addImage("settingSceneBox", "image/scene/settingSceneBox.bmp", 250, 50, true, RGB(255, 0, 255));
 
@@ -37,6 +37,9 @@ void settingScene::release()
 void settingScene::update()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) {
+		SCENEMANAGER->changeScene("메인메뉴씬");
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_BACK)) {
 		SCENEMANAGER->changeScene("메인메뉴씬");
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_UP)) {
@@ -88,9 +91,9 @@ void settingScene::render()
 	IMAGEMANAGER->findImage("settingScene배경")->render(getMemDC());
 	IMAGEMANAGER->findImage("settingSceneBox")->render(getMemDC(), _rc.left, _rc.top);
 	//volume 색
-	_background_volume->render(getMemDC(), 464, 168, 0, 0, 160 * (_background_volume_width / 100), 40);
-	_SFX_volume->render(getMemDC(), 464, 235, 0, 0, 160 * (_SFX_volume_width / 100), 40);
+	_background_volume->render(getMemDC(), 499, 164, 0, 0, (int)(160.0f * (_background_volume_width / 100.0f)), 40);
+	_SFX_volume->render(getMemDC(), 499, 238, 0, 0, (int)(160.0f * (_SFX_volume_width / 100.0f)), 40);
 	//volume Bar
-	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), 454, 163);
-	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), 454, 230);
+	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), 489, 159);
+	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), 489, 233);
 }

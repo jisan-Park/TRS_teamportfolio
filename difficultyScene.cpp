@@ -32,6 +32,9 @@ void difficultyScene::update()
 		GAMEMANAGER->setDifficulty(_difficulty);
 		SCENEMANAGER->changeScene("¼±ÅÃ¾À");
 	}
+	if (KEYMANAGER->isOnceKeyDown(VK_BACK)) {
+		SCENEMANAGER->changeScene("¸ÞÀÎ¸Þ´º¾À");
+	}
 	if (KEYMANAGER->isOnceKeyDown(VK_UP)) {
 		_difficulty--;
 		if (_difficulty < 0) {
