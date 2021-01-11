@@ -54,6 +54,8 @@ protected:
 	float _x, _y;
 	int _count;	 //따라갈지 멈출지 랜덤값을 받는 카운트
 	int _countt; //공격시작전 텀을주는 카운트
+	int _counttt;//날아갈떄 카운트
+	bool _inrangeX, _inrangeY;
 	animation* _motion;
 
 	ENEMYSTATE _state;

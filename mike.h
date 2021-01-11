@@ -11,6 +11,7 @@ public:
 	virtual void move();
 	virtual void update();
 	virtual void collsion();
+	virtual void inrange();
 
 	ENEMYDIRECTION getDirection() { return _direction; }
 	void setDirection(ENEMYDIRECTION direction) { _direction = direction; }

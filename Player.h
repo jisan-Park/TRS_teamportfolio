@@ -128,6 +128,7 @@ public:
 	void setEnemyAtkRc(RECT rc, float Damage) { _enemyAtkRc = rc, _enemyDamage = Damage; }// 에너미 공격렉트, 데미지 가져옴
 	inline RECT getAttackRc() { return _rcAtk; }
 	inline float getAttckDamege() { return _dmg; }
+	inline float getStr() { return _str; }
 
 
 	//스콧인지 라모나인지 게터 1이면 스콧 2면 라모나
