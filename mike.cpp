@@ -185,7 +185,7 @@ void mike::collsion()
 {
 
 	RECT temp;
-	if (IntersectRect(&temp, &PLAYER->getattackRc(), &_info.chr_rc))
+	if (IntersectRect(&temp, &PLAYER->getAttackRc(), &_info.chr_rc))
 	{
 		_img = IMAGEMANAGER->findImage("mike_damage");
 		_motion = KEYANIMANAGER->findAnimation("mike_DAMAGE_LEFT");

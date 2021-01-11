@@ -2319,7 +2319,6 @@ void Player::rLeftDown(void * obj)
 {
 	Player* p = (Player*)obj;
 
-	Player* p = (Player*)obj;
 	p->_info.hPushPower = 0;
 	p->_info.vPushPower = 0;
 	p->setDirection(LEFT);
