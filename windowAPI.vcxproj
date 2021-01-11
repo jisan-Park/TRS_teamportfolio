@@ -157,6 +157,7 @@
     <ClInclude Include="cube.h" />
     <ClInclude Include="difficultyScene.h" />
     <ClInclude Include="dobeman.h" />
+    <ClInclude Include="downSlope.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="enemy.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="settingScene.h" />
     <ClInclude Include="shopScene.h" />
     <ClInclude Include="singletonBase.h" />
+    <ClInclude Include="slope.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="startScene.h" />
     <ClInclude Include="stdafx.h" />
@@ -200,6 +202,7 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="topLine.h" />
+    <ClInclude Include="upSlope.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="william.h" />
     <ClInclude Include="windowAPI.h" />
@@ -213,6 +216,7 @@
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="difficultyScene.cpp" />
     <ClCompile Include="dobeman.cpp" />
+    <ClCompile Include="downSlope.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -246,6 +250,7 @@
     <ClCompile Include="selectScene.cpp" />
     <ClCompile Include="settingScene.cpp" />
     <ClCompile Include="shopScene.cpp" />
+    <ClCompile Include="slope.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="startScene.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -257,6 +262,7 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="topLine.cpp" />
+    <ClCompile Include="upSlope.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="william.cpp" />
     <ClCompile Include="winMain.cpp" />

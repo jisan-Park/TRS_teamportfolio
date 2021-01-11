@@ -70,6 +70,9 @@
     <Filter Include="playGround\enemy">
       <UniqueIdentifier>{3f949e70-b574-4659-aa6e-2207431bc175}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\mapObject\slopes">
+      <UniqueIdentifier>{e1d636f4-1fc7-441d-a244-84425efd95b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -240,6 +243,15 @@
     <ClInclude Include="william.h">
       <Filter>playGround\enemy</Filter>
     </ClInclude>
+    <ClInclude Include="slope.h">
+      <Filter>playGround\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="downSlope.h">
+      <Filter>playGround\mapObject\slopes</Filter>
+    </ClInclude>
+    <ClInclude Include="upSlope.h">
+      <Filter>playGround\mapObject\slopes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -391,6 +403,15 @@
     </ClCompile>
     <ClCompile Include="william.cpp">
       <Filter>playGround\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="slope.cpp">
+      <Filter>playGround\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="downSlope.cpp">
+      <Filter>playGround\mapObject\slopes</Filter>
+    </ClCompile>
+    <ClCompile Include="upSlope.cpp">
+      <Filter>playGround\mapObject\slopes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

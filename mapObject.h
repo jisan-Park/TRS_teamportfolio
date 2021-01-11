@@ -1,6 +1,8 @@
 #pragma once
 #include "singletonBase.h"
 #include "cube.h"
+#include "upSlope.h"
+#include "downSlope.h"
 #include <vector>
 #define FIXEDRANGE 2000
 class mapObject :
@@ -19,6 +21,9 @@ private:
 
 	vLine _vLine;
 	viLine _viLine;
+
+	upSlope* _us;
+	downSlope* _ds;
 
 public:
 	mapObject();
