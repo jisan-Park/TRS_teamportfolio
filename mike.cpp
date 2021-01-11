@@ -26,6 +26,7 @@ void mike::atk()
 		_direction = E_LEFT;
 		_state = E_IDLE;
 		_motion = KEYANIMANAGER->findAnimation("mike_IDLE_LEFT");
+		_inattack = RectMakeCenter(_info.chr_x - 100, _info.chr_y, 100, 100);
 
 		if (!_motion->isPlay())
 		{
@@ -173,9 +174,26 @@ void mike::move()
 
 void mike::update()
 {
+	//PLAYER->getEnemyAtkRc(_inattack);
 	move();
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
+	collsion();
+}
+
+void mike::collsion()
+{
+
+	RECT temp;
+	if (IntersectRect(&temp, &PLAYER->getattackRc(), &_info.chr_rc))
+	{
+		_img = IMAGEMANAGER->findImage("mike_damage");
+		_motion = KEYANIMANAGER->findAnimation("mike_DAMAGE_LEFT");
+		_motion->start();
+		_direction = E_LEFT;
+		_state = E_HITTED;
+	}
+
 }
 
 void mike::setAnimation()
@@ -186,6 +204,7 @@ void mike::setAnimation()
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_WALK_LEFT", "mike_walk", 11, 6, 8, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_ATTACK_RIGHT", "mike_attack", 0, 7, 10, false, false, rightAttack, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("mike_ATTACK_LEFT", "mike_attack", 15, 8, 10, false, false, leftAttack, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("mike_DAMAGE_LEFT", "mike_damage", 0, 2, 10, false, false);
 }
 
 
@@ -197,7 +216,7 @@ void mike::rightAttack(void * obj)
 	m->setImage(IMAGEMANAGER->findImage("mike_idle"));
 	m->setteMotion(KEYANIMANAGER->findAnimation("mike_IDLE_RIGHT"));
 	m->getMotion()->start();
-	
+
 }
 
 void mike::leftAttack(void * obj)

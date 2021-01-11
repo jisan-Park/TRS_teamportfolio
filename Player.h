@@ -48,7 +48,9 @@ private:
 	animation* _motion;
 	characterInfo _info;
 	RECT _shad;
-	RECT _rcAtk;
+	RECT _rcAtk;  // 플레이어 공격렉트
+	RECT _enemyAtkRc; // 에너미 공격렉트 
+	RECT _temp; // 비교용
 
 	float _hp;
 	float _gp;
@@ -60,7 +62,6 @@ private:
 	bool _jump;
 	bool _dash;
 
-
 	int _chracterNum;
 
 
@@ -68,7 +69,6 @@ private:
 	int _yAtk;
 	int _wAtk;
 	int _hAtk;
-
 
 public:
 	Player();
@@ -88,7 +88,6 @@ public:
 	void rHittedManage();
 
 	//콜백함수
-
 	static void sRightStop(void* obj);
 	static void sLeftStop(void* obj);
 
@@ -111,9 +110,12 @@ public:
 
 	characterInfo& getInfo() { return _info; }
 
+	void getEnemyAtkRc(RECT rc) { _enemyAtkRc = rc; }
+
 	//스콧인지 라모나인지 게터 1이면 스콧 2면 라모나
 	int cChracter(int x) { return _chracterNum = x; }
 
+	inline RECT getattackRc() { return _rcAtk; }
 	//이미지, 애니메이션
 	void setImage();
 	void setAny();

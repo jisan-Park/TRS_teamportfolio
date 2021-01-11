@@ -46,6 +46,7 @@ protected:
 	characterInfo _info;
 	image* _img;
 	RECT _inrange;
+	RECT _inattack;
 	int _hp;
 	int _def;
 	int _spd;

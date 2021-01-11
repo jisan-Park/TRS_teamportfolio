@@ -10,6 +10,7 @@ public:
 	virtual void atk();
 	virtual void move();
 	virtual void update();
+	virtual void collsion();
 
 	ENEMYDIRECTION getDirection() { return _direction; }
 	void setDirection(ENEMYDIRECTION direction) { _direction = direction; }

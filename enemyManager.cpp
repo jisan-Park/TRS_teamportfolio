@@ -5,7 +5,7 @@ HRESULT enemyManager::init()
 {
 	setimage();
 	setEnemy();
-	
+
 	return S_OK;
 }
 
@@ -37,29 +37,29 @@ void enemyManager::setEnemy()
 	temp->init("mike_idle", 400, 300);
 	_vMinion.push_back(temp);
 
-	temp = new lee;
-	temp->init("lee_idle", 600, 300);
-	_vMinion.push_back(temp);
-
-	temp = new jesse;
-	temp->init("jesse_idle", 300, 300);
-	_vMinion.push_back(temp);
-
-	temp = new william;
-	temp->init("william_idle", 300, 500);
-	_vMinion.push_back(temp);
-
-	temp = new malcolm;
-	temp->init("malcolm_idle", 200, 500);
-	_vMinion.push_back(temp);
-
-	temp = new luke;
-	temp->init("luke_idle", 700, 500);
-	_vMinion.push_back(temp);
-
-	temp = new dobeman;
-	temp->init("dobeman_idle", 900, 500);
-	_vMinion.push_back(temp);
+	//temp = new lee;
+	//temp->init("lee_idle", 600, 300);
+	//_vMinion.push_back(temp);
+	//
+	//temp = new jesse;
+	//temp->init("jesse_idle", 300, 300);
+	//_vMinion.push_back(temp);
+	//
+	//temp = new william;
+	//temp->init("william_idle", 300, 500);
+	//_vMinion.push_back(temp);
+	//
+	//temp = new malcolm;
+	//temp->init("malcolm_idle", 200, 500);
+	//_vMinion.push_back(temp);
+	//
+	//temp = new luke;
+	//temp->init("luke_idle", 700, 500);
+	//_vMinion.push_back(temp);
+	//
+	//temp = new dobeman;
+	//temp->init("dobeman_idle", 900, 500);
+	//_vMinion.push_back(temp);
 }
 
 void enemyManager::setimage()
@@ -125,7 +125,7 @@ void enemyManager::setimage()
 
 	//luke
 	IMAGEMANAGER->addFrameImage("luke_idle", "image/enemy/luke/idle.bmp", 600, 300, 4, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("luke_attack1", "image/enemy/luke/attack(punch).bmp", 1200, 300, 8, 2, true, RGB(255, 0, 255)); 
+	IMAGEMANAGER->addFrameImage("luke_attack1", "image/enemy/luke/attack(punch).bmp", 1200, 300, 8, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("luke_attack2", "image/enemy/luke/attack(roundkick).bmp", 1050, 300, 7, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("luke_walk", "image/enemy/luke/walk.bmp", 900, 300, 6, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("luke_damage", "image/enemy/luke/damage.bmp", 450, 300, 3, 2, true, RGB(255, 0, 255));
