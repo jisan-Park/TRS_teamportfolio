@@ -14,9 +14,15 @@ void camera::init(float x, float y) {
 	pt.y = y;
 }
 void camera::setCamera(float x, float y) {
-	pt.x = x;
-	pt.y = y;
+	//둘 중 하나라도 그 값에 안들어 왔으면
+	//해당 위치로 angle로 이동
+	if (pt.x != x) {
+		pt.x += cos(getAngle(pt.x, pt.y, x, y)) * 9;
 
+	}
+	if (pt.y != y) {
+		pt.y += -sin(getAngle(pt.x, pt.y, x, y)) * 9;
+	}
 	//예외처리
 	checkPoint();
 }

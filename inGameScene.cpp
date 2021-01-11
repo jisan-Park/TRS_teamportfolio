@@ -14,6 +14,7 @@ inGameScene::~inGameScene()
 
 HRESULT inGameScene::init()
 {
+	PLAYER->init();
 	IMAGEMANAGER->addImage("인게임배경", "image/scene/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
 
 	_em = new enemyManager;

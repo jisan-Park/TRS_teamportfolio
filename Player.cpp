@@ -11,8 +11,8 @@ Player::~Player()
 
 HRESULT Player::init()
 {
-	setImage();
-	setAni();
+	/*setImage();
+	setAni();*/
 
 	_hp = 100;
 	_gp = 100;

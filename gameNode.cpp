@@ -37,7 +37,9 @@ HRESULT gameNode::init(bool managerInit)
 		KEYANIMANAGER->init();
 		GAMEMANAGER->init();
 		CAMERAMANAGER->init();
-		PLAYER->init();
+		//PLAYER->init();
+		PLAYER->setImage();
+		PLAYER->setAni();
 		MAPOBJECT->init();
 	}
 
