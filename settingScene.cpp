@@ -19,10 +19,6 @@ HRESULT settingScene::init()
 	_background_volume = IMAGEMANAGER->findImage("volumnFrontBar");
 	_SFX_volume = IMAGEMANAGER->findImage("volumnFrontBar");
 
-	//각각의 width로 render할 때, 그려줌
-	_SFX_volume_width = 100.0f;
-	_background_volume_width = 100.0f;
-
 	IMAGEMANAGER->addImage("settingSceneBox", "image/scene/settingSceneBox.bmp", 250, 50, true, RGB(255, 0, 255));
 
 	_selectNum = 0;
@@ -56,29 +52,29 @@ void settingScene::update()
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT)) {
 		if (_selectNum == 0) {
-			_background_volume_width -= 10;
-			if (_background_volume_width < 0) {
-				_background_volume_width = 0;
+			GAMEMANAGER->setBackgroundVolume(GAMEMANAGER->getBackgroundVolume() - 10);
+			if (GAMEMANAGER->getBackgroundVolume() < 0) {
+				GAMEMANAGER->setBackgroundVolume(0);
 			}
 		}
 		else if (_selectNum == 1) {
-			_SFX_volume_width -= 10;
-			if (_SFX_volume_width < 0) {
-				_SFX_volume_width = 0;
+			GAMEMANAGER->setSFXVolume(GAMEMANAGER->getSFXVolume() - 10);
+			if (GAMEMANAGER->getSFXVolume() < 0) {
+				GAMEMANAGER->setSFXVolume(0);
 			}
 		}
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT)) {
 		if (_selectNum == 0) {
-			_background_volume_width += 10;
-			if (_background_volume_width > 100) {
-				_background_volume_width = 100;
+			GAMEMANAGER->setBackgroundVolume(GAMEMANAGER->getBackgroundVolume() + 10);
+			if (GAMEMANAGER->getBackgroundVolume() > 100) {
+				GAMEMANAGER->setBackgroundVolume(100);
 			}
 		}
 		else if (_selectNum == 1) {
-			_SFX_volume_width += 10;
-			if (_SFX_volume_width > 100) {
-				_SFX_volume_width = 100;
+			GAMEMANAGER->setSFXVolume(GAMEMANAGER->getSFXVolume() + 10);
+			if (GAMEMANAGER->getSFXVolume() > 100) {
+				GAMEMANAGER->setSFXVolume(100);
 			}
 		}
 	}
@@ -91,8 +87,8 @@ void settingScene::render()
 	IMAGEMANAGER->findImage("settingScene배경")->render(getMemDC());
 	IMAGEMANAGER->findImage("settingSceneBox")->render(getMemDC(), _rc.left, _rc.top);
 	//volume 색
-	_background_volume->render(getMemDC(), 499, 164, 0, 0, (int)(160.0f * (_background_volume_width / 100.0f)), 40);
-	_SFX_volume->render(getMemDC(), 499, 238, 0, 0, (int)(160.0f * (_SFX_volume_width / 100.0f)), 40);
+	_background_volume->render(getMemDC(), 499, 164, 0, 0, (int)(160.0f * (GAMEMANAGER->getBackgroundVolume() / 100.0f)), 40);
+	_SFX_volume->render(getMemDC(), 499, 238, 0, 0, (int)(160.0f * (GAMEMANAGER->getSFXVolume() / 100.0f)), 40);
 	//volume Bar
 	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), 489, 159);
 	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), 489, 233);

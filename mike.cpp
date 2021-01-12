@@ -241,9 +241,6 @@ void mike::move()
 
 void mike::update()
 {
-
-
-
 	if (_makeDead)
 	{
 		_info.hPushPower = 0;

@@ -15,6 +15,7 @@ inGameScene::~inGameScene()
 HRESULT inGameScene::init()
 {
 	PLAYER->init();
+	GAMEMANAGER->setUI();
 	IMAGEMANAGER->addImage("인게임배경", "image/scene/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
 	//카메라 위치조정 시작
 	CAMERAMANAGER->setPhase(0);
@@ -24,6 +25,8 @@ HRESULT inGameScene::init()
 	//camera 위치 초기화
 	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
 	CAMERAMANAGER->update();
+
+	_isPaused = false;
 	return S_OK;
 }
 
@@ -34,8 +37,23 @@ void inGameScene::release()
 
 void inGameScene::update()
 {
+
+	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
+		if (_isPaused) {
+			_isPaused = false;
+		}
+		else {
+			_isPaused = true;
+		}
+	}
+
+	if (_isPaused) {
+		return;
+	}
+
 	KEYANIMANAGER->update();
 	PLAYER->update();
+	GAMEMANAGER->setUI();
 	_em->update();
 	MAPOBJECT->collisionMo(PLAYER->getInfo());
 	GAMEMANAGER->update();
@@ -63,4 +81,9 @@ void inGameScene::render()
 	_em->render();*/
 
 	GAMEMANAGER->render(getMemDC());
+
+	if (_isPaused) {
+		IMAGEMANAGER->findImage("로딩배경")->alphaRender(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y, 170);
+		//pause 이미지 띄워주기
+	}
 }

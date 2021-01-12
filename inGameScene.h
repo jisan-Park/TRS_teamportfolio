@@ -7,6 +7,9 @@ class inGameScene : public gameNode
 private:
 	image* _background;
 	enemyManager* _em;
+
+	bool _isPaused;
+
 public:
 	inGameScene();
 	~inGameScene();

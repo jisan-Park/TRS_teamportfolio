@@ -4,10 +4,6 @@
 class settingScene : public gameNode
 {
 private:
-	//volume width ·Î render ÁöÁ¤
-	float _background_volume_width;
-	float _SFX_volume_width;
-	
 	image* _background_volume;
 	image* _SFX_volume;
 

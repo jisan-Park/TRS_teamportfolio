@@ -57,7 +57,7 @@ void selectScene::update()
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) {
 
-		PLAYER->cChracter(_selectPosition);
+		PLAYER->setCharacterNum(_selectPosition);
 
 		SCENEMANAGER->changeScene("¿Œ∞‘¿”æ¿");
 	}

@@ -11,7 +11,8 @@ Player::~Player()
 
 HRESULT Player::init()
 {
-
+	_life = 3;
+	_money = 13;
 	_hp = 100;
 	_gp = 100;
 	_str = 1;
@@ -29,13 +30,13 @@ HRESULT Player::init()
 	_n_Yatk_Count = 0;
 	_n_Gatk_Count = 0;
 
-	if (_chracterNum == 0)
+	if (_characterNum == 0)
 	{
 		_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
 		_motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
 		_motion->start();
 	}
-	else if (_chracterNum == 1)
+	else if (_characterNum == 1)
 	{
 		_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_IDLE");
 		_motion = KEYANIMANAGER->findAnimation("RamonaRightIdle");
@@ -63,13 +64,13 @@ void Player::update()
 {
 	atkRc();
 
-	if (_chracterNum == 0)//스콧
+	if (_characterNum == 0)//스콧
 	{
 		sMoveManage();
 		sAtkManage();
 		sHittedManage();
 	}
-	else if (_chracterNum == 1)//라모나
+	else if (_characterNum == 1)//라모나
 	{
 		rMoveManage();
 		rAtkManage();
@@ -1225,6 +1226,8 @@ void Player::sHittedManage()
 	// 적에게 맞는 조건
 	if ((IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc)) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER))
 	{
+		//2021-01-03(지산) hp 다는거 추가함.
+		_hp -= _enemyDamage;
 		_hitted = true;
 	}
 

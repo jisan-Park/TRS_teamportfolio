@@ -17,8 +17,29 @@ private:
 	DIFFICULTY _difficulty;
 	float _hp;
 	float _str;
+	//volume
+	float _background_volume;
+	float _SFX_volume;
 
 	int renderNum;
+	//UI
+	image* _uiImage;
+
+	image* hp_number_100;
+	image* hp_number_10;
+	image* hp_number_1;
+
+	image* gp_number_100;
+	image* gp_number_10;
+	image* gp_number_1;
+
+	image* coin_number_100;
+	image* coin_number_10;
+	image* coin_number_1;
+
+	image* life_number;
+
+	image* _snack;
 
 	//vector<image*, POINT>
 public:
@@ -30,8 +51,14 @@ public:
 	void render(HDC hdc);
 
 	//setter
+	void setBackgroundVolume(float f) { _background_volume = f; };
+	void setSFXVolume(float f) { _SFX_volume = f; };
+	void setUI();
+	void setUIimage();
 	void setDifficulty(int i) { _difficulty = (DIFFICULTY)i; _hp = ((i + 1)*1.0f); _str = ((i + 1) * 0.5f); };
 	//getter
+	float getBackgroundVolume() { return _background_volume; };
+	float getSFXVolume() { return _SFX_volume; };
 	int getDifficulty() { (int)_difficulty; };
 	int getRenderNum() { return renderNum++; }; //일련번호 넘겨주고 1씩 자체 증가시키기
 	float getHp() { return _hp; };
