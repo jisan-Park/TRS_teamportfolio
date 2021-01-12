@@ -315,7 +315,7 @@ void jesse::update()
 	}
 	inrange();
 
-	if (_state == E_UPPERCUT)
+	if (_state == E_UPPERCUT || _state == E_ROUNDKICK)
 	{
 		if (_direction == E_LEFT)
 		{
@@ -379,27 +379,54 @@ void jesse::collsion()
 		{
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
-				_img = IMAGEMANAGER->findImage("jesse_damage");
-				_motion = KEYANIMANAGER->findAnimation("jesse_DAMAGE_RIGHT");
-				_motion->start();
-				_direction = E_RIGHT;
-				_state = E_HITTED;
-				_count = 0;
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_hp -= PLAYER->getAttackDamege();
+				_counttttt++;
+				if (_counttttt < 30)
+				{
+					_img = IMAGEMANAGER->findImage("jesse_damage");
+					_motion = KEYANIMANAGER->findAnimation("jesse_DAMAGE_RIGHT");
+					_motion->start();
+					_direction = E_RIGHT;
+					_state = E_HITTED;
+					_count = 0;
+					_hp -= PLAYER->getAttackDamege();
+					if (PLAYER->getInfo().chr_x > _info.chr_x)
+					{
+						_info.hPushPower = -1;
+						_info.vPushPower = 0;
+					}
+					if (PLAYER->getInfo().chr_x <= _info.chr_x)
+					{
+						_info.hPushPower = 1;
+						_info.vPushPower = 0;
+					}
+				}
+				_counttttt = 0;
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
-				_img = IMAGEMANAGER->findImage("jesse_damage");
-				_motion = KEYANIMANAGER->findAnimation("jesse_DAMAGE_LEFT");
-				_motion->start();
-				_direction = E_LEFT;
-				_state = E_HITTED;
-				_count = 0;
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_hp -= PLAYER->getAttackDamege();
+				_counttttt++;
+				if (_counttttt < 30)
+				{
+					_img = IMAGEMANAGER->findImage("jesse_damage");
+					_motion = KEYANIMANAGER->findAnimation("jesse_DAMAGE_LEFT");
+					_motion->start();
+					_direction = E_LEFT;
+					_state = E_HITTED;
+					_count = 0;
+					_hp -= PLAYER->getAttackDamege();
+					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
+					if (PLAYER->getInfo().chr_x > _info.chr_x)
+					{
+						_info.hPushPower = -1;
+						_info.vPushPower = 0;
+					}
+					if (PLAYER->getInfo().chr_x <= _info.chr_x)
+					{
+						_info.hPushPower = 1;
+						_info.vPushPower = 0;
+					}
+				}
+				_counttttt = 0;
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{

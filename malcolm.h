@@ -33,4 +33,6 @@ public:
 	static void rightdown(void* obj);
 	static void leftdown(void* obj);
 	static void makeDead(void * obj);
+	static void rightUp(void* obj);
+	static void lefttUp(void* obj);
 };

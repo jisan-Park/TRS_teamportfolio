@@ -258,30 +258,59 @@ void william::collsion()
 
 		if (_state == E_WALK || _state == E_IDLE)
 		{
-			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
+			if (PLAYER->getAttackDamege() == PLAYER->getStr()) //약공격을 맞았을 때
 			{
-				_img = IMAGEMANAGER->findImage("william_damage");
-				_motion = KEYANIMANAGER->findAnimation("william_DAMAGE_RIGHT");
-				_motion->start();
-				_direction = E_RIGHT;
-				_state = E_HITTED;
-				_count = 0;
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_hp -= PLAYER->getAttackDamege();
+				if (_direction == E_RIGHT && PLAYER->getInfo().chr_x < _info.chr_x) //오른쪽 보고있었는데 뒤에서 때릴때
+				{
+					_img = IMAGEMANAGER->findImage("william_damage");
+					_motion = KEYANIMANAGER->findAnimation("william_DAMAGE_RIGHT");
+					_motion->start();
+					_direction = E_RIGHT;
+					_state = E_HITTED;
+					_count = 0;
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+				}
+				if (_direction == E_RIGHT && PLAYER->getInfo().chr_x > _info.chr_x) //오른쪽 보고있었는데 앞에서 때릴때
+				{
+					_img = IMAGEMANAGER->findImage("william_defence");
+					_motion = KEYANIMANAGER->findAnimation("william_DEFENCE_RIGHT");
+					_motion->start();
+					_direction = E_RIGHT;
+					_state = E_DEFENCE;
+					_count = 0;
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+				}
+
+				if (_direction == E_LEFT && PLAYER->getInfo().chr_x > _info.chr_x) //왼쪽 보고있었는데 뒤에서 때릴때
+				{
+					_img = IMAGEMANAGER->findImage("william_damage");
+					_motion = KEYANIMANAGER->findAnimation("william_DAMAGE_LEFT");
+					_motion->start();
+					_direction = E_LEFT;
+					_state = E_HITTED;
+					_count = 0;
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+				}
+				if (_direction == E_LEFT && PLAYER->getInfo().chr_x < _info.chr_x) //왼쪽 보고있었는데 앞에서 때릴때
+				{
+					_img = IMAGEMANAGER->findImage("william_defence");
+					_motion = KEYANIMANAGER->findAnimation("william_DEFENCE_LEFT");
+					_motion->start();
+					_direction = E_LEFT;
+					_state = E_DEFENCE;
+					_count = 0;
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+				}
+
+
 			}
-			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
-			{
-				_img = IMAGEMANAGER->findImage("william_damage");
-				_motion = KEYANIMANAGER->findAnimation("william_DAMAGE_LEFT");
-				_motion->start();
-				_direction = E_LEFT;
-				_state = E_HITTED;
-				_count = 0;
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_hp -= PLAYER->getAttackDamege();
-			}
+
+
+
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
 				_img = IMAGEMANAGER->findImage("william_knockDown");

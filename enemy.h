@@ -30,6 +30,7 @@ enum ENEMYSTATE
 	E_HOBJ_PICK,
 	E_PUNCH,
 	E_KICK,
+	E_DOWNKICK,
 	E_ROUNDKICK,
 	E_PRESSDOWN,
 	E_UPPERCUT,
@@ -57,6 +58,7 @@ protected:
 	int _countt; //공격시작전 텀을주는 카운트
 	int _counttt;//날아갈떄 카운트
 	int _countttt;
+	int _counttttt; // 약한 데미지 맞을때 뒤로 밀리는 카운트
 	bool _inrangeX, _inrangeY;
 	int _hitcount;
 	bool ison;

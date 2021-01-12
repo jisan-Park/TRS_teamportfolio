@@ -260,27 +260,55 @@ void lee::collsion()
 		{
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
-				_img = IMAGEMANAGER->findImage("lee_damage");
-				_motion = KEYANIMANAGER->findAnimation("lee_DAMAGE_RIGHT");
-				_motion->start();
-				_direction = E_RIGHT;
-				_state = E_HITTED;
-				_count = 0;
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_hp -= PLAYER->getAttackDamege();
+				_counttttt++;
+				if (_counttttt < 30)
+				{
+					_img = IMAGEMANAGER->findImage("lee_damage");
+					_motion = KEYANIMANAGER->findAnimation("lee_DAMAGE_RIGHT");
+					_motion->start();
+					_direction = E_RIGHT;
+					_state = E_HITTED;
+					_count = 0;
+					_hp -= PLAYER->getAttackDamege();
+					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
+					if (PLAYER->getInfo().chr_x > _info.chr_x)
+					{
+						_info.hPushPower = -1;
+						_info.vPushPower = 0;
+					}
+					if (PLAYER->getInfo().chr_x <= _info.chr_x)
+					{
+						_info.hPushPower = 1;
+						_info.vPushPower = 0;
+					}
+				}
+				_counttttt = 0;
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
-				_img = IMAGEMANAGER->findImage("lee_damage");
-				_motion = KEYANIMANAGER->findAnimation("lee_DAMAGE_LEFT");
-				_motion->start();
-				_direction = E_LEFT;
-				_state = E_HITTED;
-				_count = 0;
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_hp -= PLAYER->getAttackDamege();
+				_counttttt++;
+				if (_counttttt < 30)
+				{
+					_img = IMAGEMANAGER->findImage("lee_damage");
+					_motion = KEYANIMANAGER->findAnimation("lee_DAMAGE_LEFT");
+					_motion->start();
+					_direction = E_LEFT;
+					_state = E_HITTED;
+					_count = 0;
+					_hp -= PLAYER->getAttackDamege();
+					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
+					if (PLAYER->getInfo().chr_x > _info.chr_x)
+					{
+						_info.hPushPower = -1;
+						_info.vPushPower = 0;
+					}
+					if (PLAYER->getInfo().chr_x <= _info.chr_x)
+					{
+						_info.hPushPower = 1;
+						_info.vPushPower = 0;
+					}
+				}
+				_counttttt = 0;
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
@@ -390,6 +418,7 @@ void lee::collsion()
 	}
 }
 
+
 void lee::inrange()
 {
 	if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 60)
@@ -410,6 +439,8 @@ void lee::inrange()
 		_inrangeY = false;
 	}
 }
+
+
 
 void lee::setAnimation()
 {

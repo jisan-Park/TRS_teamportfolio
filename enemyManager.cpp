@@ -46,13 +46,13 @@ void enemyManager::setEnemy()
 	//temp->init("jesse_idle", 300, 300);
 	//_vMinion.push_back(temp);
 
-	temp = new william;
-	temp->init("william_idle", 300, 500);
-	_vMinion.push_back(temp);
-	//
-	//temp = new malcolm;
-	//temp->init("malcolm_idle", 200, 500);
+	//temp = new william;
+	//temp->init("william_idle", 300, 500);
 	//_vMinion.push_back(temp);
+	//
+	temp = new malcolm;
+	temp->init("malcolm_idle", 200, 500);
+	_vMinion.push_back(temp);
 	//
 	//temp = new luke;
 	//temp->init("luke_idle", 700, 500);
@@ -112,7 +112,7 @@ void enemyManager::setimage()
 	IMAGEMANAGER->addFrameImage("richard_idle", "image/enemy/richard/idle.bmp", 1000, 500, 4, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("richard_run", "image/enemy/richard/run.bmp", 1500, 500, 6, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("richard_damage", "image/enemy/richard/damage.bmp", 750, 500, 3, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("richard_damageDown", "image/enemy/richard/damageDown.bmp", 450, 300, 3, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("richard_damageDown", "image/enemy/richard/damageDown.bmp", 750, 300, 3, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("richard_knockDown", "image/enemy/richard/knockDown.bmp", 3500, 500, 14, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("richard_knockUp", "image/enemy/richard/knockUp.bmp", 2000, 500, 8, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("richard_hobj_attack", "image/enemy/richard/hobj_attack(throw).bmp", 2000, 500, 8, 2, true, RGB(255, 0, 255));
@@ -134,6 +134,7 @@ void enemyManager::setimage()
 	IMAGEMANAGER->addFrameImage("luke_knockDown", "image/enemy/luke/knockDown.bmp", 2100, 300, 14, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("luke_knockUp", "image/enemy/luke/knockUp.bmp", 1200, 300, 8, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("luke_jump", "image/enemy/luke/jump.bmp", 1500, 300, 10, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("luke_jumpkick", "image/enemy/luke/jumpkick.bmp", 750, 300, 5, 2, true, RGB(255, 0, 255));
 
 
 	//dobeman
@@ -152,9 +153,9 @@ void enemyManager::setimage()
 	IMAGEMANAGER->addFrameImage("malcolm_defense2", "image/enemy/MALCOLM/MALCOLM - DEFENSE2.bmp", 600, 400, 2, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("malcolm_down", "image/enemy/MALCOLM/MALCOLM - DOWN.bmp", 3542, 400, 14, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("malcolm_downdamage", "image/enemy/MALCOLM/MALCOLM - DOWNDAMAGE.bmp", 1265, 400, 5, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("malcolm_downkick", "image/enemy/MALCOLM/MALCOLM - DOWNKICK.bmp", 1265, 300, 5, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("malcolm_downkick", "image/enemy/MALCOLM/MALCOLM - DOWNKICK.bmp", 1256, 400, 5, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("malcolm_jump", "image/enemy/MALCOLM/MALCOLM - JUMP.bmp", 3289, 400, 13, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("malcolm_jumpattack", "image/enemy/MALCOLM/MALCOLM - JUMPATTACK.bmp", 1265, 300, 5, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("malcolm_jumpattack", "image/enemy/MALCOLM/MALCOLM - JUMPATTACK.bmp", 1265, 400, 5, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("malcolm_run", "image/enemy/MALCOLM/MALCOLM - RUN.bmp", 2024, 400, 8, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("malcolm_up", "image/enemy/MALCOLM/MALCOLM - UP(214).bmp", 2277, 428, 9, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("malcolm_walk", "image/enemy/MALCOLM/MALCOLM - WALK.bmp", 2024, 400, 8, 2, true, RGB(255, 0, 255));
