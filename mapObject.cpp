@@ -175,6 +175,86 @@ HRESULT mapObject::init()
 	testbox2->init(455, 465, 85, 35, 150);
 	_vCube.push_back(testbox2);
 
+	stair* stair0;
+	stair0 = new stair;
+	stair0->init(17815, 560, 17815 + 140, 560, 0, 0);
+	_vStair.push_back(stair0);
+
+	stair* stair1;
+	stair1 = new stair;
+	stair1->init(17805, 560, 17805 + 140, 560, 20, 20);
+	_vStair.push_back(stair1);
+
+	stair* stair2;
+	stair2 = new stair;
+	stair2->init(17790, 530, 17790 + 140, 530, 20, 100);
+	_vStair.push_back(stair2);
+
+	stair* stair3;
+	stair3 = new stair;
+	stair3->init(17760, 500, 17760 + 140, 500, 80, 135);
+	_vStair.push_back(stair3);
+
+	botLine* tunnel1;
+	tunnel1 = new botLine;
+	tunnel1->init(17060, 560, 17810, 560, 135);
+	_vLine.push_back(tunnel1);
+
+	botLine* tunnel2;
+	tunnel2 = new botLine;
+	tunnel2->init(17950, 560, 18900, 560, 135);
+	_vLine.push_back(tunnel2);
+
+	leftLine* tunnel3;
+	tunnel3 = new leftLine;
+	tunnel3->init(18740, 500, 18796, 560, FIXEDRANGE);
+	_vLine.push_back(tunnel3);
+
+	botLine* tunnelend;
+	tunnelend = new botLine;
+	tunnelend->init(17060, 510, 18900, 510, FIXEDRANGE);
+	_vLine.push_back(tunnelend);
+
+	baricadeLine* snow1;
+	snow1 = new baricadeLine;
+	snow1->init(19236, 365, 19580, 521, FIXEDRANGE);
+	_vLine.push_back(snow1);
+	//19580 522
+	botLine* snow2;
+	snow2 = new botLine;
+	snow2->init(19580, 521, 21230, 521, FIXEDRANGE);
+	_vLine.push_back(snow2);
+
+	topLine* snow3;
+	snow3 = new topLine;
+	snow3->init(19140, 740, 21230, 740, FIXEDRANGE);
+	_vLine.push_back(snow3);
+
+
+	//cube* testbox1;
+	//testbox1 = new cube;
+	//testbox1->init(365, 465, 95, 35, 75);
+	//_vCube.push_back(testbox1);
+	//cube* testbox2;
+	//testbox2 = new cube;
+	//testbox2->init(455, 465, 85, 35, 150);
+	//_vCube.push_back(testbox2);
+
+	baricadeLine* baricade1;
+	baricade1 = new baricadeLine;
+	baricade1->init(16642, 345, 16769, 470, FIXEDRANGE);
+	_vLine.push_back(baricade1);
+
+	baricadeLine* baricade2;
+	baricade2 = new baricadeLine;
+	baricade2->init(16768, 469, 17055, 560, FIXEDRANGE);
+	_vLine.push_back(baricade2);
+
+	rightLine* baricade3;
+	baricade3 = new rightLine;
+	baricade3->init(16950, 450, 17055, 560, FIXEDRANGE);
+	_vLine.push_back(baricade3);
+
 
 	cube* sinkhole;
 	sinkhole = new cube;
@@ -203,6 +283,11 @@ void mapObject::collisionMo(characterInfo & info)
 	{
 		(*_viCube)->collisionCube(info);
 	}
+
+	for (_viStair = _vStair.begin(); _viStair != _vStair.end(); ++_viStair)
+	{
+		(*_viStair)->collision(info);
+	}
 	_us->collision(info);
 	_ds->collision(info);
 }
@@ -221,5 +306,10 @@ void mapObject::render(HDC hdc)
 	for (_viCube = _vCube.begin(); _viCube != _vCube.end(); ++_viCube)
 	{
 		(*_viCube)->render(hdc);
+	}
+
+	for (_viStair = _vStair.begin(); _viStair != _vStair.end(); ++_viStair)
+	{
+		(*_viStair)->render(hdc);
 	}
 }

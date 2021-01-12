@@ -8,6 +8,13 @@ void line::init(POINT _start, POINT _end, float _passRange)
 	passRange = _passRange;
 }
 
+void line::init(float x1, float y1, float x2, float y2, float _passRange)
+{
+	start = PointMake(x1, y1);
+	end = PointMake(x2, y2);
+	passRange = _passRange;
+}
+
 bool line::intersects(RECT rc)
 {
 	float width = rc.right - rc.left;

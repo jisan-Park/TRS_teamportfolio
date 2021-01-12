@@ -10,6 +10,7 @@ protected:
 
 public:
 	virtual void init(POINT start, POINT end, float passRange);
+	virtual void init(float x1, float y1, float x2, float y2, float passRange);
 	bool intersects(RECT rc);
 	virtual void render(HDC hdc);
 

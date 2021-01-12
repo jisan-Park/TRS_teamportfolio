@@ -3,6 +3,8 @@
 #include "cube.h"
 #include "upSlope.h"
 #include "downSlope.h"
+#include "stair.h"
+#include "baricadeLine.h"
 #include <vector>
 #define FIXEDRANGE 2000
 struct box {
@@ -19,12 +21,18 @@ private:
 	typedef vector<line*>vLine;
 	typedef vector<line*>::iterator viLine;
 
+	typedef vector<stair*>vStair;
+	typedef vector<stair*>::iterator viStair;
+
 private:
 	vCube _vCube;
 	viCube _viCube;
 
 	vLine _vLine;
 	viLine _viLine;
+
+	vStair _vStair;
+	viStair _viStair;
 
 	upSlope* _us;
 	downSlope* _ds;

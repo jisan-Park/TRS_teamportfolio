@@ -46,6 +46,7 @@ struct characterInfo
 	void physics()
 	{
 		ptrc = RectMakeCenter(pt_x, pt_y, 10, 10);
+		shdrc = RectMakeCenter(shd_x, shd_y, 10, 10);
 		pt_x += hPushPower; // 그림자 기준점 푸시파워로 밀어주기
 		pt_y += vPushPower; // 그림자 기준점 푸시파워로 밀어주기
 		chr_x = shd_x = pt_x; // 
@@ -53,8 +54,8 @@ struct characterInfo
 		chr_y -= jumpPower;
 		chr_y += vPushPower;
 		chr_rc = RectMakeCenter(chr_x, chr_y, chr_width, chr_height);
-		shdDistance = shd_y - chr_rc.bottom - 1;
-		ptDistance = pt_y - chr_rc.bottom - 1;
+		shdDistance = shd_y - chr_rc.bottom;
+		ptDistance = pt_y - chr_rc.bottom;
 
 
 		if (jumpPower <= 0 && shdDistance <= 0)

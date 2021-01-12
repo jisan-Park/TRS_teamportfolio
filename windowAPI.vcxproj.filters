@@ -258,6 +258,18 @@
     <ClInclude Include="picture.h">
       <Filter>2DGameFramework\subclass\picture</Filter>
     </ClInclude>
+    <ClInclude Include="stair.h">
+      <Filter>playGround\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="stairBack.h">
+      <Filter>playGround\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="stairFront.h">
+      <Filter>playGround\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="baricadeLine.h">
+      <Filter>playGround\mapObject\lines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -421,6 +433,18 @@
     </ClCompile>
     <ClCompile Include="picture.cpp">
       <Filter>2DGameFramework\subclass\picture</Filter>
+    </ClCompile>
+    <ClCompile Include="stair.cpp">
+      <Filter>playGround\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="stairBack.cpp">
+      <Filter>playGround\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="stairFront.cpp">
+      <Filter>playGround\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="baricadeLine.cpp">
+      <Filter>playGround\mapObject\lines</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
