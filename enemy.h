@@ -56,9 +56,12 @@ protected:
 	int _count;	 //따라갈지 멈출지 랜덤값을 받는 카운트
 	int _countt; //공격시작전 텀을주는 카운트
 	int _counttt;//날아갈떄 카운트
+	int _countttt;
 	bool _inrangeX, _inrangeY;
 	int _hitcount;
 	bool ison;
+	bool _isDead;
+	bool _makeDead;
 	animation* _motion;
 
 	ENEMYSTATE _state;
@@ -76,5 +79,13 @@ public:
 	//공통 함수
 	virtual void release();
 	virtual void render();
+	//setter
+	void setIsDead(bool b) { _isDead = b; };
+	void setMakeDead(bool b) { _makeDead = b; };
+	//getter
+	int getHP() { return _hp; };
+	bool getIsDead() { return _isDead; };
+	bool getMakeDead() { return _makeDead; };
+	characterInfo getInfo() { return _info; };
 };
 

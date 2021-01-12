@@ -20,6 +20,7 @@ void enemyManager::update()
 		(*_viMinion)->update();
 
 	}
+	remove();
 }
 
 void enemyManager::render()
@@ -33,17 +34,17 @@ void enemyManager::render()
 void enemyManager::setEnemy()
 {
 	enemy* temp;
-	//temp = new mike;
-	//temp->init("mike_idle", 400, 300);
-	//_vMinion.push_back(temp);
+	temp = new mike;
+	temp->init("mike_idle", 400, 300);
+	_vMinion.push_back(temp);
 	//
 	//temp = new lee;
 	//temp->init("lee_idle", 600, 300);
 	//_vMinion.push_back(temp);
 
-	temp = new jesse;
-	temp->init("jesse_idle", 300, 300);
-	_vMinion.push_back(temp);
+	//temp = new jesse;
+	//temp->init("jesse_idle", 300, 300);
+	//_vMinion.push_back(temp);
 
 	//temp = new william;
 	//temp->init("william_idle", 300, 500);
@@ -145,8 +146,8 @@ void enemyManager::setimage()
 
 	//malcolm
 	IMAGEMANAGER->addFrameImage("malcolm_idle", "image/enemy/MALCOLM/MALCOLM - IDLE.bmp", 1012, 400, 4, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("malcolm_attack1", "image/enemy/MALCOLM/MALCOLM - ATTACK1.bmp", 1020, 400, 4, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("malcolm_attack2", "image/enemy/MALCOLM/MALCOLM - ATTACK2.bmp", 1020, 400, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("malcolm_attack1", "image/enemy/MALCOLM/MALCOLM - ATTACK1.bmp", 1012, 400, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("malcolm_attack2", "image/enemy/MALCOLM/MALCOLM - ATTACK2.bmp", 1012, 400, 4, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("malcolm_defense", "image/enemy/MALCOLM/MALCOLM - DEFENSE.bmp", 759, 400, 3, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("malcolm_defense2", "image/enemy/MALCOLM/MALCOLM - DEFENSE2.bmp", 600, 400, 2, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("malcolm_down", "image/enemy/MALCOLM/MALCOLM - DOWN.bmp", 3542, 400, 14, 2, true, RGB(255, 0, 255));
@@ -187,4 +188,18 @@ void enemyManager::setimage()
 	IMAGEMANAGER->addFrameImage("devil_damage", "image/BOSS/devil hited.bmp", 950, 312, 5, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("devil_set", "image/BOSS/devil set.bmp", 1900, 312, 10, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("devil_state3", "image/BOSS/devil state3.bmp", 4940, 312, 26, 2, true, RGB(255, 0, 255));
+}
+
+void enemyManager::remove()
+{
+
+	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end();)
+	{
+		if ((*_viMinion)->getIsDead())
+		{
+			GAMEMANAGER->deletePicture((*_viMinion)->getInfo().renderNumber);
+			_viMinion = _vMinion.erase(_viMinion);
+		}
+		else ++_viMinion;
+	}
 }

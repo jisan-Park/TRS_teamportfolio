@@ -19,7 +19,7 @@ private:
 private:
 	vEnemy _vMinion;
 	viEnemy _viMinion;
-	
+
 public:
 	enemyManager() {};
 	~enemyManager() {};
@@ -30,5 +30,6 @@ public:
 	void render();
 	void setEnemy();
 	void setimage();
+	void remove();
 };
 
