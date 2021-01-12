@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "mapObject.h"
-//
-#include <iostream>
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-using namespace std;
-//
+
 mapObject::mapObject()
 {
 }
@@ -22,14 +18,9 @@ HRESULT mapObject::init()
 	box2._img = new image;
 	box1._img = IMAGEMANAGER->findImage("box1");
 	box2._img = IMAGEMANAGER->findImage("box2");
-	/*
-	IMAGEMANAGER->findImage("box1")->render(hdc, 365, 390);
-	IMAGEMANAGER->findImage("box2")->render(hdc, 450, 315);
-	*/
+
 	box1._info.init(GAMEMANAGER->getRenderNum(), 427, 504, 124, 112, 0, 0);
 	box2._info.init(GAMEMANAGER->getRenderNum(), 512, 502, 124, 189, 0, 0);
-	cout << "box1.num = " << box1._info.renderNumber << endl;
-	cout << "box2.num = " << box2._info.renderNumber << endl;
 
 	GAMEMANAGER->addPicture(box1._info, box1._img);
 	GAMEMANAGER->addPicture(box2._info, box2._img);

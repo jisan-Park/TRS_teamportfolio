@@ -1,10 +1,12 @@
 #pragma once
 #include "singletonBase.h"
 #include "camera.h"
+
 class cameraManager : public singletonBase <cameraManager>
 {
 private:
 	camera* _camera;
+	
 public:
 	cameraManager();
 	~cameraManager();
@@ -14,7 +16,12 @@ public:
 	void update();
 
 	void initCamera(float x, float y);
-	void setCamera(float x, float y);
 	void moveCamera(float x, float y);
-	POINT getCameraPoint();
+	//setter
+	void setCamera(float x, float y);
+	void setPhase(int i) { _camera->setPhase(i); };
+	//getter
+	POINT getCameraPoint() { return _camera->getPoint(); };
+	int getCameraPhase() { return _camera->getPhase(); };
+
 };

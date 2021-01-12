@@ -16,7 +16,8 @@ HRESULT inGameScene::init()
 {
 	PLAYER->init();
 	IMAGEMANAGER->addImage("인게임배경", "image/scene/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
-
+	//카메라 위치조정 시작
+	CAMERAMANAGER->setPhase(0);
 	_em = new enemyManager;
 	_em->init();
 
@@ -47,6 +48,10 @@ void inGameScene::update()
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F2)) {
 		SCENEMANAGER->changeScene("gameclear");
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F3)) {
+		//phase 1 올려줌
+		CAMERAMANAGER->setPhase(CAMERAMANAGER->getCameraPhase()+1);
 	}
 }
 

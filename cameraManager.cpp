@@ -26,6 +26,7 @@ void cameraManager::release()
 void cameraManager::update()
 {
 	_camera->checkPoint();
+	_camera->update();
 }
 
 void cameraManager::initCamera(float x, float y)
@@ -42,7 +43,4 @@ void cameraManager::moveCamera(float x, float y)
 {
 	_camera->movePoint(x, y);
 }
-POINT cameraManager::getCameraPoint()
-{
-	return _camera->getPoint();
-}
+
