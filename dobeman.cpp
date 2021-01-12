@@ -6,7 +6,7 @@ HRESULT dobeman::init(const char * imageName, float x, float y)
 	setAnimation();
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
-	_hp = 100;
+	_hp = 10;
 	_def = 5;
 	_spd = 5;
 	_str = 5;
@@ -20,7 +20,8 @@ HRESULT dobeman::init(const char * imageName, float x, float y)
 
 void dobeman::atk()
 {
-	if (_direction == E_LEFT && _state != E_PUNCH)//범위에 들어오면 IDLE상태로
+
+	if (_direction == E_LEFT && _state != E_PUNCH && _hp > 0)//범위에 들어오면 IDLE상태로
 	{
 		_img = IMAGEMANAGER->findImage("dobeman_idle");
 		_direction = E_LEFT;
@@ -32,7 +33,7 @@ void dobeman::atk()
 			_motion->start();
 		}
 	}
-	if (_direction == E_RIGHT && _state != E_PUNCH)//범위에 들어오면 오른쪽IDLE상태로
+	if (_direction == E_RIGHT && _state != E_PUNCH && _hp > 0)//범위에 들어오면 오른쪽IDLE상태로
 	{
 		_img = IMAGEMANAGER->findImage("dobeman_idle");
 		_direction = E_RIGHT;
@@ -68,11 +69,17 @@ void dobeman::atk()
 			//_count = 0;
 		}
 	}
+
+	if (_hp <= 0)//hp가 0일때 죽음 
+	{
+		setMakeDead(true);
+	}
+
 }
 
 void dobeman::move()
 {
-	if (_img != IMAGEMANAGER->findImage("mike_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
+	if (_img != IMAGEMANAGER->findImage("dobeman_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
 	{
 		//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 		if (_inrangeX || _inrangeY)
@@ -85,14 +92,14 @@ void dobeman::move()
 
 				if (num <= 2)
 				{
-					if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 60) //player와 enemy의 x가 멀때
+					if (_inrangeX) //player와 enemy의 x가 멀때
 					{
 						if (PLAYER->getInfo().pt_x < _info.pt_x)
 						{
 							_info.hPushPower = -2;
 							_img = IMAGEMANAGER->findImage("dobeman_run");
 							_direction = E_LEFT;
-							_state = E_RUN;
+							_state = E_WALK;
 							_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_LEFT");
 							if (!_motion->isPlay())
 							{
@@ -104,7 +111,7 @@ void dobeman::move()
 							_info.hPushPower = 2;
 							_img = IMAGEMANAGER->findImage("dobeman_run");
 							_direction = E_RIGHT;
-							_state = E_RUN;
+							_state = E_WALK;
 							_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_RIGHT");
 							if (!_motion->isPlay())
 							{
@@ -116,7 +123,7 @@ void dobeman::move()
 					{
 						_info.hPushPower = 0;
 					}
-					if (abs(PLAYER->getInfo().pt_y - _info.pt_y) > 20) //player 랑 enemy 사이의 y 가 멀때
+					if (_inrangeY) //player 랑 enemy 사이의 y 가 멀때
 					{
 						if (PLAYER->getInfo().pt_y < _info.pt_y)
 						{
@@ -174,12 +181,25 @@ void dobeman::move()
 
 void dobeman::update()
 {
-	inrange();
-	move();
+
+	if (_makeDead)
+	{
+
+		_makeDead = false;
+		_img = IMAGEMANAGER->findImage("dobeman_knockDown");
+		if (_direction == LEFT) {
+			_motion = KEYANIMANAGER->findAnimation("dobeman_DEAD_LEFT");
+		}
+		else if (_direction == RIGHT) {
+			_motion = KEYANIMANAGER->findAnimation("dobeman_DEAD_RIGHT");
+		}
+		_motion->start();
+	}
+
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
-	collsion();
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
+
 	if (_state == E_PUNCH)
 	{
 		if (_direction == E_LEFT)
@@ -196,6 +216,40 @@ void dobeman::update()
 		_inattack = RectMakeCenter(-100, -100, 0, 0);
 	}
 	PLAYER->setEnemyAtkRc(_inattack, 8);
+
+	if (_state == E_DOWN || _state == E_DOWNHITTED)
+	{
+		_countttt++;
+		_info._push_width = 65;
+		_info._push_height = 187.5;
+		_info.chr_width = 50;
+		_info.chr_height = 10;
+
+		if (_countttt == 1)
+		{
+			_info.chr_y += 30;
+		}
+
+	}
+	else
+	{
+		_countttt = 0;
+		_info._push_width = 80;
+		_info._push_height = 90;
+		_info.chr_width = 50;
+		_info.chr_height = 100;
+	}
+
+
+	inrange();
+	move();
+	if (_hp > 0)
+	{
+		collsion();
+
+	}
+
+
 }
 
 void dobeman::collsion()
@@ -216,6 +270,7 @@ void dobeman::collsion()
 				_count = 0;
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
@@ -227,6 +282,7 @@ void dobeman::collsion()
 				_count = 0;
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
@@ -237,6 +293,8 @@ void dobeman::collsion()
 				_state = E_DOWN;
 				_info.vPushPower = 0;
 				_info.jumpPower = 3;
+				_hp -= PLAYER->getAttackDamege();
+
 
 
 			}
@@ -249,15 +307,14 @@ void dobeman::collsion()
 				_state = E_DOWN;
 				_info.vPushPower = 0;
 				_info.jumpPower = 3;
-
+				_hp -= PLAYER->getAttackDamege();
 
 			}
 		}
 	}
 	if (_state == E_DOWN)
 	{
-		_info.chr_width = 100;
-		_info.chr_height = 25;
+
 		_counttt++;
 		if (_counttt < 50)
 		{
@@ -298,11 +355,7 @@ void dobeman::collsion()
 		}
 
 	}
-	else
-	{
-		_info.chr_width = 50;
-		_info.chr_height = 100;
-	}
+
 	if (_state == E_WALK || _state == E_RUN || _state == E_IDLE)
 	{
 		_counttt = 0;
@@ -340,11 +393,13 @@ void dobeman::setAnimation()
 	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_ATTACK_LEFT", "dobeman_attack", 17, 9, 8, false, false, leftAttack, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DAMAGE_RIGHT", "dobeman_damage", 0, 4, 8, false, false, leftAttack, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DAMAGE_LEFT", "dobeman_damage", 9, 5, 8, false, false, leftAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKDOWN_RIGHT", "dobeman_knockDown", 0, 13, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKDOWN_LEFT", "dobeman_knockDown", 27, 14, 8, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKDOWN_RIGHT", "dobeman_knockDown", 0, 13, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKDOWN_LEFT", "dobeman_knockDown", 27, 14, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKUP_RIGHT", "dobeman_knockUp", 0, 4, 8, false, false, rightAttack, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKUP_LEFT", "dobeman_knockUp", 9, 5, 8, false, false, leftAttack, this);
 
+	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DEAD_RIGHT", "dobeman_knockDown", 0, 13, 10, false, false, makeDead, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DEAD_LEFT", "dobeman_knockDown", 27, 14, 10, false, false, makeDead, this);
 }
 
 void dobeman::rightAttack(void * obj)
@@ -368,3 +423,7 @@ void dobeman::leftAttack(void * obj)
 	m->getMotion()->start();
 }
 
+void dobeman::makeDead(void *obj) {
+	dobeman *m = (dobeman*)obj;
+	m->setIsDead(true);
+}

@@ -246,6 +246,8 @@ void mike::update()
 
 	if (_makeDead)
 	{
+		_info.hPushPower = 0;
+		_info.vPushPower = 0;
 		_makeDead = false;
 		_img = IMAGEMANAGER->findImage("mike_knockDown");
 		if (_direction == LEFT) {
@@ -313,6 +315,7 @@ void mike::update()
 	{
 		collsion();
 	}
+
 
 }
 
@@ -448,10 +451,7 @@ void mike::collsion()
 		}
 
 	}
-	else
-	{
 
-	}
 	if (_state == E_WALK || _state == E_RUN || _state == E_IDLE)
 	{
 		_counttt = 0;

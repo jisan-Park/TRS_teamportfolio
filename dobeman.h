@@ -30,5 +30,6 @@ public:
 	//animation 용 callbackFunction
 	static void rightAttack(void* obj); //right idle 로 바꿔주는 콜백함수
 	static void leftAttack(void* obj);  //left idle 로 바꿔주는 콜백함수
+	static void makeDead(void * obj);
 
 };

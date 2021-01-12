@@ -6,7 +6,7 @@ HRESULT malcolm::init(const char * imageName, float x, float y)
 	setAnimation();
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
-	_hp = 100;
+	_hp = 10;
 	_def = 5;
 	_spd = 5;
 	_str = 5;
@@ -20,7 +20,7 @@ HRESULT malcolm::init(const char * imageName, float x, float y)
 
 void malcolm::atk()
 {
-	if (_direction == E_LEFT && _state != E_PUNCH)//범위에 들어오면 IDLE상태로
+	if (_direction == E_LEFT && _state != E_PUNCH && _hp > 0)//범위에 들어오면 IDLE상태로
 	{
 		_img = IMAGEMANAGER->findImage("malcolm_idle");
 		_direction = E_LEFT;
@@ -32,7 +32,7 @@ void malcolm::atk()
 			_motion->start();
 		}
 	}
-	if (_direction == E_RIGHT && _state != E_PUNCH)//범위에 들어오면 오른쪽IDLE상태로
+	if (_direction == E_RIGHT && _state != E_PUNCH && _hp > 0)//범위에 들어오면 오른쪽IDLE상태로
 	{
 		_img = IMAGEMANAGER->findImage("malcolm_idle");
 		_direction = E_RIGHT;
@@ -92,13 +92,17 @@ void malcolm::atk()
 			//_count = 0;
 		}
 	}
+	if (_hp <= 0)//hp가 0일때 죽음 
+	{
+		setMakeDead(true);
+	}
 }
 
 void malcolm::move()
 {
 	RECT temp;
 	//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
-	if (_img != IMAGEMANAGER->findImage("mike_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
+	if (_img != IMAGEMANAGER->findImage("malcolm_down") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
 	{
 		//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 		if (_inrangeX || _inrangeY)
@@ -200,6 +204,20 @@ void malcolm::move()
 
 void malcolm::update()
 {
+	if (_makeDead)
+	{
+		_info.hPushPower = 0;
+		_info.vPushPower = 0;
+		_makeDead = false;
+		_img = IMAGEMANAGER->findImage("malcolm_down");
+		if (_direction == LEFT) {
+			_motion = KEYANIMANAGER->findAnimation("malcolm_DEAD_LEFT");
+		}
+		else if (_direction == RIGHT) {
+			_motion = KEYANIMANAGER->findAnimation("malcolm_DEAD_RIGHT");
+		}
+		_motion->start();
+	}
 	inrange();
 
 	if (_state == E_PUNCH)
@@ -220,9 +238,36 @@ void malcolm::update()
 	PLAYER->setEnemyAtkRc(_inattack, 8);
 	move();
 	_info.physics();
-	collsion();
+
 	MAPOBJECT->collisionMo(_info);
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
+
+	if (_state == E_DOWN || _state == E_DOWNHITTED)
+	{
+		_countttt++;
+		_info._push_width = 85;
+		_info._push_height = 187.5;
+		_info.chr_width = 50;
+		_info.chr_height = 10;
+
+		if (_countttt == 1)
+		{
+			_info.chr_y += 30;
+		}
+
+	}
+	else
+	{
+		_countttt = 0;
+		_info._push_width = 100;
+		_info._push_height = 90;
+		_info.chr_width = 50;
+		_info.chr_height = 100;
+	}
+	if (_hp > 0)
+	{
+		collsion();
+	}
 }
 
 void malcolm::collsion()
@@ -243,6 +288,7 @@ void malcolm::collsion()
 				_count = 0;
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
@@ -254,6 +300,7 @@ void malcolm::collsion()
 				_count = 0;
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
@@ -264,7 +311,7 @@ void malcolm::collsion()
 				_state = E_DOWN;
 				_info.vPushPower = 0;
 				_info.jumpPower = 3;
-
+				_hp -= PLAYER->getAttackDamege();
 
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
@@ -276,7 +323,7 @@ void malcolm::collsion()
 				_state = E_DOWN;
 				_info.vPushPower = 0;
 				_info.jumpPower = 3;
-
+				_hp -= PLAYER->getAttackDamege();
 
 			}
 		}
@@ -292,6 +339,7 @@ void malcolm::collsion()
 				_state = E_DOWNHITTED;
 				_info.vPushPower = 0;
 				_info.jumpPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_LEFT)
 			{
@@ -302,6 +350,7 @@ void malcolm::collsion()
 				_state = E_DOWNHITTED;
 				_info.vPushPower = 0;
 				_info.jumpPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 		}
 
@@ -414,6 +463,8 @@ void malcolm::setAnimation()
 	KEYANIMANAGER->addCoordinateFrameAnimation("malcolm_JUMP_RIGHT", "malcolm_jump", 0, 12, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("malcolm_JUMP_LEFT", "malcolm_jump", 25, 13, 10, false, false);
 
+	KEYANIMANAGER->addCoordinateFrameAnimation("malcolm_DEAD_RIGHT", "malcolm_down", 0, 13, 10, false, false, makeDead, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("malcolm_DEAD_LEFT", "malcolm_down", 27, 14, 10, false, false, makeDead, this);
 }
 
 void malcolm::rightAttack(void * obj)
@@ -455,4 +506,9 @@ void malcolm::leftdown(void * obj)
 	m->setImage(IMAGEMANAGER->findImage("malcolm_down"));
 	m->setteMotion(KEYANIMANAGER->findAnimation("malcolm_KNOCKDOWN_LEFT2"));
 	m->getMotion()->start();
+}
+
+void malcolm::makeDead(void *obj) {
+	malcolm *m = (malcolm*)obj;
+	m->setIsDead(true);
 }

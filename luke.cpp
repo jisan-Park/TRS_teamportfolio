@@ -21,7 +21,7 @@ HRESULT luke::init(const char * imageName, float x, float y)
 
 void luke::atk()
 {
-	if (_direction == E_LEFT && _state != E_PUNCH)//범위에 들어오면 IDLE상태로
+	if (_direction == E_LEFT && _state != E_PUNCH && _hp > 0)//범위에 들어오면 IDLE상태로
 	{
 		_img = IMAGEMANAGER->findImage("luke_idle");
 		_direction = E_LEFT;
@@ -33,7 +33,7 @@ void luke::atk()
 			_motion->start();
 		}
 	}
-	if (_direction == E_RIGHT && _state != E_PUNCH)//범위에 들어오면 오른쪽IDLE상태로
+	if (_direction == E_RIGHT && _state != E_PUNCH && _hp > 0)//범위에 들어오면 오른쪽IDLE상태로
 	{
 		_img = IMAGEMANAGER->findImage("luke_idle");
 		_direction = E_RIGHT;
@@ -92,6 +92,10 @@ void luke::atk()
 			}
 			//_count = 0;
 		}
+	}
+	if (_hp <= 0)//hp가 0일때 죽음 
+	{
+		setMakeDead(true);
 	}
 }
 
@@ -201,13 +205,30 @@ void luke::move()
 
 void luke::update()
 {
+	if (_makeDead)
+	{
+		_info.hPushPower = 0;
+		_info.vPushPower = 0;
+		_makeDead = false;
+		_img = IMAGEMANAGER->findImage("luke_knockDown");
+		if (_direction == LEFT) {
+			_motion = KEYANIMANAGER->findAnimation("luke_DEAD_LEFT");
+		}
+		else if (_direction == RIGHT) {
+			_motion = KEYANIMANAGER->findAnimation("luke_DEAD_RIGHT");
+		}
+		_motion->start();
+	}
 	move();
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
 	PLAYER->setEnemyAtkRc(_inattack, 8);
 	inrange();
-	collsion();
+	if (_hp > 0)
+	{
+		collsion();
+	}
 
 	if (_state == E_PUNCH)
 	{
@@ -223,6 +244,29 @@ void luke::update()
 	else
 	{
 		_inattack = RectMakeCenter(-100, -100, 0, 0);
+	}
+
+	if (_state == E_DOWN || _state == E_DOWNHITTED)
+	{
+		_countttt++;
+		_info._push_width = 65;
+		_info._push_height = 127.5;
+		_info.chr_width = 50;
+		_info.chr_height = 10;
+
+		if (_countttt == 1)
+		{
+			_info.chr_y += 30;
+		}
+
+	}
+	else
+	{
+		_countttt = 0;
+		_info._push_width = 50;
+		_info._push_height = 40;
+		_info.chr_width = 50;
+		_info.chr_height = 100;
 	}
 }
 
@@ -244,6 +288,7 @@ void luke::collsion()
 				_count = 0;
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
@@ -255,6 +300,7 @@ void luke::collsion()
 				_count = 0;
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
@@ -265,7 +311,7 @@ void luke::collsion()
 				_state = E_DOWN;
 				_info.vPushPower = 0;
 				_info.jumpPower = 3;
-
+				_hp -= PLAYER->getAttackDamege();
 
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
@@ -277,7 +323,7 @@ void luke::collsion()
 				_state = E_DOWN;
 				_info.vPushPower = 0;
 				_info.jumpPower = 3;
-
+				_hp -= PLAYER->getAttackDamege();
 
 			}
 		}
@@ -293,6 +339,7 @@ void luke::collsion()
 				_state = E_DOWNHITTED;
 				_info.vPushPower = 0;
 				_info.jumpPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_LEFT)
 			{
@@ -303,6 +350,7 @@ void luke::collsion()
 				_state = E_DOWNHITTED;
 				_info.vPushPower = 0;
 				_info.jumpPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 		}
 
@@ -447,4 +495,10 @@ void luke::leftdown(void * obj)
 	m->setImage(IMAGEMANAGER->findImage("luke_knockDown"));
 	m->setteMotion(KEYANIMANAGER->findAnimation("luke_KNOCKDOWN_LEFT2"));
 	m->getMotion()->start();
+}
+
+void luke::makeDead(void * obj)
+{
+	luke *m = (luke*)obj;
+	m->setIsDead(true);
 }

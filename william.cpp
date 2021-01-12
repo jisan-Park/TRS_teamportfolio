@@ -6,7 +6,7 @@ HRESULT william::init(const char* imageName, float x, float y)
 	setAnimation();
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
-	_hp = 100;
+	_hp = 10;
 	_def = 5;
 	_spd = 5;
 	_str = 5;
@@ -20,7 +20,7 @@ HRESULT william::init(const char* imageName, float x, float y)
 
 void william::atk()
 {
-	if (_direction == E_LEFT && _state != E_BELLY)//범위에 들어오면 IDLE상태로
+	if (_direction == E_LEFT && _state != E_BELLY && _hp > 0)//범위에 들어오면 IDLE상태로
 	{
 		_img = IMAGEMANAGER->findImage("william_idle");
 		_direction = E_LEFT;
@@ -32,7 +32,7 @@ void william::atk()
 			_motion->start();
 		}
 	}
-	if (_direction == E_RIGHT && _state != E_BELLY)//범위에 들어오면 오른쪽IDLE상태로
+	if (_direction == E_RIGHT && _state != E_BELLY && _hp > 0)//범위에 들어오면 오른쪽IDLE상태로
 	{
 		_img = IMAGEMANAGER->findImage("william_idle");
 		_direction = E_RIGHT;
@@ -68,13 +68,17 @@ void william::atk()
 			//_count = 0;
 		}
 	}
+	if (_hp <= 0)//hp가 0일때 죽음 
+	{
+		setMakeDead(true);
+	}
 }
 
 void william::move()
 {
 	RECT temp;
 	//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
-	if (_img != IMAGEMANAGER->findImage("mike_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
+	if (_img != IMAGEMANAGER->findImage("william_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
 	{
 		//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 		if (_inrangeX || _inrangeY)
@@ -176,6 +180,21 @@ void william::move()
 
 void william::update()
 {
+
+	if (_makeDead)
+	{
+		_info.hPushPower = 0;
+		_info.vPushPower = 0;
+		_makeDead = false;
+		_img = IMAGEMANAGER->findImage("william_knockDown");
+		if (_direction == LEFT) {
+			_motion = KEYANIMANAGER->findAnimation("william_DEAD_LEFT");
+		}
+		else if (_direction == RIGHT) {
+			_motion = KEYANIMANAGER->findAnimation("william_DEAD_RIGHT");
+		}
+		_motion->start();
+	}
 	inrange();
 
 	if (_state == E_BELLY)
@@ -201,8 +220,34 @@ void william::update()
 	move();
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
-	collsion();
+	if (_hp > 0)
+	{
+		collsion();
+	}
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
+
+	if (_state == E_DOWN || _state == E_DOWNHITTED)
+	{
+		_countttt++;
+		_info._push_width = 65;
+		_info._push_height = 187.5;
+		_info.chr_width = 50;
+		_info.chr_height = 10;
+
+		if (_countttt == 1)
+		{
+			_info.chr_y += 30;
+		}
+
+	}
+	else
+	{
+		_countttt = 0;
+		_info._push_width = 80;
+		_info._push_height = 90;
+		_info.chr_width = 50;
+		_info.chr_height = 100;
+	}
 }
 
 void william::collsion()
@@ -223,6 +268,7 @@ void william::collsion()
 				_count = 0;
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
@@ -234,6 +280,7 @@ void william::collsion()
 				_count = 0;
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
@@ -244,6 +291,7 @@ void william::collsion()
 				_state = E_DOWN;
 				_info.vPushPower = 0;
 				_info.jumpPower = 3;
+				_hp -= PLAYER->getAttackDamege();
 
 
 			}
@@ -256,7 +304,7 @@ void william::collsion()
 				_state = E_DOWN;
 				_info.vPushPower = 0;
 				_info.jumpPower = 3;
-
+				_hp -= PLAYER->getAttackDamege();
 
 			}
 		}
@@ -272,6 +320,7 @@ void william::collsion()
 				_state = E_DOWNHITTED;
 				_info.vPushPower = 0;
 				_info.jumpPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 			if (_direction == E_LEFT)
 			{
@@ -282,6 +331,7 @@ void william::collsion()
 				_state = E_DOWNHITTED;
 				_info.vPushPower = 0;
 				_info.jumpPower = 0;
+				_hp -= PLAYER->getAttackDamege();
 			}
 		}
 
@@ -383,6 +433,9 @@ void william::setAnimation()
 	KEYANIMANAGER->addCoordinateFrameAnimation("william_KNOCKUP_LEFT", "william_knockUp", 21, 11, 10, false, false, leftAttack, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("william_KNOCKDOWN_RIGHT2", "william_knockDown", 11, 13, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("william_KNOCKDOWN_LEFT2", "william_knockDown", 16, 14, 10, false, false);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("william_DEAD_RIGHT", "william_knockDown", 0, 13, 10, false, false, makeDead, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("william_DEAD_LEFT", "william_knockDown", 27, 14, 10, false, false, makeDead, this);
 }
 
 
@@ -425,4 +478,9 @@ void william::leftdown(void * obj)
 	m->setImage(IMAGEMANAGER->findImage("william_knockDown"));
 	m->setteMotion(KEYANIMANAGER->findAnimation("william_KNOCKDOWN_LEFT2"));
 	m->getMotion()->start();
+}
+
+void william::makeDead(void *obj) {
+	william *m = (william*)obj;
+	m->setIsDead(true);
 }

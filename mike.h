@@ -35,3 +35,4 @@ public:
 	static void leftdown(void* obj);
 	static void makeDead(void * obj);
 };
+

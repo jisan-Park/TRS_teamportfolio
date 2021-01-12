@@ -34,9 +34,9 @@ void enemyManager::render()
 void enemyManager::setEnemy()
 {
 	enemy* temp;
-	temp = new mike;
-	temp->init("mike_idle", 400, 300);
-	_vMinion.push_back(temp);
+	//temp = new mike;
+	//temp->init("mike_idle", 400, 300);
+	//_vMinion.push_back(temp);
 	//
 	//temp = new lee;
 	//temp->init("lee_idle", 600, 300);
@@ -46,9 +46,9 @@ void enemyManager::setEnemy()
 	//temp->init("jesse_idle", 300, 300);
 	//_vMinion.push_back(temp);
 
-	//temp = new william;
-	//temp->init("william_idle", 300, 500);
-	//_vMinion.push_back(temp);
+	temp = new william;
+	temp->init("william_idle", 300, 500);
+	_vMinion.push_back(temp);
 	//
 	//temp = new malcolm;
 	//temp->init("malcolm_idle", 200, 500);

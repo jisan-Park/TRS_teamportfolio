@@ -34,6 +34,5 @@ public:
 	static void leftAttack(void* obj);
 	static void rightdown(void* obj);
 	static void leftdown(void* obj);
-
+	static void makeDead(void * obj);
 };
-
