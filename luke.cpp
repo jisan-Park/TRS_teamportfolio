@@ -7,7 +7,7 @@ HRESULT luke::init(const char * imageName, float x, float y)
 	setAnimation();
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
-	_hp = 100;
+	_hp = 10;
 	_def = 5;
 	_spd = 5;
 	_str = 5;
@@ -61,21 +61,21 @@ void luke::atk()
 					num = RND->getFromIntTo(1, 3);
 					if (num == 1)//점프발차기하기
 					{
-						_img = IMAGEMANAGER->findImage("luck_jumpkick");
+						_img = IMAGEMANAGER->findImage("luke_jumpkick");
 						_info.jumpPower = 18;
 						_direction = E_LEFT;
 						_state = E_ROUNDKICK;
-						_motion = KEYANIMANAGER->findAnimation("malcolm_JUMPKICK_LEFT");
+						_motion = KEYANIMANAGER->findAnimation("luke_JUMPKICK_LEFT");
 						_motion->start();
 					}
 					if (num == 2)
 					{
-						_img = IMAGEMANAGER->findImage("malcolm_jump");
+						_img = IMAGEMANAGER->findImage("luke_jump");
 						_info.jumpPower = 15;
 						_info.hPushPower = -2;
 						_direction = E_LEFT;
 						_state = E_JUMP;
-						_motion = KEYANIMANAGER->findAnimation("malcolm_JUMP_LEFT");
+						_motion = KEYANIMANAGER->findAnimation("luke_JUMP_LEFT");
 						_motion->start();
 						if (_info.jumpPower <= 0 && _info.shdDistance <= 0)
 						{
@@ -90,18 +90,18 @@ void luke::atk()
 					num2 = RND->getFromIntTo(1, 3);
 					if (num2 == 1)
 					{
-						_img = IMAGEMANAGER->findImage("malcolm_attack1");
+						_img = IMAGEMANAGER->findImage("luke_attack1");
 						_direction = E_LEFT;
 						_state = E_PUNCH;
-						_motion = KEYANIMANAGER->findAnimation("malcolm_ATTACK1_LEFT");
+						_motion = KEYANIMANAGER->findAnimation("luke_ATTACK1_LEFT");
 						_motion->start();
 					}
 					if (num2 == 2)
 					{
-						_img = IMAGEMANAGER->findImage("malcolm_attack2");
+						_img = IMAGEMANAGER->findImage("luke_attack2");
 						_direction = E_LEFT;
 						_state = E_KICK;
-						_motion = KEYANIMANAGER->findAnimation("malcolm_ATTACK2_LEFT");
+						_motion = KEYANIMANAGER->findAnimation("luke_ATTACK2_LEFT");
 						_motion->start();
 					}
 				}
@@ -115,22 +115,22 @@ void luke::atk()
 					num = RND->getFromIntTo(1, 3);
 					if (num == 1) //점프발차기하기
 					{
-						_img = IMAGEMANAGER->findImage("malcolm_attack2");
+						_img = IMAGEMANAGER->findImage("luke_attack2");
 						_info.jumpPower = 18;
 						_direction = E_RIGHT;
 						_state = E_ROUNDKICK;
-						_motion = KEYANIMANAGER->findAnimation("malcolm_ATTACK2_RIGHT");
+						_motion = KEYANIMANAGER->findAnimation("luke_ATTACK2_RIGHT");
 						_motion->start();
 					}
 					if (num == 2)//점프 + pushpower 추가해서 다가가게 하기
 					{
-						_img = IMAGEMANAGER->findImage("malcolm_jump");
+						_img = IMAGEMANAGER->findImage("luke_jump");
 						_info.jumpPower = 15;
 						_info.hPushPower = 2;
 						_direction = E_RIGHT;
 						_state = E_JUMP;
 
-						_motion = KEYANIMANAGER->findAnimation("malcolm_JUMP_RIGHT");
+						_motion = KEYANIMANAGER->findAnimation("luke_JUMP_RIGHT");
 						_motion->start();
 						if (_info.jumpPower <= 0 && _info.shdDistance <= 0)
 						{
@@ -212,10 +212,7 @@ void luke::atk()
 	//		//_count = 0;
 	//	}
 	//}
-	if (_hp <= 0)//hp가 0일때 죽음 
-	{
-		setMakeDead(true);
-	}
+	
 }
 
 void luke::move()
@@ -224,6 +221,10 @@ void luke::move()
 	//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 	if (_img != IMAGEMANAGER->findImage("luke_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
 	{
+		if (_hp <= 0)//hp가 0일때 죽음 
+		{
+			setMakeDead(true);
+		}
 		//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 		if (_inrangeX || _inrangeY)
 		{
@@ -271,10 +272,58 @@ void luke::move()
 						if (PLAYER->getInfo().pt_y < _info.pt_y)
 						{
 							_info.vPushPower = -1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("luke_walk");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("luke_WALK_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("luke_walk");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("luke_WALK_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 						if (PLAYER->getInfo().pt_y > _info.pt_y)
 						{
 							_info.vPushPower = 1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("luke_walk");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("luke_WALK_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("luke_walk");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("luke_WALK_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 					}
 					else //player 랑 enemy 사이의 y 가 가까워졌을때
@@ -336,7 +385,11 @@ void luke::update()
 		else if (_direction == RIGHT) {
 			_motion = KEYANIMANAGER->findAnimation("luke_DEAD_RIGHT");
 		}
-		_motion->start();
+		
+		if (!_motion->isPlay())
+		{
+			_motion->start();
+		}
 	}
 	move();
 	_info.physics();
@@ -344,10 +397,8 @@ void luke::update()
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
 	PLAYER->setEnemyAtkRc(_inattack, 8);
 	inrange();
-	if (_hp > 0)
-	{
-		collsion();
-	}
+	collsion();
+	
 
 	if (_state == E_PUNCH || _state == E_KICK || _state == E_ROUNDKICK)
 	{
@@ -400,7 +451,7 @@ void luke::collsion()
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
 				_counttttt++;
-				if (_counttttt < 30)
+				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("luke_damage");
 					_motion = KEYANIMANAGER->findAnimation("luke_DAMAGE_RIGHT");
@@ -412,12 +463,12 @@ void luke::collsion()
 					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
 					if (PLAYER->getInfo().chr_x > _info.chr_x)
 					{
-						_info.hPushPower = -1;
+						_info.hPushPower = -0.1;
 						_info.vPushPower = 0;
 					}
 					if (PLAYER->getInfo().chr_x <= _info.chr_x)
 					{
-						_info.hPushPower = 1;
+						_info.hPushPower = 0.1;
 						_info.vPushPower = 0;
 					}
 				}
@@ -425,7 +476,7 @@ void luke::collsion()
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
 				_counttttt++;
-				if (_counttttt < 30)
+				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("luke_damage");
 					_motion = KEYANIMANAGER->findAnimation("luke_DAMAGE_LEFT");
@@ -437,12 +488,12 @@ void luke::collsion()
 					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
 					if (PLAYER->getInfo().chr_x > _info.chr_x)
 					{
-						_info.hPushPower = -1;
+						_info.hPushPower = -0.1;
 						_info.vPushPower = 0;
 					}
 					if (PLAYER->getInfo().chr_x <= _info.chr_x)
 					{
-						_info.hPushPower = 1;
+						_info.hPushPower = 0.1;
 						_info.vPushPower = 0;
 					}
 				}
@@ -602,6 +653,8 @@ void luke::setAnimation()
 	KEYANIMANAGER->addCoordinateFrameAnimation("luke_JUMPKICK_LEFT", "luke_jumpkick", 9, 5, 8, false, false, leftAttack, this);
 
 
+	KEYANIMANAGER->addCoordinateFrameAnimation("luke_DEAD_RIGHT", "luke_knockDown", 0, 13, 10, false, false, makeDead, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("luke_DEAD_LEFT", "luke_knockDown", 27, 14, 10, false, false, makeDead, this);
 }
 
 void luke::rightAttack(void * obj)

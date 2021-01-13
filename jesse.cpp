@@ -188,10 +188,7 @@ void jesse::atk()
 			//_count = 0;
 		}
 	}
-	if (_hp <= 0)//hp가 0일때 죽음 
-	{
-		setMakeDead(true);
-	}
+
 }
 void jesse::move()
 {
@@ -199,6 +196,10 @@ void jesse::move()
 	//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 	if (_img != IMAGEMANAGER->findImage("jesse_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
 	{
+		if (_hp <= 0)//hp가 0일때 죽음 
+		{
+			setMakeDead(true);
+		}
 		//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 		if (_inrangeX || _inrangeY)
 		{
@@ -246,10 +247,58 @@ void jesse::move()
 						if (PLAYER->getInfo().pt_y < _info.pt_y)
 						{
 							_info.vPushPower = -1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("jesse_walk");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("jesse_WALK_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("jesse_walk");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("jesse_WALK_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 						if (PLAYER->getInfo().pt_y > _info.pt_y)
 						{
 							_info.vPushPower = 1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("jesse_walk");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("jesse_WALK_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("jesse_walk");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("jesse_WALK_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 					}
 					else //player 랑 enemy 사이의 y 가 가까워졌을때
@@ -311,7 +360,10 @@ void jesse::update()
 		else if (_direction == RIGHT) {
 			_motion = KEYANIMANAGER->findAnimation("jesse_DEAD_RIGHT");
 		}
-		_motion->start();
+		if (!_motion->isPlay())
+		{
+			_motion->start();
+		}
 	}
 	inrange();
 
@@ -339,10 +391,9 @@ void jesse::update()
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
 
-	if (_hp > 0)
-	{
-		collsion();
-	}
+	
+	collsion();
+	
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
 	if (_state == E_DOWN)
 	{
@@ -380,7 +431,7 @@ void jesse::collsion()
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
 				_counttttt++;
-				if (_counttttt < 30)
+				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("jesse_damage");
 					_motion = KEYANIMANAGER->findAnimation("jesse_DAMAGE_RIGHT");
@@ -391,12 +442,12 @@ void jesse::collsion()
 					_hp -= PLAYER->getAttackDamege();
 					if (PLAYER->getInfo().chr_x > _info.chr_x)
 					{
-						_info.hPushPower = -1;
+						_info.hPushPower = -0.1;
 						_info.vPushPower = 0;
 					}
 					if (PLAYER->getInfo().chr_x <= _info.chr_x)
 					{
-						_info.hPushPower = 1;
+						_info.hPushPower = 0.1;
 						_info.vPushPower = 0;
 					}
 				}
@@ -405,7 +456,7 @@ void jesse::collsion()
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
 				_counttttt++;
-				if (_counttttt < 30)
+				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("jesse_damage");
 					_motion = KEYANIMANAGER->findAnimation("jesse_DAMAGE_LEFT");

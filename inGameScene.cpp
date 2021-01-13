@@ -54,7 +54,7 @@ void inGameScene::update()
 	KEYANIMANAGER->update();
 	PLAYER->update();
 	GAMEMANAGER->setUI();
-	_em->update();
+	//_em->update();
 	MAPOBJECT->collisionMo(PLAYER->getInfo());
 	GAMEMANAGER->update();
 	//camera 위치 초기화
@@ -67,9 +67,16 @@ void inGameScene::update()
 	if (KEYMANAGER->isOnceKeyDown(VK_F2)) {
 		SCENEMANAGER->changeScene("gameclear");
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_F3)) {
-		//phase 1 올려줌
-		CAMERAMANAGER->setPhase(CAMERAMANAGER->getCameraPhase()+1);
+	//if (KEYMANAGER->isOnceKeyDown(VK_F3)) {
+	//	//phase 1 올려줌
+	//	CAMERAMANAGER->setPhase(CAMERAMANAGER->getCameraPhase()+1);
+	//}
+	if (CAMERAMANAGER->getCameraPhase() % 2 == 1) {
+		_em->update();
+		if (_em->getVenemy().size() == 0)
+		{
+			CAMERAMANAGER->setPhase(CAMERAMANAGER->getCameraPhase() + 1);
+		}
 	}
 }
 

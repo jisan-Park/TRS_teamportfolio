@@ -68,10 +68,7 @@ void william::atk()
 			//_count = 0;
 		}
 	}
-	if (_hp <= 0)//hp가 0일때 죽음 
-	{
-		setMakeDead(true);
-	}
+	
 }
 
 void william::move()
@@ -80,9 +77,14 @@ void william::move()
 	//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 	if (_img != IMAGEMANAGER->findImage("william_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
 	{
+		if (_hp <= 0)//hp가 0일때 죽음 
+		{
+			setMakeDead(true);
+		}
 		//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 		if (_inrangeX || _inrangeY)
 		{
+			
 			_countt++; //따라갈지 멈출지 랜덤값을 받는 카운트
 			int num;
 			if (_countt % 50 == 0)
@@ -127,10 +129,58 @@ void william::move()
 						if (PLAYER->getInfo().pt_y < _info.pt_y)
 						{
 							_info.vPushPower = -1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("william_walk");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("william_WALK_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("william_walk");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("william_WALK_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 						if (PLAYER->getInfo().pt_y > _info.pt_y)
 						{
 							_info.vPushPower = 1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("william_walk");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("william_WALK_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("william_walk");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("william_WALK_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 					}
 					else //player 랑 enemy 사이의 y 가 가까워졌을때
@@ -193,7 +243,10 @@ void william::update()
 		else if (_direction == RIGHT) {
 			_motion = KEYANIMANAGER->findAnimation("william_DEAD_RIGHT");
 		}
-		_motion->start();
+		if (!_motion->isPlay())
+		{
+			_motion->start();
+		}
 	}
 	inrange();
 
@@ -220,10 +273,9 @@ void william::update()
 	move();
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
-	if (_hp > 0)
-	{
-		collsion();
-	}
+	
+	collsion();
+	
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
 
 	if (_state == E_DOWN || _state == E_DOWNHITTED)
@@ -270,6 +322,7 @@ void william::collsion()
 					_count = 0;
 					_info.hPushPower = 0;
 					_info.vPushPower = 0;
+					_hp -= PLAYER->getAttackDamege();
 				}
 				if (_direction == E_RIGHT && PLAYER->getInfo().chr_x > _info.chr_x) //오른쪽 보고있었는데 앞에서 때릴때
 				{
@@ -281,6 +334,7 @@ void william::collsion()
 					_count = 0;
 					_info.hPushPower = 0;
 					_info.vPushPower = 0;
+
 				}
 
 				if (_direction == E_LEFT && PLAYER->getInfo().chr_x > _info.chr_x) //왼쪽 보고있었는데 뒤에서 때릴때
@@ -293,6 +347,7 @@ void william::collsion()
 					_count = 0;
 					_info.hPushPower = 0;
 					_info.vPushPower = 0;
+					_hp -= PLAYER->getAttackDamege();
 				}
 				if (_direction == E_LEFT && PLAYER->getInfo().chr_x < _info.chr_x) //왼쪽 보고있었는데 앞에서 때릴때
 				{
@@ -304,6 +359,7 @@ void william::collsion()
 					_count = 0;
 					_info.hPushPower = 0;
 					_info.vPushPower = 0;
+					
 				}
 
 

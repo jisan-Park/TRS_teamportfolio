@@ -4,7 +4,7 @@
 HRESULT enemyManager::init()
 {
 	setimage();
-	setEnemy();
+	
 
 	return S_OK;
 }
@@ -15,6 +15,10 @@ void enemyManager::release()
 
 void enemyManager::update()
 {
+	if (_vMinion.size() <= 0)
+	{
+		setEnemy();
+	}
 	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); _viMinion++)
 	{
 		(*_viMinion)->update();
@@ -50,9 +54,9 @@ void enemyManager::setEnemy()
 	//temp->init("william_idle", 300, 500);
 	//_vMinion.push_back(temp);
 	//
-	temp = new malcolm;
-	temp->init("malcolm_idle", 200, 500);
-	_vMinion.push_back(temp);
+	//temp = new malcolm;
+	//temp->init("malcolm_idle", 200, 500);
+	//_vMinion.push_back(temp);
 	//
 	//temp = new luke;
 	//temp->init("luke_idle", 700, 500);
@@ -61,6 +65,51 @@ void enemyManager::setEnemy()
 	//temp = new dobeman;
 	//temp->init("dobeman_idle", 900, 500);
 	//_vMinion.push_back(temp);
+
+	switch (CAMERAMANAGER->getCameraPhase())
+	{
+	case 1:
+	{
+		temp = new lee;
+		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x+WINSIZEX, 300);
+		_vMinion.push_back(temp);
+		temp = new william;
+		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x, 500);
+		_vMinion.push_back(temp);
+		
+	}
+		break;
+	case 3:
+	{
+		temp = new mike;
+		temp->init("mike_idle", CAMERAMANAGER->getCameraPoint().x, 300);
+		_vMinion.push_back(temp);
+	}
+		break;
+	case 5:
+	{
+		temp = new william;
+		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x, 500);
+		_vMinion.push_back(temp);
+	}
+		break;
+	case 7 :
+	{
+		temp = new jesse;
+		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x, 300);
+		_vMinion.push_back(temp);
+	}
+		break;
+	case 9:
+	{
+		temp = new malcolm;
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 500);
+		_vMinion.push_back(temp);
+	}
+		break;
+	default:
+		break;
+	}
 }
 
 void enemyManager::setimage()

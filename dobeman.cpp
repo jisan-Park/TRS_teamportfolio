@@ -70,10 +70,7 @@ void dobeman::atk()
 		}
 	}
 
-	if (_hp <= 0)//hp가 0일때 죽음 
-	{
-		setMakeDead(true);
-	}
+	
 
 }
 
@@ -81,6 +78,10 @@ void dobeman::move()
 {
 	if (_img != IMAGEMANAGER->findImage("dobeman_knockDown") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED)
 	{
+		if (_hp <= 0)//hp가 0일때 죽음 
+		{
+			setMakeDead(true);
+		}
 		//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 		if (_inrangeX || _inrangeY)
 		{
@@ -128,10 +129,58 @@ void dobeman::move()
 						if (PLAYER->getInfo().pt_y < _info.pt_y)
 						{
 							_info.vPushPower = -1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("dobeman_run");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("dobeman_run");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 						if (PLAYER->getInfo().pt_y > _info.pt_y)
 						{
 							_info.vPushPower = 1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("dobeman_run");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("dobeman_run");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 					}
 					else //player 랑 enemy 사이의 y 가 가까워졌을때
@@ -193,7 +242,10 @@ void dobeman::update()
 		else if (_direction == RIGHT) {
 			_motion = KEYANIMANAGER->findAnimation("dobeman_DEAD_RIGHT");
 		}
-		_motion->start();
+		if (!_motion->isPlay())
+		{
+			_motion->start();
+		}
 	}
 
 	_info.physics();
@@ -243,11 +295,8 @@ void dobeman::update()
 
 	inrange();
 	move();
-	if (_hp > 0)
-	{
-		collsion();
-
-	}
+	
+	collsion();
 
 
 }
@@ -263,7 +312,7 @@ void dobeman::collsion()
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
 				_counttttt++;
-				if (_counttttt < 30)
+				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
 					_motion = KEYANIMANAGER->findAnimation("dobeman_DAMAGE_RIGHT");
@@ -275,12 +324,12 @@ void dobeman::collsion()
 					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
 					if (PLAYER->getInfo().chr_x > _info.chr_x)
 					{
-						_info.hPushPower = -1;
+						_info.hPushPower = -0.1;
 						_info.vPushPower = 0;
 					}
 					if (PLAYER->getInfo().chr_x <= _info.chr_x)
 					{
-						_info.hPushPower = 1;
+						_info.hPushPower = 0.1;
 						_info.vPushPower = 0;
 					}
 				}
@@ -289,7 +338,7 @@ void dobeman::collsion()
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
 				_counttttt++;
-				if (_counttttt < 30)
+				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
 					_motion = KEYANIMANAGER->findAnimation("dobeman_DAMAGE_LEFT");
@@ -301,12 +350,12 @@ void dobeman::collsion()
 					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
 					if (PLAYER->getInfo().chr_x > _info.chr_x)
 					{
-						_info.hPushPower = -1;
+						_info.hPushPower = -0.1;
 						_info.vPushPower = 0;
 					}
 					if (PLAYER->getInfo().chr_x <= _info.chr_x)
 					{
-						_info.hPushPower = 1;
+						_info.hPushPower = 0.1;
 						_info.vPushPower = 0;
 					}
 				}

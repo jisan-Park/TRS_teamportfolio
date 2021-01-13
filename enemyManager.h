@@ -31,5 +31,7 @@ public:
 	void setEnemy();
 	void setimage();
 	void remove();
+
+	inline vEnemy getVenemy() { return _vMinion; };
 };
 

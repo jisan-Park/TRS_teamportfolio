@@ -9,8 +9,8 @@
 #define PLAYER_Y_SPEED 2.5f
 #define PLAYER_JUMPPOWER 18 // 15~20
 #define PLAYER_DASH 1.5
-#define PLAYER_SK 1.5
-#define PLAYER_GATK 1.2
+#define PLAYER_SK 3
+#define PLAYER_GATK 2
 
 
 enum PLAYER_DIRECTION

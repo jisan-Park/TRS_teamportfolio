@@ -163,10 +163,7 @@ void malcolm::atk()
 		}
 	}
 	
-	if (_hp <= 0)//hp가 0일때 죽음 
-	{
-		setMakeDead(true);
-	}
+	
 }
 
 void malcolm::move()
@@ -175,6 +172,10 @@ void malcolm::move()
 	//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 	if (_img != IMAGEMANAGER->findImage("malcolm_down") && _state != E_UP && _state != E_HITTED && _state != E_DOWN && _state != E_DOWNHITTED && _state != E_DOWNKICK)
 	{
+		if (_hp <= 0)//hp가 0일때 죽음 
+		{
+			setMakeDead(true);
+		}
 		//player 와 enemy 사이의 x,y가 멀때 player 쫒아가기
 		if (_inrangeX || _inrangeY)
 		{
@@ -222,10 +223,58 @@ void malcolm::move()
 						if (PLAYER->getInfo().pt_y < _info.pt_y)
 						{
 							_info.vPushPower = -1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("malcolm_walk");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("malcolm_WALK_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("malcolm_walk");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("malcolm_WALK_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 						if (PLAYER->getInfo().pt_y > _info.pt_y)
 						{
 							_info.vPushPower = 1;
+							if (PLAYER->getInfo().chr_x < _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("malcolm_walk");
+								_direction = E_LEFT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("malcolm_WALK_LEFT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
+							if (PLAYER->getInfo().chr_x >= _info.chr_x)
+							{
+
+								_img = IMAGEMANAGER->findImage("malcolm_walk");
+								_direction = E_RIGHT;
+								_state = E_WALK;
+								_motion = KEYANIMANAGER->findAnimation("malcolm_WALK_RIGHT");
+								if (!_motion->isPlay())
+								{
+									_motion->start();
+								}
+							}
 						}
 					}
 					else //player 랑 enemy 사이의 y 가 가까워졌을때
@@ -287,7 +336,10 @@ void malcolm::update()
 		else if (_direction == RIGHT) {
 			_motion = KEYANIMANAGER->findAnimation("malcolm_DEAD_RIGHT");
 		}
-		_motion->start();
+		if (!_motion->isPlay())
+		{
+			_motion->start();
+		}
 	}
 	inrange();
 
@@ -317,7 +369,7 @@ void malcolm::update()
 	{
 		_countttt++;
 		_info._push_width = 85;
-		_info._push_height = 187.5;
+		_info._push_height = 167.5;
 		_info.chr_width = 50;
 		_info.chr_height = 10;
 
@@ -335,10 +387,9 @@ void malcolm::update()
 		_info.chr_width = 50;
 		_info.chr_height = 100;
 	}
-	if (_hp > 0)
-	{
+	
 		collsion();
-	}
+	
 }
 
 void malcolm::collsion()
@@ -364,12 +415,12 @@ void malcolm::collsion()
 					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
 					if (PLAYER->getInfo().chr_x > _info.chr_x)
 					{
-						_info.hPushPower = -1;
+						_info.hPushPower = -0.1;
 						_info.vPushPower = 0;
 					}
 					if (PLAYER->getInfo().chr_x <= _info.chr_x)
 					{
-						_info.hPushPower = 1;
+						_info.hPushPower = 0.1;
 						_info.vPushPower = 0;
 					}
 				}
@@ -390,12 +441,12 @@ void malcolm::collsion()
 					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
 					if (PLAYER->getInfo().chr_x > _info.chr_x)
 					{
-						_info.hPushPower = -1;
+						_info.hPushPower = -0.1;
 						_info.vPushPower = 0;
 					}
 					if (PLAYER->getInfo().chr_x <= _info.chr_x)
 					{
-						_info.hPushPower = 1;
+						_info.hPushPower = 0.1;
 						_info.vPushPower = 0;
 					}
 				}
