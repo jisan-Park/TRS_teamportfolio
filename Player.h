@@ -180,18 +180,16 @@ public:
 
 	// 게터 세터
 	PLAYER_DIRECTION getDirection() { return _direction; }
-	void setDirection(PLAYER_DIRECTION direction) { _direction = direction; }
-
 	PLAYER_STATE getState() { return _state; }
-	void setState(PLAYER_STATE state) { _state = state; }
-
 	image* getImage() { return _img; }
-	void setImage(image* img) { _img = img; };
-
 	animation* getMotion() { return _motion; }
-	void setMotion(animation* any) { _motion = any; }
-
 	characterInfo& getInfo() { return _info; }
+	RECT getCharacterRc() { return _info.chr_rc; }
+
+	void setDirection(PLAYER_DIRECTION direction) { _direction = direction; }
+	void setState(PLAYER_STATE state) { _state = state; }
+	void setImage(image* img) { _img = img; };
+	void setMotion(animation* any) { _motion = any; }
 
 
 	//에너미 관련 겟셋

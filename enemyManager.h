@@ -9,6 +9,7 @@
 #include"malcolm.h"
 #include"richard.h"
 #include"william.h"
+#include"Coin.h"
 
 class enemyManager : public gameNode
 {
@@ -20,6 +21,12 @@ private:
 	vEnemy _vMinion;
 	viEnemy _viMinion;
 
+	Coin* coin;
+
+	//체력을 나눌 변수
+	int _sCoin;
+	int _mCoin;
+	int _lCoin;
 public:
 	enemyManager() {};
 	~enemyManager() {};

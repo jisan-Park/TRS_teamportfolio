@@ -12,7 +12,7 @@ Player::~Player()
 HRESULT Player::init()
 {
 	_life = 3;
-	_money = 999;
+	_money = 0;
 	_str = 10;
 	_def = 10;
 	_wp = 10;

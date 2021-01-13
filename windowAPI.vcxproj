@@ -153,6 +153,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="cameraManager.h" />
     <ClInclude Include="characterInfo.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="difficultyScene.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="botLine.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cameraManager.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="difficultyScene.cpp" />
     <ClCompile Include="dobeman.cpp" />
