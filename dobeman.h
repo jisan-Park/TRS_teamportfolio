@@ -3,6 +3,21 @@
 class dobeman : public enemy
 {
 private:
+	animation*dobeman_IDLE_RIGHT;
+	animation*dobeman_IDLE_LEFT;
+	animation*dobeman_RUN_RIGHT;
+	animation*dobeman_RUN_LEFT;
+	animation*dobeman_ATTACK_RIGHT;
+	animation*dobeman_ATTACK_LEFT;
+	animation*dobeman_DAMAGE_RIGHT;
+	animation*dobeman_DAMAGE_LEFT;
+	animation*dobeman_KNOCKDOWN_RIGHT;
+	animation*dobeman_KNOCKDOWN_LEFT;
+	animation*dobeman_KNOCKUP_RIGHT;
+	animation*dobeman_KNOCKUP_LEFT;
+	animation*dobeman_DEAD_RIGHT;
+	animation*dobeman_DEAD_LEFT;
+
 
 public:
 	virtual HRESULT init(const char* imageName, float x, float y);

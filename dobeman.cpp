@@ -11,7 +11,7 @@ HRESULT dobeman::init(const char * imageName, float x, float y)
 	_spd = 5;
 	_str = 5;
 	_img = IMAGEMANAGER->findImage(imageName);
-	_motion = KEYANIMANAGER->findAnimation("dobeman_IDLE_RIGHT");
+	_motion = dobeman_IDLE_RIGHT;
 	_motion->start();
 	_inrange = RectMakeCenter(x, y, 400, 300);
 	GAMEMANAGER->addPicture(_info, _img, _motion);
@@ -26,7 +26,7 @@ void dobeman::atk()
 		_img = IMAGEMANAGER->findImage("dobeman_idle");
 		_direction = E_LEFT;
 		_state = E_IDLE;
-		_motion = KEYANIMANAGER->findAnimation("dobeman_IDLE_LEFT");
+		_motion = dobeman_IDLE_LEFT;
 
 		if (!_motion->isPlay())
 		{
@@ -38,7 +38,7 @@ void dobeman::atk()
 		_img = IMAGEMANAGER->findImage("dobeman_idle");
 		_direction = E_RIGHT;
 		_state = E_IDLE;
-		_motion = KEYANIMANAGER->findAnimation("dobeman_IDLE_RIGHT");
+		_motion = dobeman_IDLE_RIGHT;
 
 		if (!_motion->isPlay())
 		{
@@ -55,7 +55,7 @@ void dobeman::atk()
 				_img = IMAGEMANAGER->findImage("dobeman_attack");
 				_direction = E_LEFT;
 				_state = E_PUNCH;
-				_motion = KEYANIMANAGER->findAnimation("dobeman_ATTACK_LEFT");
+				_motion = dobeman_ATTACK_LEFT;
 				_motion->start();
 			}
 			if (_direction == E_RIGHT)
@@ -63,14 +63,14 @@ void dobeman::atk()
 				_img = IMAGEMANAGER->findImage("dobeman_attack");
 				_direction = E_RIGHT;
 				_state = E_PUNCH;
-				_motion = KEYANIMANAGER->findAnimation("dobeman_ATTACK_RIGHT");
+				_motion = dobeman_ATTACK_RIGHT;
 				_motion->start();
 			}
 			//_count = 0;
 		}
 	}
 
-	
+
 
 }
 
@@ -101,7 +101,7 @@ void dobeman::move()
 							_img = IMAGEMANAGER->findImage("dobeman_run");
 							_direction = E_LEFT;
 							_state = E_WALK;
-							_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_LEFT");
+							_motion = dobeman_RUN_LEFT;
 							if (!_motion->isPlay())
 							{
 								_motion->start();
@@ -113,7 +113,7 @@ void dobeman::move()
 							_img = IMAGEMANAGER->findImage("dobeman_run");
 							_direction = E_RIGHT;
 							_state = E_WALK;
-							_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_RIGHT");
+							_motion = dobeman_RUN_RIGHT;
 							if (!_motion->isPlay())
 							{
 								_motion->start();
@@ -135,7 +135,7 @@ void dobeman::move()
 								_img = IMAGEMANAGER->findImage("dobeman_run");
 								_direction = E_LEFT;
 								_state = E_WALK;
-								_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_LEFT");
+								_motion = dobeman_RUN_LEFT;
 								if (!_motion->isPlay())
 								{
 									_motion->start();
@@ -147,7 +147,7 @@ void dobeman::move()
 								_img = IMAGEMANAGER->findImage("dobeman_run");
 								_direction = E_RIGHT;
 								_state = E_WALK;
-								_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_RIGHT");
+								_motion = dobeman_RUN_RIGHT;
 								if (!_motion->isPlay())
 								{
 									_motion->start();
@@ -163,7 +163,7 @@ void dobeman::move()
 								_img = IMAGEMANAGER->findImage("dobeman_run");
 								_direction = E_LEFT;
 								_state = E_WALK;
-								_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_LEFT");
+								_motion = dobeman_RUN_LEFT;
 								if (!_motion->isPlay())
 								{
 									_motion->start();
@@ -175,7 +175,7 @@ void dobeman::move()
 								_img = IMAGEMANAGER->findImage("dobeman_run");
 								_direction = E_RIGHT;
 								_state = E_WALK;
-								_motion = KEYANIMANAGER->findAnimation("dobeman_RUN_RIGHT");
+								_motion = dobeman_RUN_RIGHT;
 								if (!_motion->isPlay())
 								{
 									_motion->start();
@@ -197,7 +197,7 @@ void dobeman::move()
 						_img = IMAGEMANAGER->findImage("dobeman_idle");
 						_direction = E_LEFT;
 						_state = E_IDLE;
-						_motion = KEYANIMANAGER->findAnimation("dobeman_IDLE_LEFT");
+						_motion = dobeman_IDLE_LEFT;
 						_motion->start();
 					}
 					if (_direction == E_RIGHT)
@@ -205,7 +205,7 @@ void dobeman::move()
 						_img = IMAGEMANAGER->findImage("dobeman_idle");
 						_direction = E_RIGHT;
 						_state = E_IDLE;
-						_motion = KEYANIMANAGER->findAnimation("dobeman_IDLE_RIGHT");
+						_motion = dobeman_IDLE_RIGHT;
 						_motion->start();
 					}
 					_info.vPushPower = 0;
@@ -237,10 +237,10 @@ void dobeman::update()
 		_makeDead = false;
 		_img = IMAGEMANAGER->findImage("dobeman_knockDown");
 		if (_direction == LEFT) {
-			_motion = KEYANIMANAGER->findAnimation("dobeman_DEAD_LEFT");
+			_motion = dobeman_DEAD_LEFT;
 		}
 		else if (_direction == RIGHT) {
-			_motion = KEYANIMANAGER->findAnimation("dobeman_DEAD_RIGHT");
+			_motion = dobeman_DEAD_RIGHT;
 		}
 		if (!_motion->isPlay())
 		{
@@ -295,9 +295,10 @@ void dobeman::update()
 
 	inrange();
 	move();
-	
-	collsion();
 
+	collsion();
+	//ÀÚÃ¼ animation frame update
+	_motion->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 
 }
 
@@ -315,7 +316,7 @@ void dobeman::collsion()
 				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
-					_motion = KEYANIMANAGER->findAnimation("dobeman_DAMAGE_RIGHT");
+					_motion = dobeman_DAMAGE_RIGHT;
 					_motion->start();
 					_direction = E_RIGHT;
 					_state = E_HITTED;
@@ -341,7 +342,7 @@ void dobeman::collsion()
 				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
-					_motion = KEYANIMANAGER->findAnimation("dobeman_DAMAGE_LEFT");
+					_motion = dobeman_DAMAGE_LEFT;
 					_motion->start();
 					_direction = E_LEFT;
 					_state = E_HITTED;
@@ -364,7 +365,7 @@ void dobeman::collsion()
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
 				_img = IMAGEMANAGER->findImage("dobeman_knockDown");
-				_motion = KEYANIMANAGER->findAnimation("dobeman_KNOCKDOWN_RIGHT");
+				_motion = dobeman_KNOCKDOWN_RIGHT;
 				_motion->start();
 				_direction = E_RIGHT;
 				_state = E_DOWN;
@@ -378,7 +379,7 @@ void dobeman::collsion()
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
 				_img = IMAGEMANAGER->findImage("dobeman_knockDown");
-				_motion = KEYANIMANAGER->findAnimation("dobeman_KNOCKDOWN_LEFT");
+				_motion = dobeman_KNOCKDOWN_LEFT;
 				_motion->start();
 				_direction = E_LEFT;
 				_state = E_DOWN;
@@ -415,7 +416,7 @@ void dobeman::collsion()
 			if (_direction == E_RIGHT)
 			{
 				_img = IMAGEMANAGER->findImage("dobeman_knockUp");
-				_motion = KEYANIMANAGER->findAnimation("dobeman_KNOCKUP_RIGHT");
+				_motion = dobeman_KNOCKUP_RIGHT;
 				_motion->start();
 				_direction = E_RIGHT;
 				_state = E_UP;
@@ -423,7 +424,7 @@ void dobeman::collsion()
 			if (_direction == E_LEFT)
 			{
 				_img = IMAGEMANAGER->findImage("dobeman_knockUp");
-				_motion = KEYANIMANAGER->findAnimation("dobeman_KNOCKUP_LEFT");
+				_motion = dobeman_KNOCKUP_LEFT;
 				_motion->start();
 				_direction = E_LEFT;
 				_state = E_UP;
@@ -462,21 +463,122 @@ void dobeman::inrange()
 
 void dobeman::setAnimation()
 {
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_IDLE_RIGHT", "dobeman_idle", 0, 3, 8, false, true);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_IDLE_LEFT", "dobeman_idle", 7, 4, 8, false, true);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_RUN_RIGHT", "dobeman_run", 0, 5, 8, false, true);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_RUN_LEFT", "dobeman_run", 11, 6, 8, false, true);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_ATTACK_RIGHT", "dobeman_attack", 0, 8, 8, false, false, rightAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_ATTACK_LEFT", "dobeman_attack", 17, 9, 8, false, false, leftAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DAMAGE_RIGHT", "dobeman_damage", 0, 4, 8, false, false, leftAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DAMAGE_LEFT", "dobeman_damage", 9, 5, 8, false, false, leftAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKDOWN_RIGHT", "dobeman_knockDown", 0, 13, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKDOWN_LEFT", "dobeman_knockDown", 27, 14, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKUP_RIGHT", "dobeman_knockUp", 0, 4, 8, false, false, rightAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKUP_LEFT", "dobeman_knockUp", 9, 5, 8, false, false, leftAttack, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DEAD_RIGHT", "dobeman_knockDown", 0, 13, 10, false, false, makeDead, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DEAD_LEFT", "dobeman_knockDown", 27, 14, 10, false, false, makeDead, this);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_IDLE_RIGHT", "dobeman_idle", 0, 3, 8, false, true);
+	dobeman_IDLE_RIGHT = new animation;
+	dobeman_IDLE_RIGHT->init(IMAGEMANAGER->findImage("dobeman_idle")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_idle")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_idle")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_idle")->getFrameHeight());
+	dobeman_IDLE_RIGHT->setPlayFrame(0, 3, false, true);
+	dobeman_IDLE_RIGHT->setFPS(8);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_IDLE_LEFT", "dobeman_idle", 7, 4, 8, false, true);
+	dobeman_IDLE_LEFT = new animation;
+	dobeman_IDLE_LEFT->init(IMAGEMANAGER->findImage("dobeman_idle")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_idle")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_idle")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_idle")->getFrameHeight());
+	dobeman_IDLE_LEFT->setPlayFrame(7, 4, false, true);
+	dobeman_IDLE_LEFT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_RUN_RIGHT", "dobeman_run", 0, 5, 8, false, true);
+	dobeman_RUN_RIGHT = new animation;
+	dobeman_RUN_RIGHT->init(IMAGEMANAGER->findImage("dobeman_run")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_run")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_run")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_run")->getFrameHeight());
+	dobeman_RUN_RIGHT->setPlayFrame(0, 5, false, true);
+	dobeman_RUN_RIGHT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_RUN_LEFT", "dobeman_run", 11, 6, 8, false, true);
+	dobeman_RUN_LEFT = new animation;
+	dobeman_RUN_LEFT->init(IMAGEMANAGER->findImage("dobeman_run")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_run")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_run")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_run")->getFrameHeight());
+	dobeman_RUN_LEFT->setPlayFrame(11, 6, false, true);
+	dobeman_RUN_LEFT->setFPS(8);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_ATTACK_RIGHT", "dobeman_attack", 0, 8, 8, false, false, rightAttack, this);
+	dobeman_ATTACK_RIGHT = new animation;
+	dobeman_ATTACK_RIGHT->init(IMAGEMANAGER->findImage("dobeman_attack")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_attack")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_attack")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_attack")->getFrameHeight());
+	dobeman_ATTACK_RIGHT->setPlayFrame(0, 8, false, false, rightAttack, this);
+	dobeman_ATTACK_RIGHT->setFPS(10);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_ATTACK_LEFT", "dobeman_attack", 17, 9, 8, false, false, leftAttack, this);
+	dobeman_ATTACK_LEFT = new animation;
+	dobeman_ATTACK_LEFT->init(IMAGEMANAGER->findImage("dobeman_attack")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_attack")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_attack")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_attack")->getFrameHeight());
+	dobeman_ATTACK_LEFT->setPlayFrame(17, 9, false, false, leftAttack, this);
+	dobeman_ATTACK_LEFT->setFPS(10);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DAMAGE_RIGHT", "dobeman_damage", 0, 4, 8, false, false, leftAttack, this);
+	dobeman_DAMAGE_RIGHT = new animation;
+	dobeman_DAMAGE_RIGHT->init(IMAGEMANAGER->findImage("dobeman_damage")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_damage")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_damage")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_damage")->getFrameHeight());
+	dobeman_DAMAGE_RIGHT->setPlayFrame(0, 4, false, false, rightAttack, this);
+	dobeman_DAMAGE_RIGHT->setFPS(10);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DAMAGE_LEFT", "dobeman_damage", 9, 5, 8, false, false, leftAttack, this);
+	dobeman_DAMAGE_LEFT = new animation;
+	dobeman_DAMAGE_LEFT->init(IMAGEMANAGER->findImage("dobeman_damage")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_damage")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_damage")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_damage")->getFrameHeight());
+	dobeman_DAMAGE_LEFT->setPlayFrame(9, 5, false, false, leftAttack, this);
+	dobeman_DAMAGE_LEFT->setFPS(10);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKDOWN_RIGHT", "dobeman_knockDown", 0, 13, 10, false, false);
+	dobeman_KNOCKDOWN_RIGHT = new animation;
+	dobeman_KNOCKDOWN_RIGHT->init(IMAGEMANAGER->findImage("dobeman_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getFrameHeight());
+	dobeman_KNOCKDOWN_RIGHT->setPlayFrame(0, 13, false, false);
+	dobeman_KNOCKDOWN_RIGHT->setFPS(10);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKDOWN_LEFT", "dobeman_knockDown", 27, 14, 10, false, false);
+	dobeman_KNOCKDOWN_LEFT = new animation;
+	dobeman_KNOCKDOWN_LEFT->init(IMAGEMANAGER->findImage("dobeman_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getFrameHeight());
+	dobeman_KNOCKDOWN_LEFT->setPlayFrame(27, 14, false, false);
+	dobeman_KNOCKDOWN_LEFT->setFPS(10);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKUP_RIGHT", "dobeman_knockUp", 0, 4, 8, false, false, rightAttack, this);
+	dobeman_KNOCKUP_RIGHT = new animation;
+	dobeman_KNOCKUP_RIGHT->init(IMAGEMANAGER->findImage("dobeman_knockUp")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockUp")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_knockUp")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockUp")->getFrameHeight());
+	dobeman_KNOCKUP_RIGHT->setPlayFrame(0, 4, false, false, rightAttack, this);
+	dobeman_KNOCKUP_RIGHT->setFPS(10);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_KNOCKUP_LEFT", "dobeman_knockUp", 9, 5, 8, false, false, leftAttack, this);
+	dobeman_KNOCKUP_LEFT = new animation;
+	dobeman_KNOCKUP_LEFT->init(IMAGEMANAGER->findImage("dobeman_knockUp")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockUp")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_knockUp")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockUp")->getFrameHeight());
+	dobeman_KNOCKUP_LEFT->setPlayFrame(9, 5, false, false, leftAttack, this);
+	dobeman_KNOCKUP_LEFT->setFPS(10);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DEAD_RIGHT", "dobeman_knockDown", 0, 13, 10, false, false, makeDead, this);
+	dobeman_DEAD_RIGHT = new animation;
+	dobeman_DEAD_RIGHT->init(IMAGEMANAGER->findImage("dobeman_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getFrameHeight());
+	dobeman_DEAD_RIGHT->setPlayFrame(0, 13, false, false, makeDead, this);
+	dobeman_DEAD_RIGHT->setFPS(10);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("dobeman_DEAD_LEFT", "dobeman_knockDown", 27, 14, 10, false, false, makeDead, this);
+	dobeman_DEAD_LEFT = new animation;
+	dobeman_DEAD_LEFT->init(IMAGEMANAGER->findImage("dobeman_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("dobeman_knockDown")->getFrameHeight());
+	dobeman_DEAD_LEFT->setPlayFrame(27, 14, false, false, makeDead, this);
+	dobeman_DEAD_LEFT->setFPS(10);
 }
 
 void dobeman::rightAttack(void * obj)
@@ -485,7 +587,7 @@ void dobeman::rightAttack(void * obj)
 	m->setDirection(E_RIGHT);
 	m->setState(E_IDLE);
 	m->setImage(IMAGEMANAGER->findImage("dobeman_idle"));
-	m->setteMotion(KEYANIMANAGER->findAnimation("dobeman_IDLE_RIGHT"));
+	m->setteMotion(m->dobeman_IDLE_RIGHT);
 	m->getMotion()->start();
 
 }
@@ -496,7 +598,7 @@ void dobeman::leftAttack(void * obj)
 	m->setDirection(E_LEFT);
 	m->setState(E_IDLE);
 	m->setImage(IMAGEMANAGER->findImage("dobeman_idle"));
-	m->setteMotion(KEYANIMANAGER->findAnimation("dobeman_IDLE_LEFT"));
+	m->setteMotion(m->dobeman_IDLE_LEFT);
 	m->getMotion()->start();
 }
 
