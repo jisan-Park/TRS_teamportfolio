@@ -4,7 +4,7 @@
 
 #define JUMP_POWER 10
 #define PLAYER_START_X 200
-#define PLAYER_START_Y 300
+#define PLAYER_START_Y 450
 #define PLAYER_X_SPEED 4.0f
 #define PLAYER_Y_SPEED 2.5f
 #define PLAYER_JUMPPOWER 18 // 15~20
@@ -27,9 +27,22 @@ enum PLAYER_STATE
 	RUN,
 	JUMP,
 	JUMPATK,
-	DOWN,
+
 	LOBJ,
+	LOBJATK,
+	LOBJWALK,
+	LOBJRUN,
+	LOBJJUMP,
+	LOBJJUMPATK,
+
 	HOBJ,
+	HOBJATK,
+	HOBJWALK,
+	HOBJRUN,
+	HOBJJUMP,
+	HOBJJUMPATK,
+
+	DOWN,
 	DEF,
 	HITTED,
 	STUN,
@@ -46,6 +59,14 @@ class Player :public singletonBase<Player>
 private:
 	PLAYER_DIRECTION _direction;
 	PLAYER_STATE _state;
+
+	//SK ATK
+	image* _imgSK;
+	animation* _aniSK;
+	float _xSK;
+	float _ySK;
+	bool _sk;
+	bool _sk1;
 
 	image* _img;
 	animation* _motion;
@@ -65,6 +86,7 @@ private:
 	int _s_Gatk_Count;
 	int _n_Gatk_Count;
 	int _count;
+	int _skCount;
 
 	int _money;//소지금
 	int _life;
@@ -97,21 +119,40 @@ public:
 	void sMoveManage();
 	void sAtkManage();
 	void sHittedManage();
+	void sLobjManage();
+	void sHobjManage();
 
 	void rMoveManage();
 	void rAtkManage();
 	void rHittedManage();
+	void rLobjManage();
+	void rHobjManage();
+
+	void skAtk();
+	void objGet();
 
 	//콜백함수
 	static void sRightStop(void* obj);
 	static void sLeftStop(void* obj);
 	static void sRightDown(void* obj);
 	static void sLeftDown(void* obj);
+	static void sRightDef(void* obj);
+	static void sLeftDef(void* obj);
+	static void sLobjRightStop(void* obj);
+	static void sLobjLeftStop(void* obj);
+	static void sHobjRightStop(void* obj);
+	static void sHobjLeftStop(void* obj);
 
 	static void rRightStop(void* obj);
 	static void rLeftStop(void* obj);
 	static void rRightDown(void* obj);
 	static void rLeftDown(void * obj);
+	static void rLobjRightStop(void* obj);
+	static void rLobjLeftStop(void* obj);
+	static void rHobjRightStop(void* obj);
+	static void rHobjLeftStop(void* obj);
+
+	static void sknull(void* obj);
 
 	// 게터 세터
 	PLAYER_DIRECTION getDirection() { return _direction; }
@@ -135,10 +176,10 @@ public:
 	inline float getAttackDamege() { return _dmg; }
 
 
-	//스콧인지 라모나인지 게터 0이면 스콧 1이면 라모나
-	void setCharacterNum(int x) { _characterNum = x; };
-	int getCharacterNum() { return _characterNum; };
 
+	//스콧인지 라모나인지 게터 0이면 스콧 1이면 라모나
+	int setCharacterNum(int x) { return _characterNum = x; }
+	int getCharacterNum() { return _characterNum; };
 
 	//이미지, 애니메이션
 	void setImage();
@@ -166,6 +207,8 @@ public:
 	void setSpd(int i) { _spd = i; };
 	void setDmg(int i) { _dmg = i; }; // player가 줄 데미지
 	//
+
+
 };
 
 

@@ -15,10 +15,10 @@ HRESULT Player::init()
 	_money = 13;
 	_hp = 100;
 	_gp = 100;
-	_str = 1;
-	_def = 1;
-	_wp = 1;
-	_spd = 1;
+	_str = 10;
+	_def = 10;
+	_wp = 10;
+	_spd = 10;
 
 	_hitted = false;
 	_direction = RIGHT;
@@ -29,6 +29,11 @@ HRESULT Player::init()
 	_s_Yatk_Count = 0;
 	_n_Yatk_Count = 0;
 	_n_Gatk_Count = 0;
+
+	//
+	_sk = false;
+	_imgSK = IMAGEMANAGER->findImage("RIGHT_SK");
+	_aniSK = KEYANIMANAGER->findAnimation("RightSk");
 
 	if (_characterNum == 0)
 	{
@@ -43,12 +48,13 @@ HRESULT Player::init()
 		_motion->start();
 	}
 
+	_xSK = -1000;
+	_ySK = -1000;
 
 
 	_shad = RectMakeCenter(_info.shd_x, _info.shd_y, 2, 2);
+
 	_info.init(GAMEMANAGER->getRenderNum(), PLAYER_START_X, PLAYER_START_Y, 50, 100, 100, 140);
-
-
 	GAMEMANAGER->addPicture(_info, _img, _motion);
 
 
@@ -63,31 +69,35 @@ void Player::release()
 void Player::update()
 {
 	atkRc();
+	objGet();
+	skAtk();
 
 	if (_characterNum == 0)//스콧
 	{
 		sMoveManage();
 		sAtkManage();
 		sHittedManage();
+		sLobjManage();
+		sHobjManage();
 	}
 	else if (_characterNum == 1)//라모나
 	{
 		rMoveManage();
 		rAtkManage();
 		rHittedManage();
+		rLobjManage();
+		rHobjManage();
 	}
 
-
 	_info.physics();
-
 
 	if (_state == DOWN)
 	{
 		_count++;
-		_info.chr_width = 100;
-		_info.chr_height = 25;
 		_info._push_width = 75;
 		_info._push_height = 207.5;
+		_info.chr_width = 100;
+		_info.chr_height = 25;
 
 		if (_count == 1)
 		{
@@ -98,30 +108,19 @@ void Player::update()
 	else
 	{
 		_count = 0;
-		_info.chr_width = 50;
-		_info.chr_height = 100;
 		_info._push_width = 100;
 		_info._push_height = 140;
+		_info.chr_width = 50;
+		_info.chr_height = 100;
 	}
 
 	//zorder
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
-
 }
 
 void Player::render(HDC hdc)
 {
-	_info.shdRender(hdc);
-	Rectangle(hdc, _rcAtk);
-
-	_img->aniRender(hdc, _info.chr_rc.left - 100, _info.chr_rc.top - 140, _motion);
-
-
-	Rectangle(hdc, _info.chr_rc);
-
-
-	Rectangle(hdc, _info.shdrc);
-	Rectangle(hdc, _info.ptrc);
+	_imgSK->aniRender(hdc, _xSK, _ySK, _aniSK);
 }
 
 
@@ -933,12 +932,16 @@ void Player::sAtkManage()
 
 		//스페셜 공격
 
-		if (KEYMANAGER->isOnceKeyDown('Q'))
+		if (KEYMANAGER->isOnceKeyDown('A'))
 		{
-			_dmg = _str * PLAYER_SK;
+
+			_sk = true;
+			_ySK = _info.chr_rc.top - 250;
 
 			if (_direction == RIGHT)
 			{
+				_xSK = _info.chr_rc.left - 150;
+
 				if (_state == WALK)
 				{
 					_info.hPushPower = 0;
@@ -946,10 +949,6 @@ void Player::sAtkManage()
 				}
 
 				_state = ATK;
-				_xAtk = 200;
-				_yAtk = 5;
-				_wAtk = 300;
-				_hAtk = 200;
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_SK_ATK");
 				_motion = KEYANIMANAGER->findAnimation("ScottRightSkAtk");
@@ -957,6 +956,8 @@ void Player::sAtkManage()
 			}
 			if (_direction == LEFT)
 			{
+				_xSK = _info.chr_rc.left - 300;
+
 				if (_state == WALK)
 				{
 					_info.hPushPower = 0;
@@ -964,17 +965,16 @@ void Player::sAtkManage()
 				}
 
 				_state = ATK;
-				_xAtk = -200;
-				_yAtk = 5;
-				_wAtk = 300;
-				_hAtk = 200;
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_SK_ATK");
 				_motion = KEYANIMANAGER->findAnimation("ScottLeftSkAtk");
 				_motion->start();
 			}
 		}
-		if (KEYMANAGER->isOnceKeyDown('W'))
+
+
+
+		if (KEYMANAGER->isOnceKeyDown('S'))
 		{
 			_dmg = _str * PLAYER_SK;
 
@@ -1015,6 +1015,24 @@ void Player::sAtkManage()
 				_motion->start();
 			}
 		}
+	}
+
+	if (_sk)
+	{
+		if (_direction == RIGHT)
+		{
+			_imgSK = IMAGEMANAGER->findImage("RIGHT_SK");
+			_aniSK = KEYANIMANAGER->findAnimation("RightSk");
+			_aniSK->start();
+		}
+		else
+		{
+			_imgSK = IMAGEMANAGER->findImage("LEFT_SK");
+			_aniSK = KEYANIMANAGER->findAnimation("LeftSk");
+			_aniSK->start();
+		}
+
+		_sk = false;
 	}
 
 
@@ -1226,14 +1244,12 @@ void Player::sHittedManage()
 	// 적에게 맞는 조건
 	if ((IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc)) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER))
 	{
-		//2021-01-03(지산) hp 다는거 추가함.
-		_hp -= _enemyDamage;
 		_hitted = true;
 	}
 
-	if (_hitted && (_state == WALK || _state == IDLE || _state == RUN || _state == ATK
-		|| _state == JUMP || _state == JUMPATK || _state == LOBJ
-		|| _state == HOBJ || _state == STUN || _state == TIRED))
+	if (_hitted && (_state == WALK || _state == IDLE || _state == RUN || _state == ATK || _state == JUMP || _state == JUMPATK ||
+		_state == LOBJ || _state == LOBJWALK || _state == LOBJRUN || _state == LOBJATK || _state == LOBJJUMP || _state == LOBJJUMPATK
+		|| _state == HOBJ || _state == HOBJWALK || _state == HOBJRUN || _state == HOBJATK || _state == HOBJJUMP || _state == HOBJJUMPATK || _state == STUN || _state == TIRED))
 	{
 		if (_enemyDamage < 4)
 		{
@@ -1296,8 +1312,20 @@ void Player::sHittedManage()
 	//방어
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && _state == DEF)
 	{
-		_state = DEF;
-
+		if (_direction == RIGHT)
+		{
+			_info.pt_x -= 20;
+			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_S_DEF");
+			_motion = KEYANIMANAGER->findAnimation("ScottRightSDef");
+			_motion->start();
+		}
+		else if (_direction == LEFT)
+		{
+			_info.pt_x += 20;
+			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_S_DEF");
+			_motion = KEYANIMANAGER->findAnimation("ScottLeftSDef");
+			_motion->start();
+		}
 	}
 
 	//다운설정
@@ -1305,7 +1333,7 @@ void Player::sHittedManage()
 	{
 		_down_Count++;
 
-		if (_down_Count > (70 - _spd))
+		if (_down_Count > (110 - _spd))
 		{
 			_down_Count = 0;
 
@@ -1326,20 +1354,1342 @@ void Player::sHittedManage()
 				_motion->start();
 			}
 		}
+	}
+}
 
-		if (_hitted)
+void Player::sLobjManage()
+{
+	//이동
+	if (_state == LOBJ || _state == LOBJWALK || _state == LOBJRUN)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 		{
+			_state = LOBJWALK;
+			_direction = RIGHT;
+			_info.hPushPower = PLAYER_X_SPEED;
+			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_WALK");
+			_motion = KEYANIMANAGER->findAnimation("ScottRightLobjWalk");
+			_motion->start();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+		{
+			_info.hPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+			{
+				_state = LOBJ;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_IDLE");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjIdle");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+		{
+			_state = LOBJWALK;
+			_direction = LEFT;
+			_info.hPushPower = -PLAYER_X_SPEED;
+			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_WALK");
+			_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjWalk");
+			_motion->start();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+		{
+			_info.hPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+			{
+				_state = LOBJ;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_IDLE");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjIdle");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			_info.vPushPower = -PLAYER_Y_SPEED;
+
 			if (_direction == RIGHT)
 			{
-				_info.chr_x -= 1;
+				_state = LOBJWALK;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjWalk");
+				_motion->start();
 			}
 			else if (_direction == LEFT)
 			{
-				_info.chr_x += 1;
+				_state = LOBJWALK;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyUp(VK_UP))
+		{
+			_info.vPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjIdle");
+					_motion->start();
+				}
 			}
 		}
 
 
+
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			_info.vPushPower = PLAYER_Y_SPEED;
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJWALK;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjWalk");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = LOBJWALK;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+		{
+			_info.vPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjIdle");
+					_motion->start();
+				}
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _state != LOBJJUMP)
+		{
+			_info.jumpPower = PLAYER_JUMPPOWER;
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJJUMP;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_JUMP");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjJump");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = LOBJJUMP;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_JUMP");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjJump");
+				_motion->start();
+			}
+
+		}
+
+		if (_state == LOBJRUN && KEYMANAGER->isOnceKeyUp(VK_LSHIFT))
+		{
+			if (_direction == RIGHT)
+			{
+				_state = LOBJWALK;
+				_direction = RIGHT;
+
+				if (_info.hPushPower == PLAYER_X_SPEED * PLAYER_DASH)
+				{
+					_info.hPushPower = PLAYER_X_SPEED;
+				}
+				if (_info.vPushPower == PLAYER_Y_SPEED * PLAYER_DASH || _info.vPushPower == -PLAYER_Y_SPEED * PLAYER_DASH)
+				{
+					_info.vPushPower = _info.vPushPower / PLAYER_DASH;
+				}
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjWalk");
+				_motion->start();
+
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = LOBJWALK;
+				_direction = LEFT;
+
+				if (_info.hPushPower == -PLAYER_X_SPEED * PLAYER_DASH)
+				{
+					_info.hPushPower = -PLAYER_X_SPEED;
+				}
+				if (_info.vPushPower == PLAYER_Y_SPEED * PLAYER_DASH || _info.vPushPower == -PLAYER_Y_SPEED * PLAYER_DASH)
+				{
+					_info.vPushPower = _info.vPushPower / PLAYER_DASH;
+				}
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isStayKeyDown(VK_LSHIFT))
+		{
+
+			if (_state == LOBJWALK)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJRUN;
+					_direction = RIGHT;
+					if (_info.hPushPower == PLAYER_X_SPEED)
+					{
+						_info.hPushPower = PLAYER_X_SPEED * PLAYER_DASH;
+					}
+					if (_info.vPushPower == PLAYER_Y_SPEED || _info.vPushPower == -PLAYER_Y_SPEED)
+					{
+						_info.vPushPower = _info.vPushPower * PLAYER_DASH;
+					}
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjDash");
+					_motion->start();
+
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJRUN;
+					_direction = LEFT;
+					if (_info.hPushPower == -PLAYER_X_SPEED)
+					{
+						_info.hPushPower = -PLAYER_X_SPEED * PLAYER_DASH;
+					}
+					if (_info.vPushPower == PLAYER_Y_SPEED || _info.vPushPower == -PLAYER_Y_SPEED)
+					{
+						_info.vPushPower = _info.vPushPower * PLAYER_DASH;
+					}
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjDash");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+			{
+				_state = LOBJRUN;
+				_direction = RIGHT;
+				_info.hPushPower = PLAYER_X_SPEED * PLAYER_DASH;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_DASH");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjDash");
+				_motion->start();
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+			{
+				_info.hPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+				{
+					_state = LOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjIdle");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+			{
+				_state = LOBJRUN;
+				_direction = LEFT;
+				_info.hPushPower = -PLAYER_X_SPEED * PLAYER_DASH;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_DASH");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjDash");
+				_motion->start();
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+			{
+				_info.hPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+				{
+					_state = LOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjIdle");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				_info.vPushPower = -PLAYER_Y_SPEED * PLAYER_DASH;
+
+				if (_direction == RIGHT)
+				{
+					_state = LOBJRUN;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJRUN;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjDash");
+					_motion->start();
+
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyUp(VK_UP))
+			{
+				_info.vPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+				{
+					if (_direction == RIGHT)
+					{
+						_state = LOBJ;
+						_direction = RIGHT;
+						_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("ScottRightLobjIdle");
+						_motion->start();
+					}
+					else if (_direction == LEFT)
+					{
+						_state = LOBJ;
+						_direction = LEFT;
+						_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjIdle");
+						_motion->start();
+					}
+				}
+			}
+
+
+
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				_info.vPushPower = PLAYER_Y_SPEED * PLAYER_DASH;
+
+				if (_direction == RIGHT)
+				{
+					_state = LOBJRUN;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJRUN;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjDash");
+					_motion->start();
+
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+			{
+				_info.vPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+				{
+					if (_direction == RIGHT)
+					{
+						_state = LOBJ;
+						_direction = RIGHT;
+						_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("ScottRightLobjIdle");
+						_motion->start();
+					}
+					else if (_direction == LEFT)
+					{
+						_state = LOBJ;
+						_direction = LEFT;
+						_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjIdle");
+						_motion->start();
+					}
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _state != LOBJJUMP)
+			{
+				_info.jumpPower = PLAYER_JUMPPOWER;
+
+				if (_direction == RIGHT)
+				{
+					_state = LOBJJUMP;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_JUMP");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjJump");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJJUMP;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_JUMP");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjJump");
+					_motion->start();
+				}
+
+			}
+		}
+	}
+
+
+	if (_info.jumpPower <= 0 && _info.shdDistance <= 0)// 땅에 붙었을경우
+	{
+		if (_state == LOBJJUMP || _state == LOBJJUMPATK)
+		{
+			if (_info.hPushPower == 0 && _info.vPushPower == 0)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJ;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJ;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjIdle");
+					_motion->start();
+				}
+			}
+			else if (_info.hPushPower <= PLAYER_X_SPEED || _info.hPushPower >= -PLAYER_X_SPEED || _info.vPushPower <= PLAYER_Y_SPEED || _info.vPushPower >= -PLAYER_Y_SPEED)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJWALK;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_WALK");
+					if (_info.hPushPower != 0)
+					{
+						_info.hPushPower = PLAYER_X_SPEED;
+					}
+					if (_info.vPushPower > 0)
+					{
+						_info.vPushPower = PLAYER_Y_SPEED;
+					}
+					if (_info.vPushPower < 0)
+					{
+						_info.vPushPower = -PLAYER_Y_SPEED;
+					}
+
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjWalk");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJWALK;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_WALK");
+					if (_info.hPushPower != 0)
+					{
+						_info.hPushPower = -PLAYER_X_SPEED;
+					}
+					if (_info.vPushPower > 0)
+					{
+						_info.vPushPower = PLAYER_Y_SPEED;
+					}
+					if (_info.vPushPower < 0)
+					{
+						_info.vPushPower = -PLAYER_Y_SPEED;
+					}
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjWalk");
+					_motion->start();
+				}
+			}
+			else if (_info.hPushPower > PLAYER_X_SPEED || _info.hPushPower < -PLAYER_X_SPEED || _info.vPushPower > PLAYER_Y_SPEED || _info.vPushPower < -PLAYER_Y_SPEED)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJRUN;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJRUN;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjDash");
+					_motion->start();
+				}
+			}
+		}
+	}
+
+	if (_state == LOBJJUMP && _direction == RIGHT && KEYMANAGER->isOnceKeyDown(VK_LEFT) && _state != LOBJJUMPATK)
+	{
+		_direction = LEFT;
+		_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_JUMP");
+		_info.hPushPower = _info.hPushPower * 0.5;
+		_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjJump");
+		_motion->start();
+
+	}
+	else if (_state == LOBJJUMP && _direction == LEFT && KEYMANAGER->isOnceKeyDown(VK_RIGHT) && _state != LOBJJUMPATK)
+	{
+		_direction = RIGHT;
+		_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_JUMP");
+		_info.hPushPower = _info.hPushPower * 0.5;
+		_motion = KEYANIMANAGER->findAnimation("ScottRightLobjJump");
+		_motion->start();
+	}
+
+
+
+
+	//공격
+
+	if (_state == LOBJ || _state == LOBJWALK || _state == LOBJRUN)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_dmg = _str; // + obj dmg
+
+			if (_state == LOBJWALK || _state == LOBJRUN)
+			{
+				_info.vPushPower = 0;
+				_info.hPushPower = 0;
+			}
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_ATK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjAtk");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = LOBJATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_ATK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjAtk");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+
+			if (_state == LOBJWALK || _state == LOBJRUN)
+			{
+				_info.vPushPower = 0;
+				_info.hPushPower = 0;
+			}
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjThrow");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = LOBJATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjThrow");
+				_motion->start();
+			}
+		}
+	}
+
+	if (_state == LOBJJUMP)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			if (_direction == RIGHT)
+			{
+				_state = LOBJJUMPATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_JUMPATK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjJumpAtk");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = LOBJJUMPATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_JUMPATK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjJumpAtk");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJJUMPATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjThrow");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = LOBJJUMPATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjThrow");
+				_motion->start();
+			}
+		}
+	}
+}
+
+void Player::sHobjManage()
+{
+	//이동
+	if (_state == HOBJ || _state == HOBJWALK || _state == HOBJRUN)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+		{
+			_state = HOBJWALK;
+			_direction = RIGHT;
+			_info.hPushPower = PLAYER_X_SPEED;
+			_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_WALK");
+			_motion = KEYANIMANAGER->findAnimation("ScottRightObjWalk");
+			_motion->start();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+		{
+			_info.hPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+			{
+				_state = HOBJ;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_IDLE");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightObjIdle");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+		{
+			_state = HOBJWALK;
+			_direction = LEFT;
+			_info.hPushPower = -PLAYER_X_SPEED;
+			_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_WALK");
+			_motion = KEYANIMANAGER->findAnimation("ScottLeftObjWalk");
+			_motion->start();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+		{
+			_info.hPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+			{
+				_state = HOBJ;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_IDLE");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftObjIdle");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			_info.vPushPower = -PLAYER_Y_SPEED;
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJWALK;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightObjWalk");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = HOBJWALK;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftObjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyUp(VK_UP))
+		{
+			_info.vPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjIdle");
+					_motion->start();
+				}
+			}
+		}
+
+
+
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			_info.vPushPower = PLAYER_Y_SPEED;
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJWALK;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightObjWalk");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = HOBJWALK;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftObjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+		{
+			_info.vPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjIdle");
+					_motion->start();
+				}
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _state != HOBJJUMP)
+		{
+			_info.jumpPower = PLAYER_JUMPPOWER;
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJJUMP;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_JUMP");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightObjJump");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = HOBJJUMP;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_JUMP");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftObjJump");
+				_motion->start();
+			}
+
+		}
+
+		if (_state == HOBJRUN && KEYMANAGER->isOnceKeyUp(VK_LSHIFT))
+		{
+			if (_direction == RIGHT)
+			{
+				_state = HOBJWALK;
+				_direction = RIGHT;
+
+				if (_info.hPushPower == PLAYER_X_SPEED * PLAYER_DASH)
+				{
+					_info.hPushPower = PLAYER_X_SPEED;
+				}
+				if (_info.vPushPower == PLAYER_Y_SPEED * PLAYER_DASH || _info.vPushPower == -PLAYER_Y_SPEED * PLAYER_DASH)
+				{
+					_info.vPushPower = _info.vPushPower / PLAYER_DASH;
+				}
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightObjWalk");
+				_motion->start();
+
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = HOBJWALK;
+				_direction = LEFT;
+
+				if (_info.hPushPower == -PLAYER_X_SPEED * PLAYER_DASH)
+				{
+					_info.hPushPower = -PLAYER_X_SPEED;
+				}
+				if (_info.vPushPower == PLAYER_Y_SPEED * PLAYER_DASH || _info.vPushPower == -PLAYER_Y_SPEED * PLAYER_DASH)
+				{
+					_info.vPushPower = _info.vPushPower / PLAYER_DASH;
+				}
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftObjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isStayKeyDown(VK_LSHIFT))
+		{
+
+			if (_state == HOBJWALK)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJRUN;
+					_direction = RIGHT;
+					if (_info.hPushPower == PLAYER_X_SPEED)
+					{
+						_info.hPushPower = PLAYER_X_SPEED * PLAYER_DASH;
+					}
+					if (_info.vPushPower == PLAYER_Y_SPEED || _info.vPushPower == -PLAYER_Y_SPEED)
+					{
+						_info.vPushPower = _info.vPushPower * PLAYER_DASH;
+					}
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJECT_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjectDash");
+					_motion->start();
+
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJRUN;
+					_direction = LEFT;
+					if (_info.hPushPower == -PLAYER_X_SPEED)
+					{
+						_info.hPushPower = -PLAYER_X_SPEED * PLAYER_DASH;
+					}
+					if (_info.vPushPower == PLAYER_Y_SPEED || _info.vPushPower == -PLAYER_Y_SPEED)
+					{
+						_info.vPushPower = _info.vPushPower * PLAYER_DASH;
+					}
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJECT_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjectDash");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+			{
+				_state = HOBJRUN;
+				_direction = RIGHT;
+				_info.hPushPower = PLAYER_X_SPEED * PLAYER_DASH;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJECT_DASH");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightObjectDash");
+				_motion->start();
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+			{
+				_info.hPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+				{
+					_state = HOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjIdle");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+			{
+				_state = HOBJRUN;
+				_direction = LEFT;
+				_info.hPushPower = -PLAYER_X_SPEED * PLAYER_DASH;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJECT_DASH");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftObjectDash");
+				_motion->start();
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+			{
+				_info.hPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+				{
+					_state = HOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjIdle");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				_info.vPushPower = -PLAYER_Y_SPEED * PLAYER_DASH;
+
+				if (_direction == RIGHT)
+				{
+					_state = HOBJRUN;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJECT_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjectDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJRUN;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJECT_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjectDash");
+					_motion->start();
+
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyUp(VK_UP))
+			{
+				_info.vPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+				{
+					if (_direction == RIGHT)
+					{
+						_state = HOBJ;
+						_direction = RIGHT;
+						_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("ScottRightObjIdle");
+						_motion->start();
+					}
+					else if (_direction == LEFT)
+					{
+						_state = HOBJ;
+						_direction = LEFT;
+						_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("ScottLeftObjIdle");
+						_motion->start();
+					}
+				}
+			}
+
+
+
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				_info.vPushPower = PLAYER_Y_SPEED * PLAYER_DASH;
+
+				if (_direction == RIGHT)
+				{
+					_state = HOBJRUN;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJECT_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjectDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJRUN;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJECT_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjectDash");
+					_motion->start();
+
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+			{
+				_info.vPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+				{
+					if (_direction == RIGHT)
+					{
+						_state = HOBJ;
+						_direction = RIGHT;
+						_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("ScottRightObjIdle");
+						_motion->start();
+					}
+					else if (_direction == LEFT)
+					{
+						_state = HOBJ;
+						_direction = LEFT;
+						_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("ScottLeftObjIdle");
+						_motion->start();
+					}
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _state != HOBJJUMP)
+			{
+				_info.jumpPower = PLAYER_JUMPPOWER;
+
+				if (_direction == RIGHT)
+				{
+					_state = HOBJJUMP;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_JUMP");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjJump");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJJUMP;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_JUMP");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjJump");
+					_motion->start();
+				}
+
+			}
+		}
+	}
+
+
+	if (_info.jumpPower <= 0 && _info.shdDistance <= 0)// 땅에 붙었을경우
+	{
+		if (_state == HOBJJUMP || _state == HOBJJUMPATK)
+		{
+			if (_info.hPushPower == 0 && _info.vPushPower == 0)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJ;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJ;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjIdle");
+					_motion->start();
+				}
+			}
+			else if (_info.hPushPower <= PLAYER_X_SPEED || _info.hPushPower >= -PLAYER_X_SPEED || _info.vPushPower <= PLAYER_Y_SPEED || _info.vPushPower >= -PLAYER_Y_SPEED)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJWALK;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_WALK");
+					if (_info.hPushPower != 0)
+					{
+						_info.hPushPower = PLAYER_X_SPEED;
+					}
+					if (_info.vPushPower > 0)
+					{
+						_info.vPushPower = PLAYER_Y_SPEED;
+					}
+					if (_info.vPushPower < 0)
+					{
+						_info.vPushPower = -PLAYER_Y_SPEED;
+					}
+
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjWalk");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJWALK;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_WALK");
+					if (_info.hPushPower != 0)
+					{
+						_info.hPushPower = -PLAYER_X_SPEED;
+					}
+					if (_info.vPushPower > 0)
+					{
+						_info.vPushPower = PLAYER_Y_SPEED;
+					}
+					if (_info.vPushPower < 0)
+					{
+						_info.vPushPower = -PLAYER_Y_SPEED;
+					}
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjWalk");
+					_motion->start();
+				}
+			}
+			else if (_info.hPushPower > PLAYER_X_SPEED || _info.hPushPower < -PLAYER_X_SPEED || _info.vPushPower > PLAYER_Y_SPEED || _info.vPushPower < -PLAYER_Y_SPEED)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJRUN;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJECT_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightObjectDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJRUN;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJECT_DASH");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftObjectDash");
+					_motion->start();
+				}
+			}
+		}
+	}
+
+	if (_state == HOBJJUMP && _direction == RIGHT && KEYMANAGER->isOnceKeyDown(VK_LEFT) && _state != HOBJJUMPATK)
+	{
+		_direction = LEFT;
+		_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_JUMP");
+		_info.hPushPower = _info.hPushPower * 0.5;
+		_motion = KEYANIMANAGER->findAnimation("ScottLeftObjJump");
+		_motion->start();
+
+	}
+	else if (_state == HOBJJUMP && _direction == LEFT && KEYMANAGER->isOnceKeyDown(VK_RIGHT) && _state != HOBJJUMPATK)
+	{
+		_direction = RIGHT;
+		_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_JUMP");
+		_info.hPushPower = _info.hPushPower * 0.5;
+		_motion = KEYANIMANAGER->findAnimation("ScottRightObjJump");
+		_motion->start();
+	}
+
+
+
+
+	//공격
+
+	if (_state == HOBJ || _state == HOBJWALK || _state == HOBJRUN)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_dmg = _str; // + obj dmg
+
+			if (_state == HOBJWALK || _state == HOBJRUN)
+			{
+				_info.vPushPower = 0;
+				_info.hPushPower = 0;
+			}
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_YATK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightObjYAtk");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = HOBJATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_YATK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftObjYAtk");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+
+			if (_state == HOBJWALK || _state == HOBJRUN)
+			{
+				_info.vPushPower = 0;
+				_info.hPushPower = 0;
+			}
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_HOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightHobjThrow");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = HOBJATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_HOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftHobjThrow");
+				_motion->start();
+			}
+		}
+	}
+
+	if (_state == HOBJJUMP)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			if (_direction == RIGHT)
+			{
+				_state = HOBJJUMPATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_YATK");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightObjYAtk");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = HOBJJUMPATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_YATK");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftObjYAtk");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJJUMPATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_HOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightHobjThrow");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = HOBJJUMPATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_HOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftHobjThrow");
+				_motion->start();
+			}
+		}
 	}
 
 }
@@ -2183,12 +3533,16 @@ void Player::rAtkManage()
 
 		//스페셜 공격
 
-		if (KEYMANAGER->isOnceKeyDown('Q'))
+		if (KEYMANAGER->isOnceKeyDown('A'))
 		{
-			_dmg = _str * PLAYER_SK;
+			_sk = true;
+
+			_ySK = _info.chr_rc.top - 250;
 
 			if (_direction == RIGHT)
 			{
+				_xSK = _info.chr_rc.left - 150;
+
 				if (_state == WALK)
 				{
 					_info.hPushPower = 0;
@@ -2196,10 +3550,6 @@ void Player::rAtkManage()
 				}
 
 				_state = ATK;
-				_xAtk = 200;
-				_yAtk = 5;
-				_wAtk = 300;
-				_hAtk = 200;
 				_direction = RIGHT;
 				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_SK_ATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaRightSKAtk1");
@@ -2207,6 +3557,8 @@ void Player::rAtkManage()
 			}
 			if (_direction == LEFT)
 			{
+				_xSK = _info.chr_rc.left - 300;
+
 				if (_state == WALK)
 				{
 					_info.hPushPower = 0;
@@ -2214,18 +3566,16 @@ void Player::rAtkManage()
 				}
 
 				_state = ATK;
-				_xAtk = -200;
-				_yAtk = 5;
-				_wAtk = 300;
-				_hAtk = 200;
 				_direction = LEFT;
 				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_SK_ATK");
 				_motion = KEYANIMANAGER->findAnimation("RamonaLeftSKAtk1");
 				_motion->start();
 			}
+
+
 		}
 
-		if (KEYMANAGER->isOnceKeyDown('W'))
+		if (KEYMANAGER->isOnceKeyDown('S'))
 		{
 			_dmg = _str * PLAYER_SK;
 
@@ -2267,6 +3617,25 @@ void Player::rAtkManage()
 			}
 		}
 	}
+
+	if (_sk)
+	{
+		if (_direction == RIGHT)
+		{
+			_imgSK = IMAGEMANAGER->findImage("RIGHT_SK");
+			_aniSK = KEYANIMANAGER->findAnimation("RightSk");
+			_aniSK->start();
+		}
+		else
+		{
+			_imgSK = IMAGEMANAGER->findImage("LEFT_SK");
+			_aniSK = KEYANIMANAGER->findAnimation("LeftSk");
+			_aniSK->start();
+		}
+
+		_sk = false;
+	}
+
 
 	//대쉬 공격
 	if (_state == RUN)
@@ -2473,7 +3842,7 @@ void Player::rHittedManage()
 	}
 
 	// 적에게 맞는 조건
-	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER))
+	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && (_state != DEF && _state != HITTED || _state != DIE || _state != WIN || _state != REVIVER))
 	{
 		_hitted = true;
 	}
@@ -2540,6 +3909,19 @@ void Player::rHittedManage()
 		}
 	}
 
+	//방어
+	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && _state == DEF)
+	{
+		if (_direction == RIGHT)
+		{
+			_info.pt_x -= 20;
+		}
+		else if (_direction == LEFT)
+		{
+			_info.pt_x += 20;
+		}
+	}
+
 	//다운설정
 	if (_state == DOWN)
 	{
@@ -2566,20 +3948,1497 @@ void Player::rHittedManage()
 				_motion->start();
 			}
 		}
+	}
+}
 
-		if (_hitted)
+void Player::rLobjManage()
+{
+	//이동
+	if (_state == LOBJ || _state == LOBJWALK || _state == LOBJRUN)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 		{
+			_state = LOBJWALK;
+			_direction = RIGHT;
+			_info.hPushPower = PLAYER_X_SPEED;
+			_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_WALK");
+			_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjWalk");
+			_motion->start();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+		{
+			_info.hPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+			{
+				_state = LOBJ;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_IDLE");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjIdle");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+		{
+			_state = LOBJWALK;
+			_direction = LEFT;
+			_info.hPushPower = -PLAYER_X_SPEED;
+			_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_WALK");
+			_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjWalk");
+			_motion->start();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+		{
+			_info.hPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+			{
+				_state = LOBJ;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_IDLE");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjIdle");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			_info.vPushPower = -PLAYER_Y_SPEED;
+
 			if (_direction == RIGHT)
 			{
-				_info.chr_x -= 1;
+				_state = LOBJWALK;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjWalk");
+				_motion->start();
 			}
 			else if (_direction == LEFT)
 			{
-				_info.chr_x += 1;
+				_state = LOBJWALK;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyUp(VK_UP))
+		{
+			_info.vPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjIdle");
+					_motion->start();
+				}
 			}
 		}
 
 
+
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			_info.vPushPower = PLAYER_Y_SPEED;
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJWALK;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjWalk");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = LOBJWALK;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+		{
+			_info.vPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjIdle");
+					_motion->start();
+				}
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _state != LOBJJUMP)
+		{
+			_info.jumpPower = PLAYER_JUMPPOWER;
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJJUMP;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_JUMP");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjJump");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = LOBJJUMP;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_JUMP");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjJump");
+				_motion->start();
+			}
+
+		}
+
+		if (_state == LOBJRUN && KEYMANAGER->isOnceKeyUp(VK_LSHIFT))
+		{
+			if (_direction == RIGHT)
+			{
+				_state = LOBJWALK;
+				_direction = RIGHT;
+
+				if (_info.hPushPower == PLAYER_X_SPEED * PLAYER_DASH)
+				{
+					_info.hPushPower = PLAYER_X_SPEED;
+				}
+				if (_info.vPushPower == PLAYER_Y_SPEED * PLAYER_DASH || _info.vPushPower == -PLAYER_Y_SPEED * PLAYER_DASH)
+				{
+					_info.vPushPower = _info.vPushPower / PLAYER_DASH;
+				}
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjWalk");
+				_motion->start();
+
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = LOBJWALK;
+				_direction = LEFT;
+
+				if (_info.hPushPower == -PLAYER_X_SPEED * PLAYER_DASH)
+				{
+					_info.hPushPower = -PLAYER_X_SPEED;
+				}
+				if (_info.vPushPower == PLAYER_Y_SPEED * PLAYER_DASH || _info.vPushPower == -PLAYER_Y_SPEED * PLAYER_DASH)
+				{
+					_info.vPushPower = _info.vPushPower / PLAYER_DASH;
+				}
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isStayKeyDown(VK_LSHIFT))
+		{
+
+			if (_state == LOBJWALK)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJRUN;
+					_direction = RIGHT;
+					if (_info.hPushPower == PLAYER_X_SPEED)
+					{
+						_info.hPushPower = PLAYER_X_SPEED * PLAYER_DASH;
+					}
+					if (_info.vPushPower == PLAYER_Y_SPEED || _info.vPushPower == -PLAYER_Y_SPEED)
+					{
+						_info.vPushPower = _info.vPushPower * PLAYER_DASH;
+					}
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjDash");
+					_motion->start();
+
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJRUN;
+					_direction = LEFT;
+					if (_info.hPushPower == -PLAYER_X_SPEED)
+					{
+						_info.hPushPower = -PLAYER_X_SPEED * PLAYER_DASH;
+					}
+					if (_info.vPushPower == PLAYER_Y_SPEED || _info.vPushPower == -PLAYER_Y_SPEED)
+					{
+						_info.vPushPower = _info.vPushPower * PLAYER_DASH;
+					}
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjDash");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+			{
+				_state = LOBJRUN;
+				_direction = RIGHT;
+				_info.hPushPower = PLAYER_X_SPEED * PLAYER_DASH;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_DASH");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjDash");
+				_motion->start();
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+			{
+				_info.hPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+				{
+					_state = LOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjIdle");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+			{
+				_state = LOBJRUN;
+				_direction = LEFT;
+				_info.hPushPower = -PLAYER_X_SPEED * PLAYER_DASH;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_DASH");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjDash");
+				_motion->start();
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+			{
+				_info.hPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+				{
+					_state = LOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjIdle");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				_info.vPushPower = -PLAYER_Y_SPEED * PLAYER_DASH;
+
+				if (_direction == RIGHT)
+				{
+					_state = LOBJRUN;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RmonaRightLobjDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJRUN;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjDash");
+					_motion->start();
+
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyUp(VK_UP))
+			{
+				_info.vPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+				{
+					if (_direction == RIGHT)
+					{
+						_state = LOBJ;
+						_direction = RIGHT;
+						_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjIdle");
+						_motion->start();
+					}
+					else if (_direction == LEFT)
+					{
+						_state = LOBJ;
+						_direction = LEFT;
+						_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjIdle");
+						_motion->start();
+					}
+				}
+			}
+
+
+
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				_info.vPushPower = PLAYER_Y_SPEED * PLAYER_DASH;
+
+				if (_direction == RIGHT)
+				{
+					_state = LOBJRUN;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJRUN;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjDash");
+					_motion->start();
+
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+			{
+				_info.vPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+				{
+					if (_direction == RIGHT)
+					{
+						_state = LOBJ;
+						_direction = RIGHT;
+						_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjIdle");
+						_motion->start();
+					}
+					else if (_direction == LEFT)
+					{
+						_state = LOBJ;
+						_direction = LEFT;
+						_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjIdle");
+						_motion->start();
+					}
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _state != LOBJJUMP)
+			{
+				_info.jumpPower = PLAYER_JUMPPOWER;
+
+				if (_direction == RIGHT)
+				{
+					_state = LOBJJUMP;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_JUMP");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjJump");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJJUMP;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_JUMP");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjJump");
+					_motion->start();
+				}
+
+			}
+		}
+	}
+
+
+	if (_info.jumpPower <= 0 && _info.shdDistance <= 0)// 땅에 붙었을경우
+	{
+		if (_state == LOBJJUMP || _state == LOBJJUMPATK)
+		{
+			if (_info.hPushPower == 0 && _info.vPushPower == 0)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJ;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJ;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjIdle");
+					_motion->start();
+				}
+			}
+			else if (_info.hPushPower <= PLAYER_X_SPEED || _info.hPushPower >= -PLAYER_X_SPEED || _info.vPushPower <= PLAYER_Y_SPEED || _info.vPushPower >= -PLAYER_Y_SPEED)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJWALK;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_WALK");
+					if (_info.hPushPower != 0)
+					{
+						_info.hPushPower = PLAYER_X_SPEED;
+					}
+					if (_info.vPushPower > 0)
+					{
+						_info.vPushPower = PLAYER_Y_SPEED;
+					}
+					if (_info.vPushPower < 0)
+					{
+						_info.vPushPower = -PLAYER_Y_SPEED;
+					}
+
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjWalk");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJWALK;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_WALK");
+					if (_info.hPushPower != 0)
+					{
+						_info.hPushPower = -PLAYER_X_SPEED;
+					}
+					if (_info.vPushPower > 0)
+					{
+						_info.vPushPower = PLAYER_Y_SPEED;
+					}
+					if (_info.vPushPower < 0)
+					{
+						_info.vPushPower = -PLAYER_Y_SPEED;
+					}
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjWalk");
+					_motion->start();
+				}
+			}
+			else if (_info.hPushPower > PLAYER_X_SPEED || _info.hPushPower < -PLAYER_X_SPEED || _info.vPushPower > PLAYER_Y_SPEED || _info.vPushPower < -PLAYER_Y_SPEED)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = LOBJRUN;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = LOBJRUN;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjDash");
+					_motion->start();
+				}
+			}
+		}
+	}
+
+	if (_state == LOBJJUMP && _direction == RIGHT && KEYMANAGER->isOnceKeyDown(VK_LEFT) && _state != LOBJJUMPATK)
+	{
+		_direction = LEFT;
+		_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_JUMP");
+		_info.hPushPower = _info.hPushPower * 0.5;
+		_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjJump");
+		_motion->start();
+
+	}
+	else if (_state == LOBJJUMP && _direction == LEFT && KEYMANAGER->isOnceKeyDown(VK_RIGHT) && _state != LOBJJUMPATK)
+	{
+		_direction = RIGHT;
+		_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_JUMP");
+		_info.hPushPower = _info.hPushPower * 0.5;
+		_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjJump");
+		_motion->start();
+	}
+
+
+
+
+	//공격
+
+	if (_state == LOBJ || _state == LOBJWALK || _state == LOBJRUN)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_dmg = _str; // + obj dmg
+
+			if (_state == LOBJWALK || _state == LOBJRUN)
+			{
+				_info.vPushPower = 0;
+				_info.hPushPower = 0;
+			}
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_ATK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjAtk");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = LOBJATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_ATK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjAtk");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+
+			if (_state == LOBJWALK || _state == LOBJRUN)
+			{
+				_info.vPushPower = 0;
+				_info.hPushPower = 0;
+			}
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjThrow");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = LOBJATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjThrow");
+				_motion->start();
+			}
+		}
+	}
+
+	if (_state == LOBJJUMP)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			if (_direction == RIGHT)
+			{
+				_state = LOBJJUMPATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_JUMP_ATK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjJumpAtk");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = LOBJJUMPATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_JUMP_ATK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjJumpAtk");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+
+			if (_direction == RIGHT)
+			{
+				_state = LOBJJUMPATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_JUMP_THROW");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjJumpThrow");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = LOBJJUMPATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_JUMP_THROW");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjJumpThrow");
+				_motion->start();
+			}
+		}
+	}
+
+}
+
+void Player::rHobjManage()
+{
+	//이동
+	if (_state == HOBJ || _state == HOBJWALK || _state == HOBJRUN)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+		{
+			_state = HOBJWALK;
+			_direction = RIGHT;
+			_info.hPushPower = PLAYER_X_SPEED;
+			_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_WALK");
+			_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjWalk");
+			_motion->start();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+		{
+			_info.hPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+			{
+				_state = HOBJ;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_IDLE");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjIdle");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+		{
+			_state = HOBJWALK;
+			_direction = LEFT;
+			_info.hPushPower = -PLAYER_X_SPEED;
+			_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_WALK");
+			_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjWalk");
+			_motion->start();
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+		{
+			_info.hPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+			{
+				_state = HOBJ;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_IDLE");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjIdle");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			_info.vPushPower = -PLAYER_Y_SPEED;
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJWALK;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjWalk");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = HOBJWALK;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyUp(VK_UP))
+		{
+			_info.vPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjIdle");
+					_motion->start();
+				}
+			}
+		}
+
+
+
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			_info.vPushPower = PLAYER_Y_SPEED;
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJWALK;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjWalk");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = HOBJWALK;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+		{
+			_info.vPushPower = 0;
+
+			if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjIdle");
+					_motion->start();
+				}
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _state != HOBJJUMP)
+		{
+			_info.jumpPower = PLAYER_JUMPPOWER;
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJJUMP;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_JUMP");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjJump");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_state = HOBJJUMP;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_JUMP");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjJump");
+				_motion->start();
+			}
+
+		}
+
+		if (_state == HOBJRUN && KEYMANAGER->isOnceKeyUp(VK_LSHIFT))
+		{
+			if (_direction == RIGHT)
+			{
+				_state = HOBJWALK;
+				_direction = RIGHT;
+
+				if (_info.hPushPower == PLAYER_X_SPEED * PLAYER_DASH)
+				{
+					_info.hPushPower = PLAYER_X_SPEED;
+				}
+				if (_info.vPushPower == PLAYER_Y_SPEED * PLAYER_DASH || _info.vPushPower == -PLAYER_Y_SPEED * PLAYER_DASH)
+				{
+					_info.vPushPower = _info.vPushPower / PLAYER_DASH;
+				}
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjWalk");
+				_motion->start();
+
+			}
+
+			if (_direction == LEFT)
+			{
+				_state = HOBJWALK;
+				_direction = LEFT;
+
+				if (_info.hPushPower == -PLAYER_X_SPEED * PLAYER_DASH)
+				{
+					_info.hPushPower = -PLAYER_X_SPEED;
+				}
+				if (_info.vPushPower == PLAYER_Y_SPEED * PLAYER_DASH || _info.vPushPower == -PLAYER_Y_SPEED * PLAYER_DASH)
+				{
+					_info.vPushPower = _info.vPushPower / PLAYER_DASH;
+				}
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_WALK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjWalk");
+				_motion->start();
+
+			}
+		}
+
+		if (KEYMANAGER->isStayKeyDown(VK_LSHIFT))
+		{
+
+			if (_state == HOBJWALK)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJRUN;
+					_direction = RIGHT;
+					if (_info.hPushPower == PLAYER_X_SPEED)
+					{
+						_info.hPushPower = PLAYER_X_SPEED * PLAYER_DASH;
+					}
+					if (_info.vPushPower == PLAYER_Y_SPEED || _info.vPushPower == -PLAYER_Y_SPEED)
+					{
+						_info.vPushPower = _info.vPushPower * PLAYER_DASH;
+					}
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjDash");
+					_motion->start();
+
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJRUN;
+					_direction = LEFT;
+					if (_info.hPushPower == -PLAYER_X_SPEED)
+					{
+						_info.hPushPower = -PLAYER_X_SPEED * PLAYER_DASH;
+					}
+					if (_info.vPushPower == PLAYER_Y_SPEED || _info.vPushPower == -PLAYER_Y_SPEED)
+					{
+						_info.vPushPower = _info.vPushPower * PLAYER_DASH;
+					}
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjDash");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+			{
+				_state = HOBJRUN;
+				_direction = RIGHT;
+				_info.hPushPower = PLAYER_X_SPEED * PLAYER_DASH;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_DASH");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjDash");
+				_motion->start();
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+			{
+				_info.hPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+				{
+					_state = HOBJ;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjIdle");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+			{
+				_state = HOBJRUN;
+				_direction = LEFT;
+				_info.hPushPower = -PLAYER_X_SPEED * PLAYER_DASH;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_DASH");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjDash");
+				_motion->start();
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+			{
+				_info.hPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_DOWN)) && !(KEYMANAGER->isStayKeyDown(VK_UP)))
+				{
+					_state = HOBJ;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjIdle");
+					_motion->start();
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				_info.vPushPower = -PLAYER_Y_SPEED * PLAYER_DASH;
+
+				if (_direction == RIGHT)
+				{
+					_state = HOBJRUN;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RmonaRightHobjDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJRUN;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjDash");
+					_motion->start();
+
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyUp(VK_UP))
+			{
+				_info.vPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+				{
+					if (_direction == RIGHT)
+					{
+						_state = HOBJ;
+						_direction = RIGHT;
+						_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjIdle");
+						_motion->start();
+					}
+					else if (_direction == LEFT)
+					{
+						_state = HOBJ;
+						_direction = LEFT;
+						_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjIdle");
+						_motion->start();
+					}
+				}
+			}
+
+
+
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				_info.vPushPower = PLAYER_Y_SPEED * PLAYER_DASH;
+
+				if (_direction == RIGHT)
+				{
+					_state = HOBJRUN;
+					_direction = RIGHT;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJRUN;
+					_direction = LEFT;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjDash");
+					_motion->start();
+
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+			{
+				_info.vPushPower = 0;
+
+				if (!(KEYMANAGER->isStayKeyDown(VK_LEFT)) && !(KEYMANAGER->isStayKeyDown(VK_RIGHT)))
+				{
+					if (_direction == RIGHT)
+					{
+						_state = HOBJ;
+						_direction = RIGHT;
+						_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjIdle");
+						_motion->start();
+					}
+					else if (_direction == LEFT)
+					{
+						_state = HOBJ;
+						_direction = LEFT;
+						_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_IDLE");
+						_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjIdle");
+						_motion->start();
+					}
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && _state != HOBJJUMP)
+			{
+				_info.jumpPower = PLAYER_JUMPPOWER;
+
+				if (_direction == RIGHT)
+				{
+					_state = HOBJJUMP;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_JUMP");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjJump");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJJUMP;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_JUMP");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjJump");
+					_motion->start();
+				}
+
+			}
+		}
+	}
+
+
+	if (_info.jumpPower <= 0 && _info.shdDistance <= 0)// 땅에 붙었을경우
+	{
+		if (_state == HOBJJUMP || _state == HOBJJUMPATK)
+		{
+			if (_info.hPushPower == 0 && _info.vPushPower == 0)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJ;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjIdle");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJ;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_IDLE");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjIdle");
+					_motion->start();
+				}
+			}
+			else if (_info.hPushPower <= PLAYER_X_SPEED || _info.hPushPower >= -PLAYER_X_SPEED || _info.vPushPower <= PLAYER_Y_SPEED || _info.vPushPower >= -PLAYER_Y_SPEED)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJWALK;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_WALK");
+					if (_info.hPushPower != 0)
+					{
+						_info.hPushPower = PLAYER_X_SPEED;
+					}
+					if (_info.vPushPower > 0)
+					{
+						_info.vPushPower = PLAYER_Y_SPEED;
+					}
+					if (_info.vPushPower < 0)
+					{
+						_info.vPushPower = -PLAYER_Y_SPEED;
+					}
+
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjWalk");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJWALK;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_WALK");
+					if (_info.hPushPower != 0)
+					{
+						_info.hPushPower = -PLAYER_X_SPEED;
+					}
+					if (_info.vPushPower > 0)
+					{
+						_info.vPushPower = PLAYER_Y_SPEED;
+					}
+					if (_info.vPushPower < 0)
+					{
+						_info.vPushPower = -PLAYER_Y_SPEED;
+					}
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjWalk");
+					_motion->start();
+				}
+			}
+			else if (_info.hPushPower > PLAYER_X_SPEED || _info.hPushPower < -PLAYER_X_SPEED || _info.vPushPower > PLAYER_Y_SPEED || _info.vPushPower < -PLAYER_Y_SPEED)
+			{
+				if (_direction == RIGHT)
+				{
+					_state = HOBJRUN;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjDash");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_state = HOBJRUN;
+					_img = IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_DASH");
+					_motion = KEYANIMANAGER->findAnimation("RamonaLeftLobjDash");
+					_motion->start();
+				}
+			}
+		}
+	}
+
+	if (_state == HOBJJUMP && _direction == RIGHT && KEYMANAGER->isOnceKeyDown(VK_LEFT) && _state != HOBJJUMPATK)
+	{
+		_direction = LEFT;
+		_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_JUMP");
+		_info.hPushPower = _info.hPushPower * 0.5;
+		_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjJump");
+		_motion->start();
+
+	}
+	else if (_state == HOBJJUMP && _direction == LEFT && KEYMANAGER->isOnceKeyDown(VK_RIGHT) && _state != HOBJJUMPATK)
+	{
+		_direction = RIGHT;
+		_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_JUMP");
+		_info.hPushPower = _info.hPushPower * 0.5;
+		_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjJump");
+		_motion->start();
+	}
+
+
+
+
+	//공격
+
+	if (_state == HOBJ || _state == HOBJWALK || _state == HOBJRUN)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_dmg = _str; // + obj dmg
+
+			if (_state == HOBJWALK || _state == HOBJRUN)
+			{
+				_info.vPushPower = 0;
+				_info.hPushPower = 0;
+			}
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_ATK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjAtk");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = HOBJATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_ATK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjAtk");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+
+			if (_state == HOBJWALK || _state == HOBJRUN)
+			{
+				_info.vPushPower = 0;
+				_info.hPushPower = 0;
+			}
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjThrow");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = LOBJATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_THROW");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjThrow");
+				_motion->start();
+			}
+		}
+	}
+
+	if (_state == HOBJJUMP)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			if (_direction == RIGHT)
+			{
+				_state = HOBJJUMPATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_JUMP_ATK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjJumpAtk");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = HOBJJUMPATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_JUMP_ATK");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjJumpAtk");
+				_motion->start();
+			}
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+
+			if (_direction == RIGHT)
+			{
+				_state = HOBJJUMPATK;
+				_xAtk = 50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = RIGHT;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_JUMP_THROW");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjJumpThrow");
+				_motion->start();
+			}
+
+			if (_direction == LEFT)
+			{
+
+				_state = HOBJJUMPATK;
+				_xAtk = -50;
+				_yAtk = 20;
+				_wAtk = 70;
+				_hAtk = 40;
+				_direction = LEFT;
+				_img = IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_JUMP_THROW");
+				_motion = KEYANIMANAGER->findAnimation("RamonaLeftHobjJumpThrow");
+				_motion->start();
+			}
+		}
+	}
+
+}
+
+void Player::skAtk()
+{
+	if (_aniSK->isPlay())
+	{
+		_sk1 = true;
+	}
+
+
+	if (_sk1)
+	{
+		_skCount++;
+
+
+		if (_skCount >= 20 && _skCount < 75)
+		{
+			if (_direction == RIGHT)
+			{
+				_dmg = _str;
+				_xAtk = 120;
+				_yAtk = -60;
+				_wAtk = 400;
+				_hAtk = 200;
+			}
+			else if (_direction == LEFT)
+			{
+				_dmg = _str;
+				_xAtk = -120;
+				_yAtk = -60;
+				_wAtk = 400;
+				_hAtk = 200;
+			}
+		}
+		else if (_skCount >= 75 && _skCount < 90)
+		{
+			if (_direction == RIGHT)
+			{
+				_dmg = _str * PLAYER_SK;
+				_xAtk = 120;
+				_yAtk = -60;
+				_wAtk = 450;
+				_hAtk = 250;
+			}
+			else if (_direction == LEFT)
+			{
+				_dmg = _str * PLAYER_SK;
+				_xAtk = -120;
+				_yAtk = -60;
+				_wAtk = 450;
+				_hAtk = 250;
+			}
+		}
+		else if (_skCount >= 90)
+		{
+			_sk1 = false;
+		}
+	}
+	else
+	{
+		_skCount = 0;
+	}
+}
+
+void Player::objGet()
+{
+	if (KEYMANAGER->isOnceKeyDown('Q') && _state != LOBJ)
+	{
+		_state == LOBJ;
+
+		if (_characterNum == 0)
+		{
+			if (_direction == RIGHT)
+			{
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_GET");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjGet");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_GET");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjGet");
+				_motion->start();
+			}
+		}
+		else if (_characterNum == 1)
+		{
+			if (_direction == RIGHT)
+			{
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_GET");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjGet");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_GET");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjGet");
+				_motion->start();
+			}
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('W') && _state != HOBJ)
+	{
+		_state == HOBJ;
+
+		if (_characterNum == 0)
+		{
+			if (_direction == RIGHT)
+			{
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_HOBJ_GET");
+				_motion = KEYANIMANAGER->findAnimation("ScottRightHobjGet");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_HOBJ_GET");
+				_motion = KEYANIMANAGER->findAnimation("ScottLeftHobjGet");
+				_motion->start();
+			}
+		}
+		else if (_characterNum == 1)
+		{
+			if (_direction == RIGHT)
+			{
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_GET");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjGet");
+				_motion->start();
+			}
+			else if (_direction == LEFT)
+			{
+				_info.hPushPower = 0;
+				_info.vPushPower = 0;
+				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_GET");
+				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjGet");
+				_motion->start();
+			}
+		}
 	}
 }
 
@@ -2615,7 +5474,6 @@ void Player::sLeftStop(void * obj)
 void Player::sRightDown(void * obj)
 {
 	Player* p = (Player*)obj;
-
 	p->_info.hPushPower = 0;
 	p->_info.vPushPower = 0;
 	p->setDirection(RIGHT);
@@ -2636,6 +5494,91 @@ void Player::sLeftDown(void * obj)
 	p->setMotion(KEYANIMANAGER->findAnimation("ScottLeftDown"));
 	p->getMotion()->start();
 }
+
+void Player::sRightDef(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->setDirection(RIGHT);
+	p->setState(DEF);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_RIGHT_DEF"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottRightDef"));
+	p->getMotion()->start();
+}
+
+void Player::sLeftDef(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->setDirection(LEFT);
+	p->setState(DEF);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_LEFT_DEF"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottLeftDef"));
+	p->getMotion()->start();
+}
+
+void Player::sLobjRightStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->_hitted = false;
+	p->setDirection(RIGHT);
+	p->setState(LOBJ);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottRightLobjIdle"));
+	p->getMotion()->start();
+}
+
+void Player::sLobjLeftStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->_hitted = false;
+	p->setDirection(LEFT);
+	p->setState(LOBJ);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottLeftLobjIdle"));
+	p->getMotion()->start();
+}
+
+void Player::sHobjRightStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->_hitted = false;
+	p->setDirection(RIGHT);
+	p->setState(HOBJ);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_RIGHT_OBJ_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottRightObjIdle"));
+	p->getMotion()->start();
+}
+
+void Player::sHobjLeftStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->_hitted = false;
+	p->setDirection(LEFT);
+	p->setState(HOBJ);
+	p->setImage(IMAGEMANAGER->findImage("SCOTT_LEFT_OBJ_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("ScottLeftObjIdle"));
+	p->getMotion()->start();
+}
+
+
+
 
 void Player::rRightStop(void * obj)
 {
@@ -2691,6 +5634,77 @@ void Player::rLeftDown(void * obj)
 	p->getMotion()->start();
 }
 
+void Player::rLobjRightStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->_hitted = false;
+	p->setDirection(RIGHT);
+	p->setState(LOBJ);
+	p->setImage(IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("RamonaRightLobjIdle"));
+	p->getMotion()->start();
+}
+
+void Player::rLobjLeftStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->_hitted = false;
+	p->setDirection(LEFT);
+	p->setState(LOBJ);
+	p->setImage(IMAGEMANAGER->findImage("RAMONA_LEFT_LOBJ_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("RamonaLeftLobjIdle"));
+	p->getMotion()->start();
+}
+
+void Player::rHobjRightStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->_hitted = false;
+	p->setDirection(RIGHT);
+	p->setState(HOBJ);
+	p->setImage(IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("RamonaRightHobjIdle"));
+	p->getMotion()->start();
+}
+
+void Player::rHobjLeftStop(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_info.hPushPower = 0;
+	p->_info.vPushPower = 0;
+	p->_hitted = false;
+	p->setDirection(LEFT);
+	p->setState(HOBJ);
+	p->setImage(IMAGEMANAGER->findImage("RAMONA_LEFT_HOBJ_IDLE"));
+	p->setMotion(KEYANIMANAGER->findAnimation("RamonaLeftHobjIdle"));
+	p->getMotion()->start();
+}
+
+
+void Player::sknull(void * obj)
+{
+	Player* p = (Player*)obj;
+
+	p->_imgSK = IMAGEMANAGER->findImage("NSK");
+	p->_aniSK = KEYANIMANAGER->findAnimation("Nsk");
+	p->_sk = false;
+}
+
+
+
+
+
+
 
 void Player::setImage()
 {
@@ -2731,6 +5745,7 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_JUMP_GATK", "image/player/scott/RIGHT_JUMP_GATK.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_JUMP_YATK", "image/player/scott/LEFT_JUMP_YATK.bmp", 1750, 250, 7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_JUMP_YATK", "image/player/scott/RIGHT_JUMP_YATK.bmp", 1750, 250, 7, 1, true, RGB(255, 0, 255));
+
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_LOBJ_ATK", "image/player/scott/LEFT_LOBJ_ATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_ATK", "image/player/scott/RIGHT_LOBJ_ATK.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_LOBJ_DASH", "image/player/scott/LEFT_LOBJ_DASH.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
@@ -2747,6 +5762,7 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_THROW", "image/player/scott/RIGHT_LOBJ_THROW.bmp", 1250, 250, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_LOBJ_WALK", "image/player/scott/LEFT_LOBJ_WALK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_LOBJ_WALK", "image/player/scott/RIGHT_LOBJ_WALK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_OBJ_IDLE", "image/player/scott/LEFT_OBJ_IDLE.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_OBJ_IDLE", "image/player/scott/RIGHT_OBJ_IDLE.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_OBJ_JUMP", "image/player/scott/LEFT_OBJ_JUMP.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
@@ -2759,6 +5775,7 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_OBJ_YATK", "image/player/scott/RIGHT_OBJ_YATK.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_OBJECT_DASH", "image/player/scott/LEFT_OBJECT_DASH.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_OBJECT_DASH", "image/player/scott/RIGHT_OBJECT_DASH.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
+
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_R_UP", "image/player/scott/LEFT_R_UP.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_RIGHT_R_UP", "image/player/scott/RIGHT_R_UP.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("SCOTT_LEFT_S_DEF", "image/player/scott/LEFT_S_DEF.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
@@ -2785,8 +5802,8 @@ void Player::setImage()
 	//RAMONA
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_HOBJ_ATK", "image/player/ramona/RIGHT_HOBJ_ATK.bmp", 1750, 250, 7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_HOBJ_ATK", "image/player/ramona/LEFT_HOBJ_ATK.bmp", 1750, 250, 7, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_HOBJ_THROW", "image/player/ramona/RIGHT_HOBJ_THROW.bmp", 1750, 250, 7, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_HOBJ_THROW", "image/player/ramona/LEFT_HOBJ_THROW.bmp", 1750, 250, 7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_HOBJ_THROW", "image/player/ramona/RIGHT_HOBJ_THROW.bmp", 1750, 250, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_HOBJ_THROW", "image/player/ramona/LEFT_HOBJ_THROW.bmp", 1750, 250, 8, 1, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_JUMP_HITTED", "image/player/ramona/RIGHT_JUMP_HITTED.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_JUMP_HITTED", "image/player/ramona/LEFT_JUMP_HITTED.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
@@ -2883,7 +5900,10 @@ void Player::setImage()
 	IMAGEMANAGER->addFrameImage("RAMONA_RIGHT_DEF", "image/player/ramona/RIGHT_DEF.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("RAMONA_LEFT_DEF", "image/player/ramona/LEFT_DEF.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
 
-
+	//SK IMG
+	IMAGEMANAGER->addFrameImage("RIGHT_SK", "image/player/RIGHT_SK1.bmp", 2200, 3150, 4, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("LEFT_SK", "image/player/LEFT_SK1.bmp", 2200, 3150, 4, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("NSK", "image/player/SKNULL.bmp", 550, 350, 2, 1, true, RGB(255, 0, 255));
 }
 
 void Player::setAni()
@@ -2897,55 +5917,42 @@ void Player::setAni()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightCYAtk2", "SCOTT_RIGHT_C_YATK", 4, 10, 18, false, false, sRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftCYAtk3", "SCOTT_LEFT_C_YATK", 11, 16, 18, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightCYAtk3", "SCOTT_RIGHT_C_YATK", 11, 16, 18, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDashGAtk", "SCOTT_LEFT_DASH_GATK", 0, 8, 12, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDashGAtk", "SCOTT_RIGHT_DASH_GATK", 0, 8, 12, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDashYAtk", "SCOTT_LEFT_DASH_YATK", 0, 6, 12, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDashYAtk", "SCOTT_RIGHT_DASH_YATK", 0, 6, 12, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDownAtk", "SCOTT_LEFT_DOWN_ATK", 0, 4, 15, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDownAtk", "SCOTT_RIGHT_DOWN_ATK", 0, 4, 15, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGAtk", "SCOTT_LEFT_GATK", 0, 6, 18, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightGAtk", "SCOTT_RIGHT_GATK", 0, 6, 18, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGAtk2", "SCOTT_LEFT_GATK2", 0, 6, 15, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightGAtk2", "SCOTT_RIGHT_GATK2", 0, 6, 15, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHobjAtk", "SCOTT_LEFT_HOBJ_ATK", 0, 6, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHobjAtk", "SCOTT_RIGHT_HOBJ_ATK", 0, 6, 10, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftJumpGAtk", "SCOTT_LEFT_JUMP_GATK", 0, 11, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightJumpGAtk", "SCOTT_RIGHT_JUMP_GATK", 0, 11, 10, false, false);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftJumpYAtk", "SCOTT_LEFT_JUMP_YATK", 0, 7, 15, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightJumpYAtk", "SCOTT_RIGHT_JUMP_YATK", 0, 7, 15, false, false);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjAtk", "SCOTT_LEFT_LOBJ_ATK", 0, 4, 10, false, false, sLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjAtk", "SCOTT_RIGHT_LOBJ_ATK", 0, 4, 10, false, false, sRightStop, this);
-
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjJumpAtk", "SCOTT_LEFT_LOBJ_JUMPATK", 0, 4, 10, false, false, sLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjJumpAtk", "SCOTT_RIGHT_LOBJ_JUMPATK", 0, 4, 10, false, false, sRightStop, this);
-
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjAtk", "SCOTT_LEFT_LOBJ_ATK", 0, 4, 10, false, false, sLobjLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjAtk", "SCOTT_RIGHT_LOBJ_ATK", 0, 4, 10, false, false, sLobjRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjJumpAtk", "SCOTT_LEFT_LOBJ_JUMPATK", 0, 4, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjJumpAtk", "SCOTT_RIGHT_LOBJ_JUMPATK", 0, 4, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjThrow", "SCOTT_LEFT_LOBJ_THROW", 0, 4, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjThrow", "SCOTT_RIGHT_LOBJ_THROW", 0, 4, 10, false, false, sRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjThrow", "SCOTT_LEFT_OBJ_THROW", 0, 5, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjThrow", "SCOTT_RIGHT_OBJ_THROW", 0, 5, 10, false, false, sRightStop, this);
-
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjYAtk", "SCOTT_LEFT_OBJ_YATK", 0, 5, 10, false, false, sLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjYAtk", "SCOTT_RIGHT_OBJ_YATK", 0, 5, 10, false, false, sRightStop, this);
-
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftSkAtk", "SCOTT_LEFT_SK_ATK", 0, 14, 12, false, false, sLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightSkAtk", "SCOTT_RIGHT_SK_ATK", 0, 14, 12, false, false, sRightStop, this);
-
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftSkAtk2", "SCOTT_LEFT_SK_ATK2", 0, 22, 18, false, false, sLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightSkAtk2", "SCOTT_RIGHT_SK_ATK2", 0, 22, 18, false, false, sRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjYAtk", "SCOTT_LEFT_OBJ_YATK", 0, 5, 10, false, false, sHobjLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjYAtk", "SCOTT_RIGHT_OBJ_YATK", 0, 5, 10, false, false, sHobjRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftThrow", "SCOTT_LEFT_THROW", 0, 7, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightThrow", "SCOTT_RIGHT_THROW", 0, 7, 10, false, false, sRightStop, this);
 
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftSkAtk", "SCOTT_LEFT_SK_ATK", 0, 14, 8, false, false, sLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightSkAtk", "SCOTT_RIGHT_SK_ATK", 0, 14, 8, false, false, sRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftSkAtk2", "SCOTT_LEFT_SK_ATK2", 0, 22, 18, false, false, sLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightSkAtk2", "SCOTT_RIGHT_SK_ATK2", 0, 22, 18, false, false, sRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftUpper", "SCOTT_LEFT_UPPER", 0, 7, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightUpper", "SCOTT_RIGHT_UPPER", 0, 7, 10, false, false, sRightStop, this);
 
@@ -2958,7 +5965,6 @@ void Player::setAni()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightIdle", "SCOTT_RIGHT_IDLE", 0, 7, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftJump", "SCOTT_LEFT_JUMP", 0, 12, 18, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightJump", "SCOTT_RIGHT_JUMP", 0, 12, 18, false, false);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftSJump", "SCOTT_LEFT_JUMP", 6, 12, 18, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightSJump", "SCOTT_RIGHT_JUMP", 6, 12, 18, false, false);
 
@@ -2968,6 +5974,9 @@ void Player::setAni()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjJump", "SCOTT_RIGHT_LOBJ_JUMP", 0, 7, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjWalk", "SCOTT_LEFT_LOBJ_WALK", 0, 5, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjWalk", "SCOTT_RIGHT_LOBJ_WALK", 0, 5, 10, false, true);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjIdle", "SCOTT_LEFT_OBJ_IDLE", 0, 3, 10, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjIdle", "SCOTT_RIGHT_OBJ_IDLE", 0, 3, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjWalk", "SCOTT_LEFT_OBJ_IDLE", 0, 3, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjWalk", "SCOTT_RIGHT_OBJ_IDLE", 0, 3, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjJump", "SCOTT_LEFT_OBJ_JUMP", 0, 12, 10, false, false);
@@ -2976,48 +5985,41 @@ void Player::setAni()
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjWalk", "SCOTT_RIGHT_OBJ_WALK", 0, 5, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftObjectDash", "SCOTT_LEFT_OBJECT_DASH", 0, 7, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightObjectDash", "SCOTT_RIGHT_OBJECT_DASH", 0, 7, 10, false, true);
+
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftWalk", "SCOTT_LEFT_WALK", 0, 5, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightWalk", "SCOTT_RIGHT_WALK", 0, 5, 10, false, true);
 
 	//그 외
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGHitted", "SCOTT_LEFT_G_HITTED", 0, 13, 10, false, false, sLeftDown, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightGHitted", "SCOTT_RIGHT_G_HITTED", 0, 13, 10, false, false, sRightDown, this);
-
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftGHitted", "SCOTT_LEFT_G_HITTED", 0, 13, 15, false, false, sLeftDown, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightGHitted", "SCOTT_RIGHT_G_HITTED", 0, 13, 15, false, false, sRightDown, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDown", "SCOTT_LEFT_G_HITTED", 12, 13, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDown", "SCOTT_RIGHT_G_HITTED", 12, 13, 10, false, false);
-
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHitted", "SCOTT_LEFT_HITTED", 0, 4, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHitted", "SCOTT_RIGHT_HITTED", 0, 4, 10, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHitted2", "SCOTT_LEFT_HITTED2", 0, 3, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHitted2", "SCOTT_RIGHT_HITTED2", 0, 3, 10, false, false, sRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHobjGet", "SCOTT_LEFT_HOBJ_GET", 0, 1, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHobjGet", "SCOTT_RIGHT_HOBJ_GET", 0, 1, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHobjGet", "SCOTT_LEFT_HOBJ_GET", 0, 1, 10, false, false, sHobjLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHobjGet", "SCOTT_RIGHT_HOBJ_GET", 0, 1, 10, false, false, sHobjRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftHobjThrow", "SCOTT_LEFT_HOBJ_THROW", 0, 5, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightHobjThrow", "SCOTT_RIGHT_HOBJ_THROW", 0, 5, 10, false, false, sRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjGet", "SCOTT_LEFT_LOBJ_GET", 0, 2, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjGet", "SCOTT_RIGHT_LOBJ_GET", 0, 2, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftLobjGet", "SCOTT_LEFT_LOBJ_GET", 0, 2, 10, false, false, sLobjLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightLobjGet", "SCOTT_RIGHT_LOBJ_GET", 0, 2, 10, false, false, sLobjRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftRUp", "SCOTT_LEFT_R_UP", 0, 7, 10, false, false, sLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightRUp", "SCOTT_RIGHT_R_UP", 0, 7, 10, false, false, sRightStop, this);
-
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftRUp", "SCOTT_LEFT_R_UP", 0, 7, 13, false, false, sLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightRUp", "SCOTT_RIGHT_R_UP", 0, 7, 13, false, false, sRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftDef", "SCOTT_LEFT_DEF", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightDef", "SCOTT_RIGHT_DEF", 0, 3, 10, false, false);
-
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftSDef", "SCOTT_LEFT_S_DEF", 0, 2, 10, false, false, sLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightSDef", "SCOTT_RIGHT_S_DEF", 0, 2, 10, false, false, sRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftSDef", "SCOTT_LEFT_S_DEF", 0, 2, 10, false, false, sLeftDef, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightSDef", "SCOTT_RIGHT_S_DEF", 0, 2, 10, false, false, sRightDef, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftStun", "SCOTT_LEFT_STUN", 0, 1, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightStun", "SCOTT_RIGHT_STUN", 0, 1, 10, false, false, sRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftTired", "SCOTT_LEFT_TIRED", 0, 3, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightTired", "SCOTT_RIGHT_TIRED", 0, 3, 10, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftUp", "SCOTT_LEFT_UP", 0, 5, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightUp", "SCOTT_RIGHT_UP", 0, 5, 10, false, false, sRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottLeftWin", "SCOTT_LEFT_WIN", 0, 17, 10, false, false, sLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("ScottRightWin", "SCOTT_RIGHT_WIN", 0, 17, 10, false, false, sRightStop, this);
 
@@ -3029,16 +6031,12 @@ void Player::setAni()
 	//공격
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDownGAtk", "RAMONA_LEFT_DOWN_GATK", 0, 4, 12, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDownGAtk", "RAMONA_RIGHT_DOWN_GATK", 0, 4, 12, false, false, rRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDownYAtk", "RAMONA_LEFT_DOWN_YATK", 0, 4, 12, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDownYAtk", "RAMONA_RIGHT_DOWN_YATK", 0, 4, 12, false, false, rRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDashGAtk", "RAMONA_LEFT_DASH_GATK", 0, 7, 14, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDashGAtk", "RAMONA_RIGHT_DASH_GATK", 0, 7, 14, false, false, rRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDashYAtk", "RAMONA_LEFT_DASH_YATK", 0, 5, 12, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDashYAtk", "RAMONA_RIGHT_DASH_YATK", 0, 5, 12, false, false, rRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGAtk", "RAMONA_LEFT_GATK", 0, 5, 15, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGAtk", "RAMONA_RIGHT_GATK", 0, 5, 15, false, false, rRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGAtk1", "RAMONA_LEFT_GATK", 6, 13, 15, false, false, rLeftStop, this);
@@ -3046,14 +6044,15 @@ void Player::setAni()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGAtk2", "RAMONA_LEFT_GATK2", 0, 7, 15, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGAtk2", "RAMONA_RIGHT_GATK2", 0, 7, 15, false, false, rRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjAtk", "RAMONA_LEFT_HOBJ_ATK", 0, 6, 10, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjAtk", "RAMONA_RIGHT_HOBJ_ATK", 0, 6, 10, false, false, rRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjJumpAtk", "RAMONA_LEFT_HOBJ_JUMP_ATK", 0, 5, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJumpAtk", "RAMONA_RIGHT_HOBJ_JUMP_ATK", 0, 5, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjAtk", "RAMONA_LEFT_HOBJ_ATK", 0, 6, 10, false, false, rHobjLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjAtk", "RAMONA_RIGHT_HOBJ_ATK", 0, 6, 10, false, false, rHobjRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjJumpThrow", "RAMONA_LEFT_HOBJ_JUMP_THROW", 0, 6, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJumpThrow", "RAMONA_RIGHT_HOBJ_JUMP_THROW", 0, 6, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjJumpAtk", "RAMONA_LEFT_HOBJ_JUMP_ATK", 0, 5, 10, false, false, rHobjLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJumpAtk", "RAMONA_RIGHT_HOBJ_JUMP_ATK", 0, 5, 10, false, false, rHobjRightStop, this);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjJumpThrow", "RAMONA_LEFT_HOBJ_JUMP_THROW", 0, 6, 10, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjJumpThrow", "RAMONA_RIGHT_HOBJ_JUMP_THROW", 0, 6, 10, false, false, rRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjThrow", "RAMONA_LEFT_HOBJ_THROW", 0, 7, 10, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjThrow", "RAMONA_RIGHT_HOBJ_THROW", 0, 7, 10, false, false, rRightStop, this);
@@ -3061,30 +6060,30 @@ void Player::setAni()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftJumpYAtk", "RAMONA_LEFT_JUMP_YATK", 0, 5, 15, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightJumpYAtk", "RAMONA_RIGHT_JUMP_YATK", 0, 5, 15, false, false);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjAtk", "RAMONA_LEFT_LOBJ_ATK", 0, 7, 10, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjAtk", "RAMONA_RIGHT_LOBJ_ATK", 0, 7, 10, false, false, rRightStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjAtk", "RAMONA_LEFT_LOBJ_ATK", 0, 4, 10, false, false, rLobjLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjAtk", "RAMONA_RIGHT_LOBJ_ATK", 0, 4, 10, false, false, rLobjRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjJumpAtk", "RAMONA_LEFT_LOBJ_JUMP_ATK", 0, 4, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjJumpAtk", "RAMONA_RIGHT_LOBJ_JUMP_ATK", 0, 4, 10, false, false);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjJumpThrow", "RAMONA_LEFT_LOBJ_JUMP_THROW", 0, 4, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjJumpThrow", "RAMONA_RIGHT_LOBJ_JUMP_THROW", 0, 4, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjJumpThrow", "RAMONA_LEFT_LOBJ_JUMP_THROW", 0, 4, 10, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjJumpThrow", "RAMONA_RIGHT_LOBJ_JUMP_THROW", 0, 4, 10, false, false, rRightStop, this);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjThrow", "RAMONA_LEFT_LOBJ_THROW", 0, 4, 10, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjThrow", "RAMONA_RIGHT_LOBJ_THROW", 0, 4, 10, false, false, rRightStop, this);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftSKAtk1", "RAMONA_LEFT_SK_ATK", 0, 9, 10, false, false, rLeftStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightSKAtk1", "RAMONA_RIGHT_SK_ATK", 0, 9, 10, false, false, rRightStop, this);
 
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftSKAtk1", "RAMONA_LEFT_SK_ATK", 0, 9, 6, false, false, rLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightSKAtk1", "RAMONA_RIGHT_SK_ATK", 0, 9, 6, false, false, rRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftSKAtk2", "RAMONA_LEFT_SK_ATK2", 0, 30, 18, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightSKAtk2", "RAMONA_RIGHT_SK_ATK2", 0, 30, 18, false, false, rRightStop, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftYAtk1", "RAMONA_LEFT_YATK", 0, 2, 12, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk1", "RAMONA_RIGHT_YATK", 0, 2, 12, false, false, rRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftYAtk2", "RAMONA_LEFT_YATK", 3, 5, 12, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk2", "RAMONA_RIGHT_YATK", 3, 5, 12, false, false, rRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftYAtk3", "RAMONA_LEFT_YATK", 6, 8, 12, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightYAtk3", "RAMONA_RIGHT_YATK", 6, 8, 12, false, false, rRightStop, this);
+
 	//이동
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDash", "RAMONA_LEFT_DASH", 0, 7, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDash", "RAMONA_RIGHT_DASH", 0, 7, 10, false, true);
@@ -3100,10 +6099,8 @@ void Player::setAni()
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightIdle", "RAMONA_RIGHT_IDLE", 0, 5, 10, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftJump", "RAMONA_LEFT_JUMP", 0, 8, 18, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightJump", "RAMONA_RIGHT_JUMP", 0, 8, 18, false, false);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftSJump", "RAMONA_LEFT_JUMP", 5, 8, 18, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightSJump", "RAMONA_RIGHT_JUMP", 5, 8, 18, false, false);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftJumpGAtk", "RAMONA_LEFT_JUMP_GATK", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightJumpGAtk", "RAMONA_RIGHT_JUMP_GATK", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjDash", "RAMONA_LEFT_LOBJ_DASH", 0, 7, 10, false, true);
@@ -3124,42 +6121,51 @@ void Player::setAni()
 	//그 외
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDef", "RAMONA_LEFT_DEF", 0, 2, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDef", "RAMONA_RIGHT_DEF", 0, 2, 10, false, false);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftGHitted", "RAMONA_LEFT_G_HITTED", 0, 11, 10, false, false, rLeftDown, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightGHitted", "RAMONA_RIGHT_G_HITTED", 0, 11, 10, false, false, rRightDown, this);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftDown", "RAMONA_LEFT_G_HITTED", 10, 11, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightDown", "RAMONA_RIGHT_G_HITTED", 10, 11, 10, false, false);
-
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHitted", "RAMONA_LEFT_HITTED", 0, 1, 10, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHitted", "RAMONA_RIGHT_HITTED", 0, 1, 10, false, false, rRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHitted2", "RAMONA_LEFT_HITTED2", 0, 1, 10, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHitted2", "RAMONA_RIGHT_HITTED2", 0, 1, 10, false, false, rRightStop, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjGet", "RAMONA_LEFT_HOBJ_GET", 0, 2, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjGet", "RAMONA_RIGHT_LOBJ_GET", 0, 2, 10, false, false);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftHobjGet", "RAMONA_LEFT_HOBJ_GET", 0, 2, 10, false, false, rHobjLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightHobjGet", "RAMONA_RIGHT_LOBJ_GET", 0, 2, 10, false, false, rHobjRightStop, this);
+
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftJumpHitted", "RAMONA_LEFT_JUMP_HITTED", 0, 1, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightJumpHitted", "RAMONA_RIGHT_JUMP_HITTED", 0, 1, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLHitted", "RAMONA_LEFT_L_HITTED", 0, 3, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLHitted", "RAMONA_RIGHT_L_HITTED", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjGet", "RAMONA_LEFT_LOBJ_GET", 0, 3, 10, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjGet", "RAMONA_RIGHT_LOBJ_GET", 0, 3, 10, false, false);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftLobjGet", "RAMONA_LEFT_LOBJ_GET", 0, 3, 10, false, false, rLobjLeftStop, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightLobjGet", "RAMONA_RIGHT_LOBJ_GET", 0, 3, 10, false, false, rLobjRightStop, this);
+
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftTired", "RAMONA_LEFT_TIRED", 0, 3, 10, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightTired", "RAMONA_RIGHT_TIRED", 0, 3, 10, false, false, rRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftUp", "RAMONA_LEFT_UP", 0, 8, 10, false, false, rRightStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightUp", "RAMONA_RIGHT_UP", 0, 8, 10, false, false, rLeftStop, this);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaLeftWin", "RAMONA_LEFT_WIN", 0, 26, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("RamonaRightWin", "RAMONA_RIGHT_WIN", 0, 26, 10, false, false);
+
+	//SK_ANI
+	KEYANIMANAGER->addCoordinateFrameAnimation("RightSk", "RIGHT_SK", 0, 35, 25, false, false, sknull, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("LeftSk", "LEFT_SK", 0, 35, 25, false, false, sknull, this);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nsk", "NSK", 0, 1, 1, false, false);
 }
 
 void Player::atkRc()
 {
-	if (_state == ATK || _state == JUMPATK)
+	if (_state == ATK || _state == JUMPATK || _state == LOBJATK || _state == LOBJJUMPATK || _state == HOBJATK || _state == HOBJJUMPATK)
 	{
 		_rcAtk = RectMakeCenter(_info.chr_x + _xAtk, _info.chr_y + _yAtk, _wAtk, _hAtk);
 	}
 	else
 	{
 		_rcAtk = RectMakeCenter(-100, -100, 1, 1);
-
+		_xAtk = 0;
+		_yAtk = 0;
+		_wAtk = 0;
+		_hAtk = 0;
 	}
 }
