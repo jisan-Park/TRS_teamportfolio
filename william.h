@@ -3,6 +3,29 @@
 class william : public enemy
 {
 private:
+	animation* william_IDLE_RIGHT;
+	animation* william_IDLE_LEFT;
+	animation* william_WALK_RIGHT;
+	animation* william_WALK_LEFT;
+	animation* william_ATTACK_RIGHT;
+	animation* william_ATTACK_LEFT;
+	animation* william_DAMAGE_RIGHT;
+	animation* william_DAMAGE_LEFT;
+	animation* william_DOWNDAMAGE_RIGHT;
+	animation* william_DOWNDAMAGE_LEFT;
+	animation* william_DEFENCE_RIGHT;
+	animation* william_DEFENCE_LEFT;
+	animation* william_KNOCKDOWN_RIGHT;
+	animation* william_KNOCKDOWN_LEFT;
+	animation* william_KNOCKUP_RIGHT;
+	animation* william_KNOCKUP_LEFT;
+	animation* william_KNOCKDOWN_RIGHT2;
+	animation* william_KNOCKDOWN_LEFT2;
+	animation* william_DEAD_RIGHT;
+	animation* william_DEAD_LEFT;
+
+
+
 
 public:
 

@@ -4,6 +4,27 @@ class lee : public enemy
 {
 
 private:
+	animation* lee_IDLE_RIGHT;
+	animation* lee_IDLE_LEFT;
+	animation* lee_WALK_RIGHT;
+	animation* lee_WALK_LEFT;
+	animation* lee_ATTACK_RIGHT;
+	animation* lee_ATTACK_LEFT;
+	animation* lee_DAMAGE_RIGHT;
+	animation* lee_DAMAGE_LEFT;
+	animation* lee_DOWNDAMAGE_RIGHT;
+	animation* lee_DOWNDAMAGE_LEFT;
+	animation* lee_PRESSDOWN_RIGHT;
+	animation* lee_PRESSDOWN_LEFT;
+	animation* lee_KNOCKDOWN_RIGHT;
+	animation* lee_KNOCKDOWN_LEFT;
+	animation* lee_KNOCKUP_RIGHT;
+	animation* lee_KNOCKUP_LEFT;
+	animation* lee_KNOCKDOWN_RIGHT2;
+	animation* lee_KNOCKDOWN_LEFT2;
+	animation* lee_DEAD_RIGHT;
+	animation* lee_DEAD_LEFT;
+
 
 public:
 

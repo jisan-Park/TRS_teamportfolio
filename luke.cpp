@@ -12,7 +12,7 @@ HRESULT luke::init(const char * imageName, float x, float y)
 	_spd = 5;
 	_str = 5;
 	_img = IMAGEMANAGER->findImage(imageName);
-	_motion = KEYANIMANAGER->findAnimation("luke_IDLE_RIGHT");
+	_motion = luke_IDLE_RIGHT;
 	_motion->start();
 	_inrange = RectMakeCenter(x, y, 400, 300);
 	GAMEMANAGER->addPicture(_info, _img, _motion);
@@ -26,7 +26,7 @@ void luke::atk()
 		_img = IMAGEMANAGER->findImage("luke_idle");
 		_direction = E_LEFT;
 		_state = E_IDLE;
-		_motion = KEYANIMANAGER->findAnimation("luke_IDLE_LEFT");
+		_motion = luke_IDLE_LEFT;
 
 		if (!_motion->isPlay())
 		{
@@ -38,7 +38,7 @@ void luke::atk()
 		_img = IMAGEMANAGER->findImage("luke_idle");
 		_direction = E_RIGHT;
 		_state = E_IDLE;
-		_motion = KEYANIMANAGER->findAnimation("luke_IDLE_RIGHT");
+		_motion = luke_IDLE_RIGHT;
 
 		if (!_motion->isPlay())
 		{
@@ -65,7 +65,7 @@ void luke::atk()
 						_info.jumpPower = 18;
 						_direction = E_LEFT;
 						_state = E_ROUNDKICK;
-						_motion = KEYANIMANAGER->findAnimation("luke_JUMPKICK_LEFT");
+						_motion = luke_JUMPKICK_LEFT;
 						_motion->start();
 					}
 					if (num == 2)
@@ -75,7 +75,7 @@ void luke::atk()
 						_info.hPushPower = -2;
 						_direction = E_LEFT;
 						_state = E_JUMP;
-						_motion = KEYANIMANAGER->findAnimation("luke_JUMP_LEFT");
+						_motion = luke_JUMP_LEFT;
 						_motion->start();
 						if (_info.jumpPower <= 0 && _info.shdDistance <= 0)
 						{
@@ -93,7 +93,7 @@ void luke::atk()
 						_img = IMAGEMANAGER->findImage("luke_attack1");
 						_direction = E_LEFT;
 						_state = E_PUNCH;
-						_motion = KEYANIMANAGER->findAnimation("luke_ATTACK1_LEFT");
+						_motion = luke_ATTACK1_LEFT;
 						_motion->start();
 					}
 					if (num2 == 2)
@@ -101,7 +101,7 @@ void luke::atk()
 						_img = IMAGEMANAGER->findImage("luke_attack2");
 						_direction = E_LEFT;
 						_state = E_KICK;
-						_motion = KEYANIMANAGER->findAnimation("luke_ATTACK2_LEFT");
+						_motion = luke_ATTACK2_LEFT;
 						_motion->start();
 					}
 				}
@@ -119,7 +119,7 @@ void luke::atk()
 						_info.jumpPower = 18;
 						_direction = E_RIGHT;
 						_state = E_ROUNDKICK;
-						_motion = KEYANIMANAGER->findAnimation("luke_ATTACK2_RIGHT");
+						_motion = luke_ATTACK2_RIGHT;
 						_motion->start();
 					}
 					if (num == 2)//점프 + pushpower 추가해서 다가가게 하기
@@ -130,7 +130,7 @@ void luke::atk()
 						_direction = E_RIGHT;
 						_state = E_JUMP;
 
-						_motion = KEYANIMANAGER->findAnimation("luke_JUMP_RIGHT");
+						_motion = luke_JUMP_RIGHT;
 						_motion->start();
 						if (_info.jumpPower <= 0 && _info.shdDistance <= 0)
 						{
@@ -147,7 +147,7 @@ void luke::atk()
 						_img = IMAGEMANAGER->findImage("luke_attack1");
 						_direction = E_RIGHT;
 						_state = E_PUNCH;
-						_motion = KEYANIMANAGER->findAnimation("luke_ATTACK1_RIGHT");
+						_motion = luke_ATTACK1_RIGHT;
 						_motion->start();
 					}
 					if (num2 == 2)
@@ -155,7 +155,7 @@ void luke::atk()
 						_img = IMAGEMANAGER->findImage("luke_attack2");
 						_direction = E_RIGHT;
 						_state = E_KICK;
-						_motion = KEYANIMANAGER->findAnimation("luke_ATTACK2_RIGHT");
+						_motion = luke_ATTACK2_RIGHT;
 						_motion->start();
 					}
 				}
@@ -212,7 +212,7 @@ void luke::atk()
 	//		//_count = 0;
 	//	}
 	//}
-	
+
 }
 
 void luke::move()
@@ -244,7 +244,7 @@ void luke::move()
 							_img = IMAGEMANAGER->findImage("luke_walk");
 							_direction = E_LEFT;
 							_state = E_WALK;
-							_motion = KEYANIMANAGER->findAnimation("luke_WALK_LEFT");
+							_motion = luke_WALK_LEFT;
 							if (!_motion->isPlay())
 							{
 								_motion->start();
@@ -256,7 +256,7 @@ void luke::move()
 							_img = IMAGEMANAGER->findImage("luke_walk");
 							_direction = E_RIGHT;
 							_state = E_WALK;
-							_motion = KEYANIMANAGER->findAnimation("luke_WALK_RIGHT");
+							_motion = luke_WALK_RIGHT;
 							if (!_motion->isPlay())
 							{
 								_motion->start();
@@ -278,7 +278,7 @@ void luke::move()
 								_img = IMAGEMANAGER->findImage("luke_walk");
 								_direction = E_LEFT;
 								_state = E_WALK;
-								_motion = KEYANIMANAGER->findAnimation("luke_WALK_LEFT");
+								_motion = luke_WALK_LEFT;
 								if (!_motion->isPlay())
 								{
 									_motion->start();
@@ -290,7 +290,7 @@ void luke::move()
 								_img = IMAGEMANAGER->findImage("luke_walk");
 								_direction = E_RIGHT;
 								_state = E_WALK;
-								_motion = KEYANIMANAGER->findAnimation("luke_WALK_RIGHT");
+								_motion = luke_WALK_RIGHT;
 								if (!_motion->isPlay())
 								{
 									_motion->start();
@@ -306,7 +306,7 @@ void luke::move()
 								_img = IMAGEMANAGER->findImage("luke_walk");
 								_direction = E_LEFT;
 								_state = E_WALK;
-								_motion = KEYANIMANAGER->findAnimation("luke_WALK_LEFT");
+								_motion = luke_WALK_LEFT;
 								if (!_motion->isPlay())
 								{
 									_motion->start();
@@ -318,7 +318,7 @@ void luke::move()
 								_img = IMAGEMANAGER->findImage("luke_walk");
 								_direction = E_RIGHT;
 								_state = E_WALK;
-								_motion = KEYANIMANAGER->findAnimation("luke_WALK_RIGHT");
+								_motion = luke_WALK_RIGHT;
 								if (!_motion->isPlay())
 								{
 									_motion->start();
@@ -340,7 +340,7 @@ void luke::move()
 						_img = IMAGEMANAGER->findImage("luke_idle");
 						_direction = E_LEFT;
 						_state = E_IDLE;
-						_motion = KEYANIMANAGER->findAnimation("luke_IDLE_LEFT");
+						_motion = luke_IDLE_LEFT;
 						_motion->start();
 					}
 					if (_direction == E_RIGHT)
@@ -348,7 +348,7 @@ void luke::move()
 						_img = IMAGEMANAGER->findImage("luke_idle");
 						_direction = E_RIGHT;
 						_state = E_IDLE;
-						_motion = KEYANIMANAGER->findAnimation("luke_IDLE_RIGHT");
+						_motion = luke_IDLE_RIGHT;
 						_motion->start();
 					}
 					_info.vPushPower = 0;
@@ -380,12 +380,12 @@ void luke::update()
 		_makeDead = false;
 		_img = IMAGEMANAGER->findImage("luke_knockDown");
 		if (_direction == LEFT) {
-			_motion = KEYANIMANAGER->findAnimation("luke_DEAD_LEFT");
+			_motion = luke_DEAD_LEFT;
 		}
 		else if (_direction == RIGHT) {
-			_motion = KEYANIMANAGER->findAnimation("luke_DEAD_RIGHT");
+			_motion = luke_DEAD_RIGHT;
 		}
-		
+
 		if (!_motion->isPlay())
 		{
 			_motion->start();
@@ -398,7 +398,7 @@ void luke::update()
 	PLAYER->setEnemyAtkRc(_inattack, 8);
 	inrange();
 	collsion();
-	
+	_motion->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 
 	if (_state == E_PUNCH || _state == E_KICK || _state == E_ROUNDKICK)
 	{
@@ -454,7 +454,7 @@ void luke::collsion()
 				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("luke_damage");
-					_motion = KEYANIMANAGER->findAnimation("luke_DAMAGE_RIGHT");
+					_motion = luke_DAMAGE_RIGHT;
 					_motion->start();
 					_direction = E_RIGHT;
 					_state = E_HITTED;
@@ -479,7 +479,7 @@ void luke::collsion()
 				if (_counttttt < 5)
 				{
 					_img = IMAGEMANAGER->findImage("luke_damage");
-					_motion = KEYANIMANAGER->findAnimation("luke_DAMAGE_LEFT");
+					_motion = luke_DAMAGE_LEFT;
 					_motion->start();
 					_direction = E_LEFT;
 					_state = E_HITTED;
@@ -501,7 +501,7 @@ void luke::collsion()
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
 				_img = IMAGEMANAGER->findImage("luke_knockDown");
-				_motion = KEYANIMANAGER->findAnimation("luke_KNOCKDOWN_RIGHT");
+				_motion = luke_KNOCKDOWN_RIGHT;
 				_motion->start();
 				_direction = E_RIGHT;
 				_state = E_DOWN;
@@ -513,7 +513,7 @@ void luke::collsion()
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
 				_img = IMAGEMANAGER->findImage("luke_knockDown");
-				_motion = KEYANIMANAGER->findAnimation("luke_KNOCKDOWN_LEFT");
+				_motion = luke_KNOCKDOWN_LEFT;
 				_motion->start();
 				_direction = E_LEFT;
 				_state = E_DOWN;
@@ -529,7 +529,7 @@ void luke::collsion()
 			if (_direction == E_RIGHT)
 			{
 				_img = IMAGEMANAGER->findImage("luke_damageDown");
-				_motion = KEYANIMANAGER->findAnimation("luke_DAMAGEDOWN_RIGHT");
+				_motion = luke_DAMAGEDOWN_RIGHT;
 				_motion->start();
 				_direction = E_RIGHT;
 				_state = E_DOWNHITTED;
@@ -540,7 +540,7 @@ void luke::collsion()
 			if (_direction == E_LEFT)
 			{
 				_img = IMAGEMANAGER->findImage("luke_damageDown");
-				_motion = KEYANIMANAGER->findAnimation("luke_DAMAGEDOWN_LEFT");
+				_motion = luke_DAMAGEDOWN_LEFT;
 				_motion->start();
 				_direction = E_LEFT;
 				_state = E_DOWNHITTED;
@@ -578,7 +578,7 @@ void luke::collsion()
 			if (_direction == E_RIGHT)
 			{
 				_img = IMAGEMANAGER->findImage("luke_knockUp");
-				_motion = KEYANIMANAGER->findAnimation("luke_KNOCKUP_RIGHT");
+				_motion = luke_KNOCKUP_RIGHT;
 				_motion->start();
 				_direction = E_RIGHT;
 				_state = E_UP;
@@ -586,7 +586,7 @@ void luke::collsion()
 			if (_direction == E_LEFT)
 			{
 				_img = IMAGEMANAGER->findImage("luke_knockUp");
-				_motion = KEYANIMANAGER->findAnimation("luke_KNOCKUP_LEFT");
+				_motion = luke_KNOCKUP_LEFT;
 				_motion->start();
 				_direction = E_LEFT;
 				_state = E_UP;
@@ -629,32 +629,222 @@ void luke::inrange()
 
 void luke::setAnimation()
 {
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_IDLE_RIGHT", "luke_idle", 0, 3, 8, false, true);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_IDLE_LEFT", "luke_idle", 7, 4, 8, false, true);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_WALK_RIGHT", "luke_walk", 0, 5, 8, false, true);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_WALK_LEFT", "luke_walk", 11, 6, 8, false, true);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_ATTACK1_RIGHT", "luke_attack1", 0, 7, 8, false, false, rightAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_ATTACK1_LEFT", "luke_attack1", 15, 8, 8, false, false, leftAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_ATTACK2_RIGHT", "luke_attack2", 0, 6, 10, false, false, rightAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_ATTACK2_LEFT", "luke_attack2", 13, 7, 10, false, false, leftAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_DAMAGE_RIGHT", "luke_damage", 0, 2, 8, false, false, rightAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_DAMAGE_LEFT", "luke_damage", 5, 3, 8, false, false, leftAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_DAMAGEDOWN_RIGHT", "luke_damageDown", 0, 2, 8, false, false, rightdown, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_DAMAGEDOWN_LEFT", "luke_damageDown", 5, 3, 8, false, false, leftdown, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKDOWN_RIGHT", "luke_knockDown", 0, 13, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKDOWN_LEFT", "luke_knockDown", 27, 14, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKUP_RIGHT", "luke_knockUp", 0, 7, 8, false, false, rightAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKUP_LEFT", "luke_knockUp", 15, 8, 8, false, false, leftAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_JUMP_RIGHT", "luke_jump", 0, 9, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_JUMP_LEFT", "luke_jump", 19, 10, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKDOWN_RIGHT2", "luke_knockDown", 11, 13, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKDOWN_LEFT2", "luke_knockDown", 16, 14, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_JUMPKICK_RIGHT", "luke_jumpkick", 0, 4, 8, false, false, rightAttack, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_JUMPKICK_LEFT", "luke_jumpkick", 9, 5, 8, false, false, leftAttack, this);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_IDLE_RIGHT", "luke_idle", 0, 3, 8, false, true);
+	luke_IDLE_RIGHT = new animation;
+	luke_IDLE_RIGHT->init(IMAGEMANAGER->findImage("luke_idle")->getWidth(),
+		IMAGEMANAGER->findImage("luke_idle")->getHeight(),
+		IMAGEMANAGER->findImage("luke_idle")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_idle")->getFrameHeight());
+	luke_IDLE_RIGHT->setPlayFrame(0, 3, false, true);
+	luke_IDLE_RIGHT->setFPS(8);
 
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_IDLE_LEFT", "luke_idle", 7, 4, 8, false, true);
+	luke_IDLE_LEFT = new animation;
+	luke_IDLE_LEFT->init(IMAGEMANAGER->findImage("luke_idle")->getWidth(),
+		IMAGEMANAGER->findImage("luke_idle")->getHeight(),
+		IMAGEMANAGER->findImage("luke_idle")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_idle")->getFrameHeight());
+	luke_IDLE_LEFT->setPlayFrame(7, 4, false, true);
+	luke_IDLE_LEFT->setFPS(8);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_DEAD_RIGHT", "luke_knockDown", 0, 13, 10, false, false, makeDead, this);
-	KEYANIMANAGER->addCoordinateFrameAnimation("luke_DEAD_LEFT", "luke_knockDown", 27, 14, 10, false, false, makeDead, this);
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_WALK_RIGHT", "luke_walk", 0, 5, 8, false, true);
+	luke_WALK_RIGHT = new animation;
+	luke_WALK_RIGHT->init(IMAGEMANAGER->findImage("luke_walk")->getWidth(),
+		IMAGEMANAGER->findImage("luke_walk")->getHeight(),
+		IMAGEMANAGER->findImage("luke_walk")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_walk")->getFrameHeight());
+	luke_WALK_RIGHT->setPlayFrame(0, 5, false, true);
+	luke_WALK_RIGHT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_WALK_LEFT", "luke_walk", 11, 6, 8, false, true);
+	luke_WALK_LEFT = new animation;
+	luke_WALK_LEFT->init(IMAGEMANAGER->findImage("luke_walk")->getWidth(),
+		IMAGEMANAGER->findImage("luke_walk")->getHeight(),
+		IMAGEMANAGER->findImage("luke_walk")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_walk")->getFrameHeight());
+	luke_WALK_LEFT->setPlayFrame(11, 6, false, true);
+	luke_WALK_LEFT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_ATTACK1_RIGHT", "luke_attack1", 0, 7, 8, false, false, rightAttack, this);
+	luke_ATTACK1_RIGHT = new animation;
+	luke_ATTACK1_RIGHT->init(IMAGEMANAGER->findImage("luke_attack1")->getWidth(),
+		IMAGEMANAGER->findImage("luke_attack1")->getHeight(),
+		IMAGEMANAGER->findImage("luke_attack1")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_attack1")->getFrameHeight());
+	luke_ATTACK1_RIGHT->setPlayFrame(0, 7, false, false, rightAttack, this);
+	luke_ATTACK1_RIGHT->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_ATTACK1_LEFT", "luke_attack1", 15, 8, 8, false, false, leftAttack, this);
+	luke_ATTACK1_LEFT = new animation;
+	luke_ATTACK1_LEFT->init(IMAGEMANAGER->findImage("luke_attack1")->getWidth(),
+		IMAGEMANAGER->findImage("luke_attack1")->getHeight(),
+		IMAGEMANAGER->findImage("luke_attack1")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_attack1")->getFrameHeight());
+	luke_ATTACK1_LEFT->setPlayFrame(15, 8, false, false, leftAttack, this);
+	luke_ATTACK1_LEFT->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_ATTACK2_RIGHT", "luke_attack2", 0, 6, 10, false, false, rightAttack, this);
+	luke_ATTACK2_RIGHT = new animation;
+	luke_ATTACK2_RIGHT->init(IMAGEMANAGER->findImage("luke_attack2")->getWidth(),
+		IMAGEMANAGER->findImage("luke_attack2")->getHeight(),
+		IMAGEMANAGER->findImage("luke_attack2")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_attack2")->getFrameHeight());
+	luke_ATTACK2_RIGHT->setPlayFrame(0, 6, false, false, rightAttack, this);
+	luke_ATTACK2_RIGHT->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_ATTACK2_LEFT", "luke_attack2", 13, 7, 10, false, false, leftAttack, this);
+	luke_ATTACK2_LEFT = new animation;
+	luke_ATTACK2_LEFT->init(IMAGEMANAGER->findImage("luke_attack2")->getWidth(),
+		IMAGEMANAGER->findImage("luke_attack2")->getHeight(),
+		IMAGEMANAGER->findImage("luke_attack2")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_attack2")->getFrameHeight());
+	luke_ATTACK2_LEFT->setPlayFrame(13, 7, false, false, leftAttack, this);
+	luke_ATTACK2_LEFT->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_DAMAGE_RIGHT", "luke_damage", 0, 2, 8, false, false, rightAttack, this);
+	luke_DAMAGE_RIGHT = new animation;
+	luke_DAMAGE_RIGHT->init(IMAGEMANAGER->findImage("luke_damage")->getWidth(),
+		IMAGEMANAGER->findImage("luke_damage")->getHeight(),
+		IMAGEMANAGER->findImage("luke_damage")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_damage")->getFrameHeight());
+	luke_DAMAGE_RIGHT->setPlayFrame(0, 2, false, false, rightAttack, this);
+	luke_DAMAGE_RIGHT->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_DAMAGE_LEFT", "luke_damage", 5, 3, 8, false, false, leftAttack, this);
+	luke_DAMAGE_LEFT = new animation;
+	luke_DAMAGE_LEFT->init(IMAGEMANAGER->findImage("luke_damage")->getWidth(),
+		IMAGEMANAGER->findImage("luke_damage")->getHeight(),
+		IMAGEMANAGER->findImage("luke_damage")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_damage")->getFrameHeight());
+	luke_DAMAGE_LEFT->setPlayFrame(5, 3, false, false, leftAttack, this);
+	luke_DAMAGE_LEFT->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_DAMAGEDOWN_RIGHT", "luke_damageDown", 0, 2, 8, false, false, rightdown, this);
+	luke_DAMAGEDOWN_RIGHT = new animation;
+	luke_DAMAGEDOWN_RIGHT->init(IMAGEMANAGER->findImage("luke_damageDown")->getWidth(),
+		IMAGEMANAGER->findImage("luke_damageDown")->getHeight(),
+		IMAGEMANAGER->findImage("luke_damageDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_damageDown")->getFrameHeight());
+	luke_DAMAGEDOWN_RIGHT->setPlayFrame(0, 2, false, false, rightdown, this);
+	luke_DAMAGEDOWN_RIGHT->setFPS(3);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_DAMAGEDOWN_LEFT", "luke_damageDown", 5, 3, 8, false, false, leftdown, this);
+	luke_DAMAGEDOWN_LEFT = new animation;
+	luke_DAMAGEDOWN_LEFT->init(IMAGEMANAGER->findImage("luke_damageDown")->getWidth(),
+		IMAGEMANAGER->findImage("luke_damageDown")->getHeight(),
+		IMAGEMANAGER->findImage("luke_damageDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_damageDown")->getFrameHeight());
+	luke_DAMAGEDOWN_LEFT->setPlayFrame(5, 3, false, false, leftdown, this);
+	luke_DAMAGEDOWN_LEFT->setFPS(3);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKDOWN_RIGHT", "luke_knockDown", 0, 13, 8, false, false);
+	luke_KNOCKDOWN_RIGHT = new animation;
+	luke_KNOCKDOWN_RIGHT->init(IMAGEMANAGER->findImage("luke_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameHeight());
+	luke_KNOCKDOWN_RIGHT->setPlayFrame(0, 13, false, false);
+	luke_KNOCKDOWN_RIGHT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKDOWN_LEFT", "luke_knockDown", 27, 14, 8, false, false);
+	luke_KNOCKDOWN_LEFT = new animation;
+	luke_KNOCKDOWN_LEFT->init(IMAGEMANAGER->findImage("luke_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameHeight());
+	luke_KNOCKDOWN_LEFT->setPlayFrame(27, 14, false, false);
+	luke_KNOCKDOWN_LEFT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKUP_RIGHT", "luke_knockUp", 0, 7, 8, false, false, rightAttack, this);
+	luke_KNOCKUP_RIGHT = new animation;
+	luke_KNOCKUP_RIGHT->init(IMAGEMANAGER->findImage("luke_knockUp")->getWidth(),
+		IMAGEMANAGER->findImage("luke_knockUp")->getHeight(),
+		IMAGEMANAGER->findImage("luke_knockUp")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_knockUp")->getFrameHeight());
+	luke_KNOCKUP_RIGHT->setPlayFrame(0, 7, false, false, rightAttack, this);
+	luke_KNOCKUP_RIGHT->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKUP_LEFT", "luke_knockUp", 15, 8, 8, false, false, leftAttack, this);
+	luke_KNOCKUP_LEFT = new animation;
+	luke_KNOCKUP_LEFT->init(IMAGEMANAGER->findImage("luke_knockUp")->getWidth(),
+		IMAGEMANAGER->findImage("luke_knockUp")->getHeight(),
+		IMAGEMANAGER->findImage("luke_knockUp")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_knockUp")->getFrameHeight());
+	luke_KNOCKUP_LEFT->setPlayFrame(15, 8, false, false, leftAttack, this);
+	luke_KNOCKUP_LEFT->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_JUMP_RIGHT", "luke_jump", 0, 9, 8, false, false);
+	luke_JUMP_RIGHT = new animation;
+	luke_JUMP_RIGHT->init(IMAGEMANAGER->findImage("luke_jump")->getWidth(),
+		IMAGEMANAGER->findImage("luke_jump")->getHeight(),
+		IMAGEMANAGER->findImage("luke_jump")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_jump")->getFrameHeight());
+	luke_JUMP_RIGHT->setPlayFrame(0, 9, false, false);
+	luke_JUMP_RIGHT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_JUMP_LEFT", "luke_jump", 19, 10, 8, false, false);
+	luke_JUMP_LEFT = new animation;
+	luke_JUMP_LEFT->init(IMAGEMANAGER->findImage("luke_jump")->getWidth(),
+		IMAGEMANAGER->findImage("luke_jump")->getHeight(),
+		IMAGEMANAGER->findImage("luke_jump")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_jump")->getFrameHeight());
+	luke_JUMP_LEFT->setPlayFrame(19, 10, false, false);
+	luke_JUMP_LEFT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKDOWN_RIGHT2", "luke_knockDown", 11, 13, 8, false, false);
+	luke_KNOCKDOWN_RIGHT2 = new animation;
+	luke_KNOCKDOWN_RIGHT2->init(IMAGEMANAGER->findImage("luke_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameHeight());
+	luke_KNOCKDOWN_RIGHT2->setPlayFrame(11, 13, false, false);
+	luke_KNOCKDOWN_RIGHT2->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_KNOCKDOWN_LEFT2", "luke_knockDown", 16, 14, 8, false, false);
+	luke_KNOCKDOWN_LEFT2 = new animation;
+	luke_KNOCKDOWN_LEFT2->init(IMAGEMANAGER->findImage("luke_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameHeight());
+	luke_KNOCKDOWN_LEFT2->setPlayFrame(16, 14, false, false);
+	luke_KNOCKDOWN_LEFT2->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_JUMPKICK_RIGHT", "luke_jumpkick", 0, 4, 8, false, false, rightAttack, this);
+	luke_JUMPKICK_RIGHT = new animation;
+	luke_JUMPKICK_RIGHT->init(IMAGEMANAGER->findImage("luke_jumpkick")->getWidth(),
+		IMAGEMANAGER->findImage("luke_jumpkick")->getHeight(),
+		IMAGEMANAGER->findImage("luke_jumpkick")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_jumpkick")->getFrameHeight());
+	luke_JUMPKICK_RIGHT->setPlayFrame(0, 4, false, false, rightAttack, this);
+	luke_JUMPKICK_RIGHT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_JUMPKICK_LEFT", "luke_jumpkick", 9, 5, 8, false, false, leftAttack, this);
+	luke_JUMPKICK_LEFT = new animation;
+	luke_JUMPKICK_LEFT->init(IMAGEMANAGER->findImage("luke_jumpkick")->getWidth(),
+		IMAGEMANAGER->findImage("luke_jumpkick")->getHeight(),
+		IMAGEMANAGER->findImage("luke_jumpkick")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_jumpkick")->getFrameHeight());
+	luke_JUMPKICK_LEFT->setPlayFrame(9, 5, false, false, leftAttack, this);
+	luke_JUMPKICK_LEFT->setFPS(8);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_DEAD_RIGHT", "luke_knockDown", 0, 13, 10, false, false, makeDead, this);
+	luke_DEAD_RIGHT = new animation;
+	luke_DEAD_RIGHT->init(IMAGEMANAGER->findImage("luke_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameHeight());
+	luke_DEAD_RIGHT->setPlayFrame(0, 13, false, false, makeDead, this);
+	luke_DEAD_RIGHT->setFPS(10);
+
+	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_DEAD_LEFT", "luke_knockDown", 27, 14, 10, false, false, makeDead, this);
+	luke_DEAD_LEFT = new animation;
+	luke_DEAD_LEFT->init(IMAGEMANAGER->findImage("luke_knockDown")->getWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getHeight(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameWidth(),
+		IMAGEMANAGER->findImage("luke_knockDown")->getFrameHeight());
+	luke_DEAD_LEFT->setPlayFrame(27, 14, false, false, makeDead, this);
+	luke_DEAD_LEFT->setFPS(10);
+
 }
 
 void luke::rightAttack(void * obj)
@@ -663,7 +853,7 @@ void luke::rightAttack(void * obj)
 	m->setDirection(E_RIGHT);
 	m->setState(E_IDLE);
 	m->setImage(IMAGEMANAGER->findImage("luke_idle"));
-	m->setteMotion(KEYANIMANAGER->findAnimation("luke_IDLE_RIGHT"));
+	m->setteMotion(m->luke_IDLE_RIGHT);
 	m->getMotion()->start();
 
 }
@@ -674,7 +864,7 @@ void luke::leftAttack(void * obj)
 	m->setDirection(E_LEFT);
 	m->setState(E_IDLE);
 	m->setImage(IMAGEMANAGER->findImage("luke_idle"));
-	m->setteMotion(KEYANIMANAGER->findAnimation("luke_IDLE_LEFT"));
+	m->setteMotion(m->luke_IDLE_LEFT);
 	m->getMotion()->start();
 }
 void luke::rightdown(void * obj)
@@ -683,7 +873,7 @@ void luke::rightdown(void * obj)
 	m->setDirection(E_RIGHT);
 	m->setState(E_DOWN);
 	m->setImage(IMAGEMANAGER->findImage("luke_knockDown"));
-	m->setteMotion(KEYANIMANAGER->findAnimation("luke_KNOCKDOWN_RIGHT2"));
+	m->setteMotion(m->luke_KNOCKDOWN_RIGHT2);
 	m->getMotion()->start();
 }
 
@@ -693,7 +883,7 @@ void luke::leftdown(void * obj)
 	m->setDirection(E_LEFT);
 	m->setState(E_DOWN);
 	m->setImage(IMAGEMANAGER->findImage("luke_knockDown"));
-	m->setteMotion(KEYANIMANAGER->findAnimation("luke_KNOCKDOWN_LEFT2"));
+	m->setteMotion(m->luke_KNOCKDOWN_LEFT2);
 	m->getMotion()->start();
 }
 
