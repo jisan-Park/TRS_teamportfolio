@@ -27,6 +27,11 @@ HRESULT loadingScene::init()
 		NULL				//스레드 생성 후 스레드의 ID 넘겨줌 보통은 NULL로 둔다
 	);
 
+	SOUNDMANAGER->stop("보스방");
+	SOUNDMANAGER->stop("상점");
+	SOUNDMANAGER->stop("인게임");
+	SOUNDMANAGER->play("메뉴", 1.0f);
+
 	return S_OK;
 }
 

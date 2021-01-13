@@ -49,6 +49,12 @@ HRESULT inGameScene::init()
 	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
 	_isPaused = false;
 	_isSetting = false;
+
+	SOUNDMANAGER->stop("메뉴");
+	SOUNDMANAGER->stop("보스방");
+	SOUNDMANAGER->stop("상점");
+	SOUNDMANAGER->play("인게임", 1.0f);
+
 	return S_OK;
 }
 
@@ -86,9 +92,17 @@ void inGameScene::update()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1)) {
 		SCENEMANAGER->changeScene("gameover");
+		SOUNDMANAGER->stop("메뉴");
+		SOUNDMANAGER->stop("보스방");
+		SOUNDMANAGER->stop("상점");
+		SOUNDMANAGER->stop("인게임");
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F2)) {
 		SCENEMANAGER->changeScene("gameclear");
+		SOUNDMANAGER->stop("메뉴");
+		SOUNDMANAGER->stop("보스방");
+		SOUNDMANAGER->stop("상점");
+		SOUNDMANAGER->stop("인게임");
 	}
 
 	if (CAMERAMANAGER->getCameraPhase() % 2 == 1) {

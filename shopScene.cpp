@@ -31,6 +31,13 @@ HRESULT shopScene::init()
 	if (GAMEMANAGER->getShopNum() == 4) {
 		_img = IMAGEMANAGER->findImage("스시점");
 	}
+
+	SOUNDMANAGER->stop("보스방");
+	SOUNDMANAGER->stop("메뉴");
+	SOUNDMANAGER->stop("인게임");
+	SOUNDMANAGER->play("상점", 1.0f);
+
+
 	return S_OK;
 }
 
