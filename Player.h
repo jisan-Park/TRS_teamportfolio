@@ -34,6 +34,8 @@ enum PLAYER_STATE
 	LOBJRUN,
 	LOBJJUMP,
 	LOBJJUMPATK,
+	LOBJTHROW,
+	LOBJGET,
 
 	HOBJ,
 	HOBJATK,
@@ -41,6 +43,8 @@ enum PLAYER_STATE
 	HOBJRUN,
 	HOBJJUMP,
 	HOBJJUMPATK,
+	HOBJTHROW,
+	HOBJGET,
 
 	DOWN,
 	DEF,
@@ -88,6 +92,8 @@ private:
 	int _count;
 	int _skCount;
 
+
+
 	int _money;//소지금
 	int _life;
 	int _hp;
@@ -99,6 +105,8 @@ private:
 	int _dmg; // player가 줄 데미지
 
 	bool _hitted; // 플레이어가 맞았는지
+	bool _die1;
+	bool _die2;
 
 	int _characterNum;
 
@@ -106,6 +114,11 @@ private:
 	int _yAtk;
 	int _wAtk;
 	int _hAtk;
+
+	//스탯
+	int _reduceDamage;
+	int _atkSpeed;
+
 
 public:
 	Player();
@@ -121,15 +134,18 @@ public:
 	void sHittedManage();
 	void sLobjManage();
 	void sHobjManage();
+	void sDie();
 
 	void rMoveManage();
 	void rAtkManage();
 	void rHittedManage();
 	void rLobjManage();
 	void rHobjManage();
-
 	void skAtk();
 	void objGet();
+	void rDie();
+
+	void statManage();
 
 	//콜백함수
 	static void sRightStop(void* obj);
@@ -142,6 +158,10 @@ public:
 	static void sLobjLeftStop(void* obj);
 	static void sHobjRightStop(void* obj);
 	static void sHobjLeftStop(void* obj);
+	static void sRightTired(void* obj);
+	static void sLeftTired(void* obj);
+	static void sRightUp1(void* obj);
+	static void sLeftUp1(void* obj);
 
 	static void rRightStop(void* obj);
 	static void rLeftStop(void* obj);
@@ -151,6 +171,10 @@ public:
 	static void rLobjLeftStop(void* obj);
 	static void rHobjRightStop(void* obj);
 	static void rHobjLeftStop(void* obj);
+	static void rRightTired(void* obj);
+	static void rLeftTired(void* obj);
+	static void rRightUp1(void* obj);
+	static void rLeftUp1(void* obj);
 
 	static void sknull(void* obj);
 
@@ -174,6 +198,9 @@ public:
 	void setEnemyAtkRc(RECT rc, float Damage) { _enemyAtkRc = rc, _enemyDamage = Damage; }// 에너미 공격렉트, 데미지 가져옴
 	inline RECT getAttackRc() { return _rcAtk; }
 	inline float getAttackDamege() { return _dmg; }
+
+	bool getHit() { return _hitted; }
+
 
 
 

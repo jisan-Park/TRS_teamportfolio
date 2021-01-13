@@ -108,6 +108,8 @@ void inGameScene::render()
 
 	GAMEMANAGER->render(getMemDC());
 
+	PLAYER->render(getMemDC());
+
 	if (_isPaused) {
 		IMAGEMANAGER->findImage("로딩배경")->alphaRender(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y, 170);
 		//pause 이미지 띄워주기

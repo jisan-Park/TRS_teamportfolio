@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "playGround.h"
+#pragma warning(disable:4996)
+
 
 playGround::playGround()
 {
@@ -13,6 +15,11 @@ playGround::~playGround()
 HRESULT playGround::init()
 {
 	gameNode::init(true);
+
+	SOUNDMANAGER->addSound("메뉴", "music/메뉴.mp3", true, true);
+	SOUNDMANAGER->addSound("인게임", "music/인게임.mp3", true, true);
+	SOUNDMANAGER->addSound("상점", "music/상점.mp3", true, true);
+	SOUNDMANAGER->addSound("보스방", "music/보스방.mp3", true, true);
 
 	SCENEMANAGER->addScene("시작씬", new startScene);
 	SCENEMANAGER->addScene("로딩씬", new loadingScene);
