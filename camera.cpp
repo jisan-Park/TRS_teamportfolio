@@ -19,24 +19,12 @@ void camera::init(float x, float y) {
 void camera::setCamera(float x, float y) {
 	//카메라 고정상태면 x축 고정 y만 이동
 	if (_stop) {
-		if (pt.y != y) {
-			pt.y += -sin(getAngle(pt.x,pt.y, x, y))*9;
-		}
-		
+		pt.y = y;
 	}
 	else {
-		if (pt.x != x) {
-			pt.x += cos(getAngle(pt.x, pt.y, x, y)) * 9;
-		}
-		if (pt.y != y) {
-			pt.y += -sin(getAngle(pt.x, pt.y, x, y)) * 9;
-		}
-		/*pt.x = x;
-		pt.y = y;*/
+		pt.x = x;
+		pt.y = y;
 	}
-	//phase처리
-	checkPoint();
-	update();
 }
 
 //phase 에 따른 camera stop (고정)
@@ -46,7 +34,7 @@ void camera::checkPoint()
 	if (pt.x >= 333 && _phase < 1) {
 		_phase = 1;
 		setX(333);
-		_stop = true;	
+		_stop = true;
 	}
 	//x 가 1610이상이고, phase 3보다 낮으면
 	if (pt.x >= 1610 && _phase < 3) {
@@ -169,7 +157,7 @@ void camera::update()
 			}
 		}
 	}
-	else{
+	else {
 		//보스방 예외처리
 		if (pt.x <= 21268) {
 			pt.x = 21268;
@@ -184,7 +172,7 @@ void camera::update()
 			pt.y = 730;
 		}
 	}
-	
+
 }
 
 void camera::movePoint(float x, float y)

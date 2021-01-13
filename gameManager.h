@@ -69,5 +69,6 @@ public:
 	void updatePicture(characterInfo info, image * img, animation * ani);
 	void quicksort(vector<picture*>& data, int start, int end);
 	void deletePicture(int renderNum);
+	void resetPicture() { arrPicture.clear(); };
 };
 

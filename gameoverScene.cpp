@@ -54,6 +54,6 @@ void gameoverScene::update()
 
 void gameoverScene::render()
 {
-	IMAGEMANAGER->findImage("gameover배경")->render(getMemDC());
-	IMAGEMANAGER->findImage("gameoverBox")->render(getMemDC(), _rc.left, _rc.top);
+	IMAGEMANAGER->findImage("gameover배경")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y);
+	IMAGEMANAGER->findImage("gameoverBox")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x + _rc.left, CAMERAMANAGER->getCameraPoint().y + _rc.top);
 }

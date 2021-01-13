@@ -43,4 +43,3 @@ void cameraManager::moveCamera(float x, float y)
 {
 	_camera->movePoint(x, y);
 }
-

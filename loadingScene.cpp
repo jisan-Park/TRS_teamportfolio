@@ -53,10 +53,11 @@ void loadingScene::render()
 	//그림파일 이미지 경로를 텍스트로 보여줘도 되고
 	
 
-	_background->render(getMemDC());
+	//그림파일 이미지 경로를 텍스트로 보여줘도 되고
+	_background->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y);
 
 	//_loadingBar->render();
-	_loadingCharacter->frameRender(getMemDC(),WINSIZEX-50,WINSIZEY-50);
+	_loadingCharacter->frameRender(getMemDC(), CAMERAMANAGER->getCameraPoint().x + WINSIZEX - 50, CAMERAMANAGER->getCameraPoint().y + WINSIZEY - 50);
 }
 
 DWORD CALLBACK threadFunction(LPVOID lpParameter)

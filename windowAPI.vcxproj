@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="baricadeLine.h" />
-    <ClInclude Include="bonusBoxScene.h" />
     <ClInclude Include="botLine.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cameraManager.h" />
@@ -186,7 +185,6 @@
     <ClInclude Include="picture.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="playGround.h" />
-    <ClInclude Include="rainbowScene.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="richard.h" />
@@ -215,7 +213,6 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="baricadeLine.cpp" />
-    <ClCompile Include="bonusBoxScene.cpp" />
     <ClCompile Include="botLine.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cameraManager.cpp" />
@@ -250,7 +247,6 @@
     <ClCompile Include="picture.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playGround.cpp" />
-    <ClCompile Include="rainbowScene.cpp" />
     <ClCompile Include="richard.cpp" />
     <ClCompile Include="rightLine.cpp" />
     <ClCompile Include="sceneManager.cpp" />

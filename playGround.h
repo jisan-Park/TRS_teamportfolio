@@ -14,9 +14,6 @@
 #include "gameoverScene.h"
 //Shop Scene
 #include "shopScene.h"
-//bonus Scene
-#include "rainbowScene.h"
-#include "bonusBoxScene.h"
 //////////////////////////
 #include "Player.h"
 

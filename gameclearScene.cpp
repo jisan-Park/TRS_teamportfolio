@@ -42,7 +42,7 @@ void gameclearScene::render()
 {
 	// 게임이 시작되지 않았으면 (영상 재생중이기때문에 랜더를 잠시 치워준다.)
 	if (_isStart) {
-		//IMAGEMANAGER->findImage("background")->render(getMemDC());
+		IMAGEMANAGER->findImage("로딩배경")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y);
 	}
 }
 

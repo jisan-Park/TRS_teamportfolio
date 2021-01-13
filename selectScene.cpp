@@ -98,10 +98,10 @@ void selectScene::update()
 
 void selectScene::render()
 {
-	IMAGEMANAGER->findImage("selectScene배경")->render(getMemDC(),0,0);
+	IMAGEMANAGER->findImage("selectScene배경")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y);
 
-	_scott->aniRender(getMemDC(), 140, 50, _scottMotion); 
-	_ramona->aniRender(getMemDC(), 415, 50, _ramonaMotion);
+	_scott->aniRender(getMemDC(), CAMERAMANAGER->getCameraPoint().x + 140, CAMERAMANAGER->getCameraPoint().y + 50, _scottMotion);
+	_ramona->aniRender(getMemDC(), CAMERAMANAGER->getCameraPoint().x + 415, CAMERAMANAGER->getCameraPoint().y + 50, _ramonaMotion);
 
-	_img->render(getMemDC(),_rc.left,_rc.top);
+	//_img->render(getMemDC(),_rc.left,_rc.top);
 }

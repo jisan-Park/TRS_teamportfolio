@@ -84,12 +84,13 @@ void settingScene::update()
 void settingScene::render()
 {
 	//배경 + 선택박스
-	IMAGEMANAGER->findImage("settingScene배경")->render(getMemDC());
-	IMAGEMANAGER->findImage("settingSceneBox")->render(getMemDC(), _rc.left, _rc.top);
-	//volume 색
-	_background_volume->render(getMemDC(), 499, 164, 0, 0, (int)(160.0f * (GAMEMANAGER->getBackgroundVolume() / 100.0f)), 40);
-	_SFX_volume->render(getMemDC(), 499, 238, 0, 0, (int)(160.0f * (GAMEMANAGER->getSFXVolume() / 100.0f)), 40);
+	IMAGEMANAGER->findImage("settingScene배경")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y);
+
+	IMAGEMANAGER->findImage("settingSceneBox")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x + _rc.left, CAMERAMANAGER->getCameraPoint().y + _rc.top);
+//volume 색
+	_background_volume->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x + 499, CAMERAMANAGER->getCameraPoint().y + 164, 0, 0, (int)(160.0f * (GAMEMANAGER->getBackgroundVolume() / 100.0f)), 40);
+	_SFX_volume->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x + 499, CAMERAMANAGER->getCameraPoint().y + 238, 0, 0, (int)(160.0f * (GAMEMANAGER->getSFXVolume() / 100.0f)), 40);
 	//volume Bar
-	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), 489, 159);
-	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), 489, 233);
+	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x + 489, CAMERAMANAGER->getCameraPoint().y + 159);
+	IMAGEMANAGER->findImage("volumnBackBar")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x + 489, CAMERAMANAGER->getCameraPoint().y + 233);
 }

@@ -27,6 +27,7 @@ public:
 	void setX(float x) { pt.x = x; };
 	void setY(float y) { pt.y = y; };
 	void setPhase(int i) { _phase = i; };
+	void setStop(bool b) { _stop = b; };
 	//getter
 	POINT getPoint() { return pt; };
 	int getPhase() { return _phase; };

@@ -52,6 +52,6 @@ void difficultyScene::update()
 
 void difficultyScene::render()
 {
-	IMAGEMANAGER->findImage("difficultyScene배경")->render(getMemDC());
-	IMAGEMANAGER->findImage("difficultySceneBox")->render(getMemDC(),_rc.left,_rc.top);
+	IMAGEMANAGER->findImage("difficultyScene배경")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y);
+	IMAGEMANAGER->findImage("difficultySceneBox")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x + _rc.left, CAMERAMANAGER->getCameraPoint().y + _rc.top);
 }

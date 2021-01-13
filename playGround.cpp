@@ -24,8 +24,6 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("gameover",new gameoverScene);
 	SCENEMANAGER->addScene("gameclear", new gameclearScene);
 	SCENEMANAGER->addScene("상점씬", new shopScene);
-	SCENEMANAGER->addScene("무지개다리씬", new rainbowScene);
-	SCENEMANAGER->addScene("보너스박스씬", new bonusBoxScene);
 
 	SCENEMANAGER->changeScene("시작씬");
 

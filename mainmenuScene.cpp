@@ -54,6 +54,6 @@ void mainmenuScene::update()
 
 void mainmenuScene::render()
 {
-	IMAGEMANAGER->findImage("mainmenuScene배경")->render(getMemDC());
-	IMAGEMANAGER->findImage("mainmenuBox")->render(getMemDC(), _rc.left, _rc.top);
+	IMAGEMANAGER->findImage("mainmenuScene배경")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y);
+	IMAGEMANAGER->findImage("mainmenuBox")->render(getMemDC(), CAMERAMANAGER->getCameraPoint().x + _rc.left, CAMERAMANAGER->getCameraPoint().y + _rc.top);
 }

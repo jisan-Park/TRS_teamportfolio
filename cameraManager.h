@@ -6,7 +6,7 @@ class cameraManager : public singletonBase <cameraManager>
 {
 private:
 	camera* _camera;
-	
+
 public:
 	cameraManager();
 	~cameraManager();
@@ -19,6 +19,7 @@ public:
 	void moveCamera(float x, float y);
 	//setter
 	void setCamera(float x, float y);
+	void setCameraStop(bool b) { _camera->setStop(b); };
 	void setPhase(int i) { _camera->setPhase(i); };
 	//getter
 	POINT getCameraPoint() { return _camera->getPoint(); };

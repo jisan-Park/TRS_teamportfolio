@@ -207,12 +207,6 @@
     <ClInclude Include="gameoverScene.h">
       <Filter>playGround\scene</Filter>
     </ClInclude>
-    <ClInclude Include="bonusBoxScene.h">
-      <Filter>playGround\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="rainbowScene.h">
-      <Filter>playGround\scene</Filter>
-    </ClInclude>
     <ClInclude Include="settingScene.h">
       <Filter>playGround\scene</Filter>
     </ClInclude>
@@ -381,12 +375,6 @@
       <Filter>playGround\scene</Filter>
     </ClCompile>
     <ClCompile Include="gameoverScene.cpp">
-      <Filter>playGround\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="rainbowScene.cpp">
-      <Filter>playGround\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="bonusBoxScene.cpp">
       <Filter>playGround\scene</Filter>
     </ClCompile>
     <ClCompile Include="settingScene.cpp">
