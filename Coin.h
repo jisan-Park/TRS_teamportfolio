@@ -48,6 +48,7 @@ public:
 	virtual void render();
 
 	void moveCoin();
+	void rectCoin();
 
 	void setsCoin(int x) { smallC = x; }
 	void setmCoin(int x) { mediumC = x; }

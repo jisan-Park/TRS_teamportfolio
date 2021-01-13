@@ -40,7 +40,7 @@ void Coin::update()
 {
 
 	moveCoin();
-
+	rectCoin();
 
 	if (smallC != 0)
 	{
@@ -80,12 +80,12 @@ void Coin::update()
 		else if (IntersectRect(&temp, &_mediumCoin[i].rc, &playerRc) && _mediumCoin[i].isfire)
 		{
 			PLAYER->setMoney(PLAYER->getMoney() + 5);
-			_smallCoin[i].isfire = false;
+			_mediumCoin[i].isfire = false;
 		}
 		else if (IntersectRect(&temp, &_largeCoin[i].rc, &playerRc) && _largeCoin[i].isfire)
 		{
 			PLAYER->setMoney(PLAYER->getMoney() + 20);
-			_smallCoin[i].isfire = false;
+			_largeCoin[i].isfire = false;
 		}
 	}
 
@@ -95,21 +95,14 @@ void Coin::render()
 {
 	for (int i = 0; i < MAX_COIN; i++)
 	{
-		if (_smallCoin[i].isfire)
-		{
-			_smallCoin[i].img->frameRender(getMemDC(), _sCoinX - 25, _sCoinY - 25);
-			Rectangle(getMemDC(), _smallCoin[i].rc);
-		}
-		if (_mediumCoin[i].isfire)
-		{
-			_smallCoin[i].img->frameRender(getMemDC(), _mCoinX - 30, _mCoinY - 30);
-			Rectangle(getMemDC(), _mediumCoin[i].rc);
-		}
-		if (_largeCoin[i].isfire)
-		{
-			_smallCoin[i].img->frameRender(getMemDC(), _lCoinX - 32, _lCoinY - 32);
-			Rectangle(getMemDC(), _largeCoin[i].rc);
-		}
+		_smallCoin[i].img->frameRender(getMemDC(), _sCoinX - 25, _sCoinY - 25);
+		//Rectangle(getMemDC(), _smallCoin[i].rc);
+
+		_mediumCoin[i].img->frameRender(getMemDC(), _mCoinX - 30, _mCoinY - 30);
+		//Rectangle(getMemDC(), _mediumCoin[i].rc);
+
+		_largeCoin[i].img->frameRender(getMemDC(), _lCoinX - 32, _lCoinY - 32);
+		//Rectangle(getMemDC(), _largeCoin[i].rc);
 	}
 }
 
@@ -153,6 +146,17 @@ void Coin::moveCoin()
 			}
 		}
 
+
+	}
+}
+
+void Coin::rectCoin()
+{
+	for (int i = 0; i < MAX_COIN; i++)
+	{
+		_smallCoin[i].rc = RectMakeCenter(_sCoinX, _sCoinY, 50, 50);
+		_mediumCoin[i].rc = RectMakeCenter(_sCoinX, _sCoinY, 60, 60);
+		_largeCoin[i].rc = RectMakeCenter(_sCoinX, _sCoinY, 64, 64);
 
 	}
 }

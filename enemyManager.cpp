@@ -4,7 +4,7 @@
 HRESULT enemyManager::init()
 {
 	setimage();
-	
+
 	coin = new Coin;
 	coin->init();
 
@@ -35,10 +35,10 @@ void enemyManager::render()
 {
 	coin->render();
 
-	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); _viMinion++)
-	{
-		(*_viMinion)->render();
-	}
+	//for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); _viMinion++)
+	//{
+	//	(*_viMinion)->render();
+	//}
 }
 
 void enemyManager::setEnemy()
@@ -77,7 +77,7 @@ void enemyManager::setEnemy()
 	case 1:
 	{
 		temp = new lee;
-		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x+WINSIZEX, 400);
+		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX, 400);
 		_vMinion.push_back(temp);
 		temp = new lee;
 		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x, 500);
@@ -85,9 +85,9 @@ void enemyManager::setEnemy()
 		temp = new lee;
 		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x, 550);
 		_vMinion.push_back(temp);
-		
+
 	}
-		break;
+	break;
 	case 3:
 	{
 		temp = new mike;
@@ -100,7 +100,7 @@ void enemyManager::setEnemy()
 		temp->init("mike_idle", CAMERAMANAGER->getCameraPoint().x, 600);
 		_vMinion.push_back(temp);
 	}
-		break;
+	break;
 	case 5:
 	{
 		temp = new william;
@@ -113,21 +113,33 @@ void enemyManager::setEnemy()
 		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x, 600);
 		_vMinion.push_back(temp);
 	}
-		break;
-	case 7 :
+	break;
+	case 7:
 	{
 		temp = new jesse;
-		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x, 300);
+		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x, 400);
+		_vMinion.push_back(temp);
+		temp = new jesse;
+		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x, 500);
+		_vMinion.push_back(temp);
+		temp = new jesse;
+		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x, 600);
 		_vMinion.push_back(temp);
 	}
-		break;
+	break;
 	case 9:
 	{
 		temp = new malcolm;
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 400);
+		_vMinion.push_back(temp);
+		temp = new malcolm;
 		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 500);
 		_vMinion.push_back(temp);
+		temp = new malcolm;
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 600);
+		_vMinion.push_back(temp);
 	}
-		break;
+	break;
 	default:
 		break;
 	}
@@ -263,24 +275,21 @@ void enemyManager::setimage()
 
 void enemyManager::remove()
 {
-	
+
 
 	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end();)
 	{
 		if ((*_viMinion)->getIsDead())
 		{
-			//체력 나누는걸로 바꿔야함
-			
 			_lCoin = 1;
 			_mCoin = 1;
 			_sCoin = 1;
-			coin->setsfire(((*_viMinion)->getInfo().chr_x)-20, ((*_viMinion)->getInfo().chr_y)+20);
-			coin->setmfire(((*_viMinion)->getInfo().chr_x)+10, ((*_viMinion)->getInfo().chr_y)-10);
+			coin->setsfire(((*_viMinion)->getInfo().chr_x) - 20, ((*_viMinion)->getInfo().chr_y) + 20);
+			coin->setmfire(((*_viMinion)->getInfo().chr_x) + 10, ((*_viMinion)->getInfo().chr_y) - 10);
 			coin->setlfire((*_viMinion)->getInfo().chr_x, (*_viMinion)->getInfo().chr_y);
 			coin->setsCoin(_sCoin);
 			coin->setmCoin(_mCoin);
 			coin->setlCoin(_lCoin);
-
 			GAMEMANAGER->deletePicture((*_viMinion)->getInfo().renderNumber);
 			_viMinion = _vMinion.erase(_viMinion);
 		}

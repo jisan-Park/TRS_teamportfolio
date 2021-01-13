@@ -38,6 +38,7 @@ public:
 	void setEnemy();
 	void setimage();
 	void remove();
+	void setcoin();
 
 	inline vEnemy getVenemy() { return _vMinion; };
 };

@@ -121,8 +121,9 @@ void inGameScene::render()
 	IMAGEMANAGER->findImage("인게임배경")->render(getMemDC(), 0, 0);
 
 	GAMEMANAGER->render(getMemDC());
-
 	PLAYER->render(getMemDC());
+
+	_em->render();
 
 	if (_isPaused) {
 		IMAGEMANAGER->findImage("로딩배경")->alphaRender(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y, 170);
@@ -225,10 +226,10 @@ void inGameScene::setPause()
 
 void inGameScene::collisionShop()
 {
-	for (int i = 0; i < 4; i ++) {
+	for (int i = 0; i < 4; i++) {
 		RECT temp;
-		if (IntersectRect(&temp,&PLAYER->getInfo().ptrc,&_shop[i])) {
-			GAMEMANAGER->setShopNum(i+1);
+		if (IntersectRect(&temp, &PLAYER->getInfo().ptrc, &_shop[i])) {
+			GAMEMANAGER->setShopNum(i + 1);
 			SCENEMANAGER->changeScene("상점씬");
 		}
 	}
