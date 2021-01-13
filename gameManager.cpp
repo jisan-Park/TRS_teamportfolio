@@ -11,6 +11,7 @@ gameManager::~gameManager()
 
 HRESULT gameManager::init()
 {
+	_shopNum = 0;
 	renderNum = 0;
 	_background_volume = 100.0f;
 	_SFX_volume = 100.0f;

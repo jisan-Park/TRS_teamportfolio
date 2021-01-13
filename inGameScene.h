@@ -8,7 +8,7 @@ private:
 
 	image* _background;
 	enemyManager* _em;
-
+	RECT _shop[4];
 	bool _isPaused;
 	RECT _pauseBox;
 	int _selectNum;
@@ -27,4 +27,5 @@ public:
 	virtual void update();
 	virtual void render();
 	void setPause();
+	void collisionShop();
 };

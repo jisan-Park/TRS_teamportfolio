@@ -26,6 +26,10 @@ HRESULT inGameScene::init()
 	IMAGEMANAGER->addImage("ingamevolumnFrontBar", "image/scene/ingamevolumnFrontBar.bmp", 80, 20, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("ingamesettingSceneBox", "image/scene/ingamesettingSceneBox.bmp", 125, 25, true, RGB(255, 0, 255));
 
+	_shop[0] = RectMake(12000, 360, 100, 60);
+	_shop[1] = RectMake(12660, 360, 100, 60);
+	_shop[2] = RectMake(13630, 360, 100, 60);
+	_shop[3] = RectMake(13970, 360, 100, 60);
 	_background_volume = IMAGEMANAGER->findImage("ingamevolumnFrontBar");
 	_SFX_volume = IMAGEMANAGER->findImage("ingamevolumnFrontBar");
 	//selectbox
@@ -94,6 +98,8 @@ void inGameScene::update()
 			CAMERAMANAGER->setPhase(CAMERAMANAGER->getCameraPhase() + 1);
 		}
 	}
+	//상점 rect와 충돌
+	collisionShop();
 }
 
 void inGameScene::render()
@@ -198,5 +204,16 @@ void inGameScene::setPause()
 		}
 		_settingBox = RectMake(90, 80 + (_selectSettingNum * 33), 125, 25);
 		_pauseBox = RectMake(282, 187 + (_selectNum * 43), 236, 43);
+	}
+}
+
+void inGameScene::collisionShop()
+{
+	for (int i = 0; i < 4; i ++) {
+		RECT temp;
+		if (IntersectRect(&temp,&PLAYER->getInfo().ptrc,&_shop[i])) {
+			GAMEMANAGER->setShopNum(i+1);
+			SCENEMANAGER->changeScene("상점씬");
+		}
 	}
 }

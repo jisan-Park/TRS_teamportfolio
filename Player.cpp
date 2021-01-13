@@ -34,7 +34,7 @@ HRESULT Player::init()
 	_sk = false;
 	_imgSK = IMAGEMANAGER->findImage("RIGHT_SK");
 	_aniSK = KEYANIMANAGER->findAnimation("RightSk");
-
+	
 	if (_characterNum == 0)
 	{
 		_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
@@ -51,13 +51,10 @@ HRESULT Player::init()
 	_xSK = -1000;
 	_ySK = -1000;
 
-
 	_shad = RectMakeCenter(_info.shd_x, _info.shd_y, 2, 2);
 
 	_info.init(GAMEMANAGER->getRenderNum(), PLAYER_START_X, PLAYER_START_Y, 50, 100, 100, 140);
 	GAMEMANAGER->addPicture(_info, _img, _motion);
-
-
 
 	return S_OK;
 }

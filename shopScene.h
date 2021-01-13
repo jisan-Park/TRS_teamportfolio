@@ -1,15 +1,24 @@
 #pragma once
 #include "gameNode.h"
-struct tagItem {
-	string name;
+#include <map>
 
-};
-class shopScene:public gameNode
+class shopScene :public gameNode
 {
 private:
+	//출구 렉트
+	RECT _exit;
+	//배경이미지
+	image* _background;
 	image* _img;
 
-	vector<tagItem> _vItem;
+	int _selectNum;
+	RECT _selectBox;
+
+	////중복처리 제외된 아이템 리스트(ItemName, tagItem)
+	//map<string, tagItem> _mItem;
+
+	//player 에게 보여줄 itemList
+	map<string, string> _mItem;
 public:
 	shopScene();
 	~shopScene();
@@ -18,4 +27,3 @@ public:
 	void update();
 	void render();
 };
-

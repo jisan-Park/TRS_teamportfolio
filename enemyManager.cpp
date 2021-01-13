@@ -88,9 +88,9 @@ void enemyManager::setEnemy()
 		break;
 	case 5:
 	{
-		temp = new william;
+		/*temp = new william;
 		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x, 500);
-		_vMinion.push_back(temp);
+		_vMinion.push_back(temp);*/
 	}
 		break;
 	case 7 :

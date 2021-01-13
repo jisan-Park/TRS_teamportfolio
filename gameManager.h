@@ -40,7 +40,7 @@ private:
 	image* life_number;
 
 	image* _snack;
-
+	int _shopNum;
 	//vector<image*, POINT>
 public:
 	gameManager();
@@ -51,12 +51,14 @@ public:
 	void render(HDC hdc);
 
 	//setter
+	void setShopNum(int i) { _shopNum = i; };
 	void setBackgroundVolume(float f) { _background_volume = f; };
 	void setSFXVolume(float f) { _SFX_volume = f; };
 	void setUI();
 	void setUIimage();
 	void setDifficulty(int i) { _difficulty = (DIFFICULTY)i; _hp = ((i + 1)*1.0f); _str = ((i + 1) * 0.5f); };
 	//getter
+	int getShopNum() { return _shopNum; };
 	float getBackgroundVolume() { return _background_volume; };
 	float getSFXVolume() { return _SFX_volume; };
 	int getDifficulty() { (int)_difficulty; };
