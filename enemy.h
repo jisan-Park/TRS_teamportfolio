@@ -84,6 +84,9 @@ public:
 	virtual void release();
 	virtual void render();
 	//setter
+	void setInfo(characterInfo info) { _info = info; };
+	void setShdHeight(float f) { _info.shd_height = f; };
+	void setChrY(float f) { _info.chr_y = f; };
 	void setIsDead(bool b) { _isDead = b; };
 	void setMakeDead(bool b) { _makeDead = b; };
 	//getter

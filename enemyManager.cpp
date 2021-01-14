@@ -15,7 +15,7 @@ void enemyManager::release()
 void enemyManager::update()
 {
 
-	if (CAMERAMANAGER->getCameraPhase() == 1)
+	if (CAMERAMANAGER->getCameraPhase() == 1 || CAMERAMANAGER->getCameraPhase() == 5 || CAMERAMANAGER->getCameraPhase() == 15)
 	{
 		if (_vMinion.size() < 1)
 		{
@@ -82,82 +82,115 @@ void enemyManager::setEnemy()
 	case 1:
 	{
 		temp = new lee;
-		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX, 400);
+		temp->init("lee_idle", 970, 400);
 		_vMinion.push_back(temp);
 		temp = new lee;
-		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x, 500);
+		temp->init("lee_idle", 777, 400);
 		_vMinion.push_back(temp);
-		temp = new lee;
-		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x, 550);
-		_vMinion.push_back(temp);
-
 	}
 	break;
 	case 3:
 	{
 		temp = new mike;
-		temp->init("mike_idle", CAMERAMANAGER->getCameraPoint().x, 400);
+		temp->init("mike_idle", CAMERAMANAGER->getCameraPoint().x - 100, 400);
 		_vMinion.push_back(temp);
 		temp = new mike;
-		temp->init("mike_idle", CAMERAMANAGER->getCameraPoint().x, 500);
-		_vMinion.push_back(temp);
-		temp = new mike;
-		temp->init("mike_idle", CAMERAMANAGER->getCameraPoint().x, 600);
+		temp->init("mike_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 500);
 		_vMinion.push_back(temp);
 	}
 	break;
 	case 5:
 	{
 		temp = new william;
-		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x, 400);
+		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX/2 + 100, 400);
 		_vMinion.push_back(temp);
 		temp = new william;
-		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x, 500);
-		_vMinion.push_back(temp);
-		temp = new william;
-		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x, 600);
+		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 - 100, 400);
 		_vMinion.push_back(temp);
 	}
 	break;
 	case 7:
 	{
 		temp = new jesse;
-		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x, 400);
+		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x -100, 200);
 		_vMinion.push_back(temp);
-		temp = new jesse;
-		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x, 500);
-		_vMinion.push_back(temp);
-		temp = new jesse;
-		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x, 600);
+		temp = new luke;
+		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 500);
 		_vMinion.push_back(temp);
 	}
 	break;
 	case 9:
 	{
-		temp = new malcolm;
-		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 400);
+		temp = new dobeman;
+		temp->init("dobeman_idle", CAMERAMANAGER->getCameraPoint().x - 100, 250);
 		_vMinion.push_back(temp);
-		temp = new malcolm;
-		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 500);
+		temp = new dobeman;
+		temp->init("dobeman_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 500);
 		_vMinion.push_back(temp);
-		temp = new malcolm;
-		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 600);
-		_vMinion.push_back(temp);
+		
 	}
 	break;
+	case 11: {
+		temp = new malcolm;
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x - 100, 400);
+		_vMinion.push_back(temp);
+		temp = new malcolm;
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 400);
+		_vMinion.push_back(temp);
+		temp = new malcolm;
+	}break;
+	case 13: {
+		temp = new lee;
+		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x - 100, 400);
+		_vMinion.push_back(temp);
+		temp = new mike;
+		temp->init("mike_idle", CAMERAMANAGER->getCameraPoint().x - 100, 450);
+		_vMinion.push_back(temp);
+		temp = new lee;
+		temp->init("lee_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 400);
+		_vMinion.push_back(temp);
+		temp = new mike;
+		temp->init("mike_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 450);
+		_vMinion.push_back(temp);
+	}break;
+	case 15: {
+		temp = new william;
+		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 + 100, 400);
+		_vMinion.push_back(temp);
+		temp = new malcolm;
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 - 100, 400);
+		_vMinion.push_back(temp);
+	}break;
 	case 17:
 	{
-		temp = new malcolm;
-		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 400);
+		temp = new luke;
+		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x-100, 315);
+		temp->setShdHeight(135);
+		temp->setChrY(temp->getInfo().chr_y - 135);
+		_vMinion.push_back(temp);
+
+		temp = new luke;
+		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 315);
+		temp->setShdHeight(135);
+		temp->setChrY(temp->getInfo().chr_y - 135);
+		_vMinion.push_back(temp);
+
+		temp = new jesse;
+		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x-100, 500);
 		_vMinion.push_back(temp);
 		temp = new malcolm;
-		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 500);
-		_vMinion.push_back(temp);
-		temp = new malcolm;
-		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 600);
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 600);
 		_vMinion.push_back(temp);
 	}
 	break;
+	case 19: {
+		temp = new william;
+		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX  + 100, 500);
+		_vMinion.push_back(temp);
+		temp = new dobeman;
+		temp->init("dobeman_idle", CAMERAMANAGER->getCameraPoint().x - 100, 500);
+		_vMinion.push_back(temp);
+	}break;
 	default:
 		break;
 	}
