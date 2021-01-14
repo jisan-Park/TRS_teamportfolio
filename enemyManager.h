@@ -9,6 +9,7 @@
 #include"malcolm.h"
 #include"richard.h"
 #include"william.h"
+#include"bus.h"
 #include"Coin.h"
 
 class enemyManager : public gameNode

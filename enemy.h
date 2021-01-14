@@ -64,6 +64,7 @@ protected:
 	bool ison;
 	bool _isDead;
 	bool _makeDead;
+	bool _isBus;
 	animation* _motion;
 
 	ENEMYSTATE _state;
@@ -90,6 +91,8 @@ public:
 	int getHP() { return _hp; };
 	bool getIsDead() { return _isDead; };
 	bool getMakeDead() { return _makeDead; };
+	bool getIsBus() { return _isBus; };
+	ENEMYSTATE getState() { return _state; };
 	characterInfo getInfo() { return _info; };
 };
 

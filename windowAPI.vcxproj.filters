@@ -279,6 +279,9 @@
     <ClInclude Include="ioManager.h">
       <Filter>playGround\io</Filter>
     </ClInclude>
+    <ClInclude Include="bus.h">
+      <Filter>playGround\enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -463,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="ioManager.cpp">
       <Filter>playGround\io</Filter>
+    </ClCompile>
+    <ClCompile Include="bus.cpp">
+      <Filter>playGround\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

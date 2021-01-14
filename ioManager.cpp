@@ -14,7 +14,7 @@ ioManager::~ioManager()
 HRESULT ioManager::init()
 {
 	setImage();
-	
+
 	setBin();
 	setBat();
 	return S_OK;
@@ -39,6 +39,11 @@ void ioManager::setBat()
 	bat1 = new bat;
 	bat1->init("bat_right_neutral", 500, 600);
 	_vIO.push_back(bat1);
+
+	interactiveObject* bat2;
+	bat2 = new bat;
+	bat2->init("bat_right_neutral", 300, 600);
+	_vIO.push_back(bat2);
 }
 
 void ioManager::setBin()

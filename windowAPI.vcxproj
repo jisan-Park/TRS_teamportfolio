@@ -152,6 +152,7 @@
     <ClInclude Include="bat.h" />
     <ClInclude Include="bin.h" />
     <ClInclude Include="botLine.h" />
+    <ClInclude Include="bus.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cameraManager.h" />
     <ClInclude Include="characterInfo.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="bat.cpp" />
     <ClCompile Include="bin.cpp" />
     <ClCompile Include="botLine.cpp" />
+    <ClCompile Include="bus.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="Coin.cpp" />

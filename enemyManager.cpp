@@ -15,9 +15,17 @@ void enemyManager::release()
 void enemyManager::update()
 {
 
-	if (_vMinion.size() <= 0)
+	if (CAMERAMANAGER->getCameraPhase() == 1)
 	{
-		setEnemy();
+		if (_vMinion.size() < 1)
+		{
+			bus* bus1;
+			bus1 = new bus;
+			bus1->init("bus_move", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 700, 550);
+			_vMinion.push_back(bus1);
+		}
+		if (_vMinion[0]->getState() == E_IDLE && _vMinion.size() == 1 && _vMinion[0]->getIsBus() == true)
+			setEnemy();
 	}
 	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); _viMinion++)
 	{
@@ -266,6 +274,9 @@ void enemyManager::setimage()
 	IMAGEMANAGER->addFrameImage("devil_damage", "image/BOSS/devil hited.bmp", 950, 312, 5, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("devil_set", "image/BOSS/devil set.bmp", 1900, 312, 10, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("devil_state3", "image/BOSS/devil state3.bmp", 4940, 312, 26, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bus_move", "image/iobject/bus/bus_move.bmp", 2340, 350, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bus_stop", "image/iobject/bus/bus_stop.bmp", 7020, 350, 9, 1, true, RGB(255, 0, 255));
+
 }
 
 void enemyManager::remove()
