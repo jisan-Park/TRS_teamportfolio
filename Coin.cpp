@@ -39,6 +39,7 @@ void Coin::collisionCoin()
 	RECT temp;
 	for (_viCoin = _vCoin.begin(); _viCoin != _vCoin.end();) {
 		if (IntersectRect(&temp,&PLAYER->getInfo().chr_rc,&_viCoin->_info.chr_rc)) {
+			EFFECTMANAGER->play("coinEffect", _viCoin->_info.chr_x, _viCoin->_info.chr_y);
 			PLAYER->setMoney(PLAYER->getMoney() + _viCoin->value);
 			GAMEMANAGER->deletePicture(_viCoin->_info.renderNumber);
 			_viCoin = _vCoin.erase(_viCoin);

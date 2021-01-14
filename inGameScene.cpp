@@ -58,8 +58,6 @@ HRESULT inGameScene::init()
 	SOUNDMANAGER->stop("보스방");
 	SOUNDMANAGER->stop("상점");
 	SOUNDMANAGER->play("인게임", 1.0f);
-	EFFECTMANAGER->addEffect("attackEffect", "image/effect/attackEffect.bmp", 350, 50, 50, 50, 14.0f, 0.1f, 1000);
-	EFFECTMANAGER->addEffect("defenceEffect", "image/effect/defenceEffect.bmp", 350, 50, 50, 50, 14.0f, 0.1f, 1000);
 	
 
 	return S_OK;
