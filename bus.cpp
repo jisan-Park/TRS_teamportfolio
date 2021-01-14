@@ -71,7 +71,7 @@ void bus::update()
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
 	if (_state == E_WALK)
 	{
-		PLAYER->setEnemyAtkRc(RectMake(_info.chr_rc.left, _info.chr_rc.top, 50, 350), 8);
+		PLAYER->setEnemyAtkRc(RectMake(_info.chr_rc.left, _info.chr_y, 50, 150), 8);
 	}
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);

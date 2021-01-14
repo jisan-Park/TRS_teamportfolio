@@ -38,20 +38,39 @@ HRESULT mapObject::init()
 	_tl1 = new topLine;
 	_tl1->init(PointMake(0, 630), PointMake(16452, 616), FIXEDRANGE);
 	_vLine.push_back(_tl1);
+	rightLine* bossleft;
+	bossleft = new rightLine;
+	bossleft->init(21418, 507, 21333, 753, FIXEDRANGE);
+	_vLine.push_back(bossleft);
+
+	leftLine* bossRight;
+	bossRight = new leftLine;
+	bossRight->init(21865, 508, 22014, 753, FIXEDRANGE);
+	_vLine.push_back(bossRight);
+
+	botLine* bossTop;
+	bossTop = new botLine;
+	bossTop->init(21376, 531, 21932, 531, FIXEDRANGE);
+	_vLine.push_back(bossTop);
+
+	topLine* bossbot;
+	bossbot = new topLine;
+	bossbot->init(21317, 730, 22045, 730, FIXEDRANGE);
+	_vLine.push_back(bossbot);
 
 	cube* _cube1;
 	_cube1 = new cube;
-	_cube1->init(614, 360, 82, 30, FIXEDRANGE);
+	_cube1->init(614, 360, 82, 30, 40);// 맨처음 나오는 재활용 상자
 	_vCube.push_back(_cube1);
 	/////////////////////일단 여기까지 두배 다 만들었음////////////////////////////
-	cube* _cube2;
+	cube* _cube2; // 맨 처음 나오는 소화전
 	_cube2 = new cube;
-	_cube2->init(3234, 360, 50, 40, FIXEDRANGE);
+	_cube2->init(3234, 360, 50, 40, 85);
 	_vCube.push_back(_cube2);
 
-	cube* _cube3;
+	cube* _cube3; // 우편함
 	_cube3 = new cube;
-	_cube3->init(4106, 360, 80, 40, FIXEDRANGE);
+	_cube3->init(4106, 360, 80, 40, 100);
 	_vCube.push_back(_cube3);
 
 	cube* _cube4;
@@ -121,9 +140,9 @@ HRESULT mapObject::init()
 	_cube16->init(14036, 360, 160, 40, FIXEDRANGE);
 	_vCube.push_back(_cube16);
 
-	cube* _cube17;
+	cube* _cube17; // 쓰레기통
 	_cube17 = new cube;
-	_cube17->init(14306, 360, 80, 40, FIXEDRANGE);
+	_cube17->init(14306, 360, 80, 40, 100);
 	_vCube.push_back(_cube17);
 
 	cube* _cube18;
@@ -156,7 +175,10 @@ HRESULT mapObject::init()
 	_cube22->init(16464, 360, 40, 40, FIXEDRANGE);
 	_vCube.push_back(_cube22);
 
-
+	cube* _well;
+	_well = new cube;
+	_well->init(5927, 495, 100, 65, 50);
+	_vCube.push_back(_well);
 	//cube* testbox1;
 	//testbox1 = new cube;
 	//testbox1->init(365, 465, 95, 35, 75);
@@ -218,7 +240,7 @@ HRESULT mapObject::init()
 
 	topLine* snow3;
 	snow3 = new topLine;
-	snow3->init(19140, 740, 21230, 740, FIXEDRANGE);
+	snow3->init(16452, 740, 21230, 740, FIXEDRANGE);
 	_vLine.push_back(snow3);
 
 

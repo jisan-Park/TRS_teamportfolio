@@ -40,10 +40,10 @@ void ioManager::setBat()
 	bat1->init("bat_right_neutral", 500, 600);
 	_vIO.push_back(bat1);
 
-	interactiveObject* bat2;
-	bat2 = new bat;
-	bat2->init("bat_right_neutral", 300, 600);
-	_vIO.push_back(bat2);
+	//interactiveObject* bat2;
+	//bat2 = new bat;
+	//bat2->init("bat_right_neutral", 300, 600);
+	//_vIO.push_back(bat2);
 }
 
 void ioManager::setBin()
@@ -57,10 +57,10 @@ void ioManager::setBin()
 
 void ioManager::render()
 {
-	for (_viIO = _vIO.begin(); _viIO != _vIO.end(); ++_viIO)
-	{
-		(*_viIO)->render();
-	}
+	//for (_viIO = _vIO.begin(); _viIO != _vIO.end(); ++_viIO)
+	//{
+	//	(*_viIO)->render();
+	//}
 }
 
 
