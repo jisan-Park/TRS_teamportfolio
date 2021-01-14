@@ -100,6 +100,7 @@ private:
 	int _hp;
 	int _gp;
 	int _str;
+	int _objDmg;
 	int _def;
 	int _wp;
 	int _spd;
@@ -233,6 +234,7 @@ public:
 	void setSpd(int i) { _spd = i; };
 	void setDmg(int i) { _dmg = i; }; // player가 줄 데미지
 	void setIORC(RECT rc) { _ioRc = rc; };
+	void setObjDmg(int i) { _objDmg = i; };
 									  
 									  //
 

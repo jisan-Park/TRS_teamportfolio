@@ -5067,7 +5067,7 @@ void Player::rHobjManage()
 	{
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
-			_dmg = _str; // + obj dmg
+			_dmg = _str + _objDmg; // + obj dmg
 
 			if (_state == HOBJWALK || _state == HOBJRUN)
 			{

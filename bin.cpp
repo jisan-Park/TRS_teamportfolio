@@ -148,6 +148,7 @@ void bin::aniControl()
 
 void bin::update()
 {
+	if (_state != IO_NEUTRAL) PLAYER->setObjDmg(_power);
 	_info.physics();
 	aniControl();
 	MAPOBJECT->collisionMo(_info);
