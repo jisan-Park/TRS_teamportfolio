@@ -40,7 +40,7 @@ HRESULT gameNode::init(bool managerInit)
 		//PLAYER->init();
 		PLAYER->setImage();
 		PLAYER->setAni();
-		MAPOBJECT->init();
+		//MAPOBJECT->init();
 		COIN->init();
 	}
 

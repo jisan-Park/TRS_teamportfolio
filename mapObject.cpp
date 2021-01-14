@@ -11,20 +11,14 @@ mapObject::~mapObject()
 
 HRESULT mapObject::init()
 {
-	IMAGEMANAGER->addImage("box1", "image/box1.bmp", 124, 112, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("box2", "image/box2.bmp", 124, 189, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("±âµÕ1", "image/±âµÕ1.bmp", 120, 125, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("±âµÕ2", "image/±âµÕ2.bmp", 120, 125, true, RGB(255, 0, 255));
 
-	box1._img = new image;
-	box2._img = new image;
-	box1._img = IMAGEMANAGER->findImage("box1");
-	box2._img = IMAGEMANAGER->findImage("box2");
 
-	box1._info.init(GAMEMANAGER->getRenderNum(), 427, 504, 124, 112, 0, 0);
-	box2._info.init(GAMEMANAGER->getRenderNum(), 512, 502, 124, 189, 0, 0);
-
-	GAMEMANAGER->addPicture(box1._info, box1._img);
-	GAMEMANAGER->addPicture(box2._info, box2._img);
-
+	fence1 = new imgObj;
+	fence2 = new imgObj;
+	fence1->init("±âµÕ1", 5429, 493);
+	fence2->init("±âµÕ2", 7080, 493);
 	_ds = new downSlope;
 	_us = new upSlope;
 	_ds->init(16730, 430, 450, 300);

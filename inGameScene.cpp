@@ -16,6 +16,7 @@ HRESULT inGameScene::init()
 {
 	//GAMEMANAGER->resetPicture();
 	//PLAYER->init();
+	MAPOBJECT->init();
 	GAMEMANAGER->setUI();
 	IMAGEMANAGER->addImage("인게임배경", "image/scene/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("pause배경", "image/scene/pause배경.bmp", 236, 200, true, RGB(255, 0, 255));

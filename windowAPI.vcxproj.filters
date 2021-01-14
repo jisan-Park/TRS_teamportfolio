@@ -282,6 +282,9 @@
     <ClInclude Include="bus.h">
       <Filter>playGround\enemy</Filter>
     </ClInclude>
+    <ClInclude Include="imgObj.h">
+      <Filter>playGround\mapObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -469,6 +472,9 @@
     </ClCompile>
     <ClCompile Include="bus.cpp">
       <Filter>playGround\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="imgObj.cpp">
+      <Filter>playGround\mapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

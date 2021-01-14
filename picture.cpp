@@ -38,7 +38,7 @@ void picture::render(HDC hdc)
 		_img->aniRender(hdc, _info.chr_rc.left - _info._push_width, _info.chr_rc.top - _info._push_height, _animation);
 	}
 	else {
-		_img->render(hdc, _info.chr_rc.left, _info.chr_rc.top);
+		_img->render(hdc, _info.chr_rc.left - _info._push_width, _info.chr_rc.top - _info._push_height);
 	}
 }
 

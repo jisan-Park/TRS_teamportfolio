@@ -172,6 +172,7 @@
     <ClInclude Include="gameoverScene.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
+    <ClInclude Include="imgObj.h" />
     <ClInclude Include="inGameScene.h" />
     <ClInclude Include="interactiveObject.h" />
     <ClInclude Include="ioManager.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="gameoverScene.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
+    <ClCompile Include="imgObj.cpp" />
     <ClCompile Include="inGameScene.cpp" />
     <ClCompile Include="interactiveObject.cpp" />
     <ClCompile Include="ioManager.cpp" />

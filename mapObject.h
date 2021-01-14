@@ -5,6 +5,7 @@
 #include "downSlope.h"
 #include "stair.h"
 #include "baricadeLine.h"
+#include "imgObj.h"
 #include <vector>
 #define FIXEDRANGE 2000
 struct box {
@@ -36,6 +37,9 @@ private:
 
 	upSlope* _us;
 	downSlope* _ds;
+
+	imgObj* fence1;
+	imgObj* fence2;
 
 	box box1;
 	box box2;
