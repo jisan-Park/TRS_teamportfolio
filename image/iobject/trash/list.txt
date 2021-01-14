@@ -1,0 +1,57 @@
+bin_left_atk.bmp 
+bin_left_dash.bmp
+bin_left_get.bmp
+bin_left_idle.bmp
+bin_left_jump.bmp
+bin_left_jumpthrow.bmp
+bin_left_neutral.bmp
+bin_left_throw.bmp
+bin_left_walk.bmp
+bin_right_atk.bmp
+bin_right_dash.bmp
+bin_right_get.bmp
+bin_right_idle.bmp
+bin_right_jump.bmp
+bin_right_jumpthrow.bmp
+bin_right_neutral.bmp
+bin_right_throw.bmp
+bin_right_walk.bmp
+
+image/iobject/bin/bin_left_atk.bmp
+image/iobject/bin/bin_left_dash.bmp
+image/iobject/bin/bin_left_get.bmp
+image/iobject/bin/bin_left_idle.bmp
+image/iobject/bin/bin_left_jump.bmp
+image/iobject/bin/bin_left_jumpthrow.bmp
+image/iobject/bin/bin_left_neutral.bmp
+image/iobject/bin/bin_left_throw.bmp
+image/iobject/bin/bin_left_walk.bmp
+image/iobject/bin/bin_right_atk.bmp
+image/iobject/bin/bin_right_dash.bmp
+image/iobject/bin/bin_right_get.bmp
+image/iobject/bin/bin_right_idle.bmp
+image/iobject/bin/bin_right_jump.bmp
+image/iobject/bin/bin_right_jumpthrow.bmp
+image/iobject/bin/bin_right_neutral.bmp
+image/iobject/bin/bin_right_throw.bmp
+image/iobject/bin/bin_right_walk.bmp
+
+
+1500, 250, 6, 1,
+2000, 250, 8, 1,
+250, 250, 1, 1,
+1000, 250, 4, 1,
+2250, 500, 9, 2,
+750, 250, 3, 1,
+250,250, 1, 1,
+750, 250, 3, 1,
+1500, 250, 6, 1,
+1500, 250, 6, 1,
+2000, 250, 8, 1,
+250, 250, 1, 1,
+1000, 250, 4, 1,
+2250, 500, 9, 2,
+750, 250, 3, 1,
+250,250, 1, 1,
+750, 250, 3, 1,
+1500, 250, 6, 1,

@@ -90,22 +90,22 @@ void ioManager::setImage()
 	IMAGEMANAGER->addFrameImage("bat_right_walk", "image/iobject/bat/bat_right_walk.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 
 
-	IMAGEMANAGER->addFrameImage("bin_left_atk", "image/iobject/bin/bin_left_atk.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_left_dash", "image/iobject/bin/bin_left_dash.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_left_get", "image/iobject/bin/bin_left_get.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_left_idle", "image/iobject/bin/bin_left_idle.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_left_jump", "image/iobject/bin/bin_left_jump.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_left_neutral", "image/iobject/bin/bin_left_neutral.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_left_throw", "image/iobject/bin/bin_left_throw.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_left_walk", "image/iobject/bin/bin_left_walk.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_right_atk", "image/iobject/bin/bin_right_atk.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_right_dash", "image/iobject/bin/bin_right_dash.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_right_get", "image/iobject/bin/bin_right_get.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_right_idle", "image/iobject/bin/bin_right_idle.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_right_jump", "image/iobject/bin/bin_right_jump.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_right_neutral", "image/iobject/bin/bin_right_neutral.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_right_throw", "image/iobject/bin/bin_right_throw.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bin_right_walk", "image/iobject/bin/bin_right_walk.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_left_atk", "image/iobject/trash/bin_left_atk.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_left_dash", "image/iobject/trash/bin_left_dash.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_left_get", "image/iobject/trash/bin_left_get.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_left_idle", "image/iobject/trash/bin_left_idle.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_left_jump", "image/iobject/trash/bin_left_jump.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_left_neutral", "image/iobject/trash/bin_left_neutral.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_left_throw", "image/iobject/trash/bin_left_throw.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_left_walk", "image/iobject/trash/bin_left_walk.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_right_atk", "image/iobject/trash/bin_right_atk.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_right_dash", "image/iobject/trash/bin_right_dash.bmp", 2000, 250, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_right_get", "image/iobject/trash/bin_right_get.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_right_idle", "image/iobject/trash/bin_right_idle.bmp", 1000, 250, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_right_jump", "image/iobject/trash/bin_right_jump.bmp", 2250, 500, 9, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_right_neutral", "image/iobject/trash/bin_right_neutral.bmp", 500, 250, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_right_throw", "image/iobject/trash/bin_right_throw.bmp", 750, 250, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bin_right_walk", "image/iobject/trash/bin_right_walk.bmp", 1500, 250, 6, 1, true, RGB(255, 0, 255));
 
 
 }
