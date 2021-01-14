@@ -14,8 +14,8 @@ inGameScene::~inGameScene()
 
 HRESULT inGameScene::init()
 {
-	GAMEMANAGER->resetPicture();
-	PLAYER->init();
+	//GAMEMANAGER->resetPicture();
+	//PLAYER->init();
 	GAMEMANAGER->setUI();
 	IMAGEMANAGER->addImage("인게임배경", "image/scene/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("pause배경", "image/scene/pause배경.bmp", 236, 200, true, RGB(255, 0, 255));
@@ -39,7 +39,6 @@ HRESULT inGameScene::init()
 	_pauseBox = RectMake(282, 187 + (_selectNum * 43), 236, 43);
 
 	//카메라 위치조정 시작
-	CAMERAMANAGER->setPhase(0);
 	CAMERAMANAGER->setCameraStop(false);
 	/*CAMERAMANAGER->setCamera(0,0);*/
 	_em = new enemyManager;

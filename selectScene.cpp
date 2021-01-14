@@ -11,7 +11,7 @@ selectScene::~selectScene()
 
 HRESULT selectScene::init()
 {
-
+	
 	IMAGEMANAGER->addImage("selectScene배경", "image/scene/selectScene배경.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("selectSceneBox","image/scene/selectSceneBox.bmp",150,200,true,RGB(255,0,255));
 
@@ -58,7 +58,10 @@ void selectScene::update()
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) {
 
 		PLAYER->setCharacterNum(_selectPosition);
-
+		//PLAYER->init();
+		CAMERAMANAGER->setPhase(0);
+		GAMEMANAGER->resetPicture();
+		PLAYER->init();
 		SCENEMANAGER->changeScene("인게임씬");
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_BACK)) {

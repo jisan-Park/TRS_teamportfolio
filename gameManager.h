@@ -3,6 +3,10 @@
 #include "picture.h"
 
 #include <vector>
+struct tagItem {
+	string itemName;		//아이템 이름
+	image* img;		//아이템 이미지
+};
 enum DIFFICULTY {
 	EASY,
 	NORMAL,
@@ -13,6 +17,10 @@ class gameManager :public singletonBase<gameManager>
 private:
 	vector<picture*>				arrPicture;
 	vector<picture*>::iterator	iterPicture;
+
+	//전체 itemlist
+	vector<tagItem> _vItem;
+	vector<tagItem>::iterator iterItem;
 
 	DIFFICULTY _difficulty;
 	float _hp;
@@ -51,6 +59,7 @@ public:
 	void render(HDC hdc);
 
 	//setter
+	void setItem();
 	void setShopNum(int i) { _shopNum = i; };
 	void setBackgroundVolume(float f) { _background_volume = f; };
 	void setSFXVolume(float f) { _SFX_volume = f; };
@@ -58,6 +67,7 @@ public:
 	void setUIimage();
 	void setDifficulty(int i) { _difficulty = (DIFFICULTY)i; _hp = ((i + 1)*1.0f); _str = ((i + 1) * 0.5f); };
 	//getter
+	vector<tagItem> getItemList(int i);
 	int getShopNum() { return _shopNum; };
 	float getBackgroundVolume() { return _background_volume; };
 	float getSFXVolume() { return _SFX_volume; };

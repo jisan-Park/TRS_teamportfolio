@@ -18,7 +18,7 @@ private:
 	//map<string, tagItem> _mItem;
 
 	//player 에게 보여줄 itemList
-	map<string, string> _mItem;
+	vector<tagItem> _vItem;
 public:
 	shopScene();
 	~shopScene();

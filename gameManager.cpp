@@ -11,6 +11,8 @@ gameManager::~gameManager()
 
 HRESULT gameManager::init()
 {
+	setItem();
+
 	_shopNum = 0;
 	renderNum = 0;
 	_background_volume = 100.0f;
@@ -49,6 +51,73 @@ void gameManager::render(HDC hdc)
 	coin_number_100->frameRender(hdc, CAMERAMANAGER->getCameraPoint().x + 86, CAMERAMANAGER->getCameraPoint().y + 85, PLAYER->getMoney() / 100, 0);
 	coin_number_10->frameRender(hdc, CAMERAMANAGER->getCameraPoint().x + 106, CAMERAMANAGER->getCameraPoint().y + 85, (PLAYER->getMoney() % 100) / 10, 0);
 	coin_number_1->frameRender(hdc, CAMERAMANAGER->getCameraPoint().x + 126, CAMERAMANAGER->getCameraPoint().y + 85, PLAYER->getMoney() % 10, 0);
+}
+void gameManager::setItem()
+{
+	tagItem temp;
+
+	IMAGEMANAGER->addImage("계란초밥","image/shop/계란초밥.bmp",400,100,true,RGB(255,0,255));
+	IMAGEMANAGER->addImage("장어초밥", "image/shop/장어초밥.bmp", 400, 100, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("연어초밥", "image/shop/연어초밥.bmp", 400, 100, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("육회초밥", "image/shop/육회초밥.bmp", 400, 100, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("스테이크", "image/shop/스테이크.bmp", 400, 100, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("치킨", "image/shop/치킨.bmp", 400, 100, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("피자", "image/shop/피자.bmp", 400, 100, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("햄버거", "image/shop/햄버거.bmp", 400, 100, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("아메리카노", "image/shop/아메리카노.bmp", 400, 100, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("카라멜 마끼아또", "image/shop/카라멜 마끼아또.bmp", 400, 100, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("풍선껌", "image/shop/풍선껌.bmp", 400, 100, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("초콜릿", "image/shop/초콜릿.bmp", 400, 100, true, RGB(255, 0, 255));
+
+	temp.img = IMAGEMANAGER->findImage("계란초밥");
+	temp.itemName = "계란초밥";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("장어초밥");
+	temp.itemName = "장어초밥";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("연어초밥");
+	temp.itemName = "연어초밥";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("육회초밥");
+	temp.itemName = "육회초밥";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("스테이크");
+	temp.itemName = "스테이크";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("치킨");
+	temp.itemName = "치킨";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("피자");
+	temp.itemName = "피자";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("햄버거");
+	temp.itemName = "햄버거";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("아메리카노");
+	temp.itemName = "아메리카노";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("카라멜 마끼아또");
+	temp.itemName = "카라멜 마끼아또";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("풍선껌");
+	temp.itemName = "풍선껌";
+	_vItem.push_back(temp);
+
+	temp.img = IMAGEMANAGER->findImage("초콜릿");
+	temp.itemName = "초콜릿";
+	_vItem.push_back(temp);
 }
 void gameManager::setUI()
 {//UI
@@ -101,6 +170,41 @@ void gameManager::setUIimage()
 	coin_number_1 = IMAGEMANAGER->findImage("coin_number");
 
 	life_number = IMAGEMANAGER->findImage("life_number");
+}
+vector<tagItem> gameManager::getItemList(int i)
+{
+	vector<tagItem> items;
+	for (tagItem t : _vItem) {
+		if (i == 1) {
+			if (t.itemName == "아메리카노" ||
+				t.itemName == "카라멜 마끼아또") {
+				items.push_back(t);
+			}
+		}
+		else if (i == 2) {
+			if (t.itemName == "스테이크" ||
+				t.itemName == "피자" ||
+				t.itemName == "치킨" || 
+				t.itemName == "햄버거") {
+				items.push_back(t);
+			}
+		}
+		else if (i == 3) {
+			if (t.itemName == "풍선껌" ||
+				t.itemName == "초콜릿") {
+				items.push_back(t);
+			}
+		}
+		else if (i == 4) {
+			if (t.itemName == "장어초밥" ||
+				t.itemName == "육회초밥" ||
+				t.itemName == "연어초밥" ||
+				t.itemName == "계란초밥") {
+				items.push_back(t);
+			}
+		}
+	}
+	return items;
 }
 void gameManager::addPicture(characterInfo info, image * img)
 {
