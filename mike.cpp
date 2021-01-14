@@ -322,7 +322,8 @@ void mike::collsion()
 	RECT temp;
 	if (IntersectRect(&temp, &PLAYER->getAttackRc(), &_info.chr_rc) && !_inrangeY)
 	{
-
+		//attack effect play
+		EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
 		if (_state == E_WALK || _state == E_IDLE)
 		{
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
@@ -521,6 +522,9 @@ void mike::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//attack effect play
+					EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+
 					_img = IMAGEMANAGER->findImage("mike_damage");
 					_motion = mike_DAMAGE_RIGHT;
 					_motion->start();
@@ -547,6 +551,9 @@ void mike::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//attack effect play
+					EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+
 					_img = IMAGEMANAGER->findImage("mike_damage");
 					_motion = mike_DAMAGE_LEFT;
 					_motion->start();

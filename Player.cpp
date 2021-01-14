@@ -1267,6 +1267,8 @@ void Player::sHittedManage()
 	// 적에게 맞는 조건
 	if ((IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc)) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER || _state == UP))
 	{
+		//attack effect play
+		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left), _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top));
 		_hp -= (_enemyDamage - _reduceDamage);
 		_hitted = true;
 	}
@@ -1336,6 +1338,8 @@ void Player::sHittedManage()
 	//방어
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && _state == DEF)
 	{
+		//attack effect play
+		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left), _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top));
 		if (_direction == RIGHT)
 		{
 			_info.pt_x -= 20;
@@ -3832,6 +3836,8 @@ void Player::rHittedManage()
 	// 적에게 맞는 조건
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && (_state != DEF && _state != HITTED && _state != DIE && _state != WIN && _state != REVIVER && _state != UP))
 	{
+		//attack effect play
+		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left), _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top));
 		_hp -= (_enemyDamage - _reduceDamage);
 		_hitted = true;
 	}
@@ -3901,6 +3907,8 @@ void Player::rHittedManage()
 	//방어
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && _state == DEF)
 	{
+		//attack effect play
+		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left), _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top));
 		if (_direction == RIGHT)
 		{
 			_info.pt_x -= 20;

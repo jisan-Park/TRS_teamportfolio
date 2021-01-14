@@ -15,6 +15,8 @@ gameManager::~gameManager()
 
 HRESULT gameManager::init()
 {
+	
+	
 	setItem();
 	_snackNum = 0;
 	_shopNum = 0;
@@ -31,6 +33,7 @@ void gameManager::release()
 
 void gameManager::update()
 {
+	
 	quicksort(arrPicture, 0, arrPicture.size() - 1);
 }
 

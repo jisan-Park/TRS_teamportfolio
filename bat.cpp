@@ -341,6 +341,8 @@ void bat::collision(characterInfo info)
 	RECT temp;
 	if (abs(_info.pt_y - info.pt_y) < 30 && IntersectRect(&temp, &_info.chr_rc, &info.chr_rc) && abs(_info.hPushPower) > 1)
 	{
+		//attack effect play
+		EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left), _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top));
 		_info.hPushPower *= (-0.5f);
 		_info.jumpPower += 5;
 		if (_direction == IO_LEFT) _direction = IO_RIGHT;

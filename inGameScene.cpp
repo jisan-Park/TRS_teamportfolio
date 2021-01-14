@@ -58,6 +58,9 @@ HRESULT inGameScene::init()
 	SOUNDMANAGER->stop("보스방");
 	SOUNDMANAGER->stop("상점");
 	SOUNDMANAGER->play("인게임", 1.0f);
+	EFFECTMANAGER->addEffect("attackEffect", "image/effect/attackEffect.bmp", 350, 50, 50, 50, 14.0f, 0.1f, 1000);
+	EFFECTMANAGER->addEffect("defenceEffect", "image/effect/defenceEffect.bmp", 350, 50, 50, 50, 14.0f, 0.1f, 1000);
+	
 
 	return S_OK;
 }
@@ -69,6 +72,7 @@ void inGameScene::release()
 
 void inGameScene::update()
 {
+	EFFECTMANAGER->update();
 	//보스 죽이면 phase - 21로 변경 - changeScene
 	if (CAMERAMANAGER->getCameraPhase() == 21) {
 		SCENEMANAGER->changeScene("gameclear");
@@ -98,15 +102,9 @@ void inGameScene::update()
 	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
 	CAMERAMANAGER->update();
 	_io->update();
-	for (int i = 0; i < _io->getVIO().size(); ++i)
-	{
-		for (int j = 0; j < _em->getVenemy().size(); ++j)
-		{
-			_io->getVIO()[i]->collision(_em->getVenemy()[j]->getInfo());
-			_em->getVenemy()[j]->objHit(_io->getVIO()[i]->getInfo());
-		}
+	//weapon + Enemy 충돌처리
+	collisionInteractiveObject();
 
-	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1)) {
 		SCENEMANAGER->changeScene("gameover");
 		SOUNDMANAGER->stop("메뉴");
@@ -140,8 +138,9 @@ void inGameScene::render()
 	GAMEMANAGER->render(getMemDC());
 	PLAYER->render(getMemDC());
 
-	_em->render();
-	_io->render();
+	EFFECTMANAGER->render();
+	//_em->render();
+	//_io->render();
 	if (_isPaused) {
 		IMAGEMANAGER->findImage("로딩배경")->alphaRender(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y, 170);
 		//pause 이미지 띄워주기
@@ -238,6 +237,19 @@ void inGameScene::setPause()
 		}
 		_settingBox = RectMake(90, 80 + (_selectSettingNum * 33), 125, 25);
 		_pauseBox = RectMake(282, 187 + (_selectNum * 43), 236, 43);
+	}
+}
+
+void inGameScene::collisionInteractiveObject()
+{
+	for (int i = 0; i < _io->getVIO().size(); ++i)
+	{
+		for (int j = 0; j < _em->getVenemy().size(); ++j)
+		{
+			_io->getVIO()[i]->collision(_em->getVenemy()[j]->getInfo());
+			_em->getVenemy()[j]->objHit(_io->getVIO()[i]->getInfo());
+		}
+
 	}
 }
 

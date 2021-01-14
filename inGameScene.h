@@ -31,5 +31,6 @@ public:
 	virtual void update();
 	virtual void render();
 	void setPause();
+	void collisionInteractiveObject();
 	void collisionShop();
 };

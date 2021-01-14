@@ -308,7 +308,8 @@ void dobeman::collsion()
 	RECT temp;
 	if (IntersectRect(&temp, &PLAYER->getAttackRc(), &_info.chr_rc) && !_inrangeY)
 	{
-
+		//attack effect play
+		EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
 		if (_state == E_WALK || _state == E_IDLE)
 		{
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
@@ -316,6 +317,7 @@ void dobeman::collsion()
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
 					_motion = dobeman_DAMAGE_RIGHT;
 					_motion->start();
@@ -475,6 +477,9 @@ void dobeman::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//attack effect play
+					EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
 					_motion = dobeman_DAMAGE_RIGHT;
 					_motion->start();
@@ -501,6 +506,9 @@ void dobeman::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//attack effect play
+					EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
 					_motion = dobeman_DAMAGE_LEFT;
 					_motion->start();

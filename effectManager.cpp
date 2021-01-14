@@ -14,7 +14,6 @@ effectManager::~effectManager()
 
 HRESULT effectManager::init()
 {
-
 	return S_OK;
 }
 
