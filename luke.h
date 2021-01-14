@@ -35,6 +35,7 @@ public:
 	virtual void update();
 	virtual void collsion();
 	virtual void inrange();
+	virtual void objHit(characterInfo info);
 
 	ENEMYDIRECTION getDirection() { return _direction; }
 	void setDirection(ENEMYDIRECTION direction) { _direction = direction; }

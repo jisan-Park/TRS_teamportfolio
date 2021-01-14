@@ -627,6 +627,70 @@ void luke::inrange()
 	}
 }
 
+void luke::objHit(characterInfo info)
+{
+	RECT temp;
+	if (abs(_info.pt_y - info.pt_y) < 30 && IntersectRect(&temp, &info.chr_rc, &_info.chr_rc) && abs(info.hPushPower) > 1)
+	{
+
+		if (_state == E_WALK || _state == E_IDLE)
+		{
+			if (_direction == E_RIGHT)
+			{
+				_counttttt++;
+				if (_counttttt < 5)
+				{
+					_img = IMAGEMANAGER->findImage("luke_damage");
+					_motion = luke_DAMAGE_RIGHT;
+					_motion->start();
+					_direction = E_RIGHT;
+					_state = E_HITTED;
+					_count = 0;
+					_hp -= PLAYER->getAttackDamege();
+					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
+					if (info.chr_x > _info.chr_x)
+					{
+						_info.hPushPower = -0.1;
+						_info.vPushPower = 0;
+					}
+					if (info.chr_x <= _info.chr_x)
+					{
+						_info.hPushPower = 0.1;
+						_info.vPushPower = 0;
+					}
+				}
+				_counttttt = 0;
+			}
+			if (_direction == E_LEFT)
+			{
+				_counttttt++;
+				if (_counttttt < 5)
+				{
+					_img = IMAGEMANAGER->findImage("luke_damage");
+					_motion = luke_DAMAGE_LEFT;
+					_motion->start();
+					_direction = E_LEFT;
+					_state = E_HITTED;
+					_count = 0;
+					_hp -= PLAYER->getAttackDamege();
+					//약한 타격을 맞았을 떄 뒤로 밀리는데 player 보다 enemy의 위치를 비교해서 밀리는 방향을 정함 
+					if (info.chr_x > _info.chr_x)
+					{
+						_info.hPushPower = -0.1;
+						_info.vPushPower = 0;
+					}
+					if (info.chr_x <= _info.chr_x)
+					{
+						_info.hPushPower = 0.1;
+						_info.vPushPower = 0;
+					}
+				}
+				_counttttt = 0;
+			}
+		}
+	}
+}
+
 void luke::setAnimation()
 {
 	//KEYANIMANAGER->addCoordinateFrameAnimation("luke_IDLE_RIGHT", "luke_idle", 0, 3, 8, false, true);
