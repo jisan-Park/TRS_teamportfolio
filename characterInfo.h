@@ -39,6 +39,8 @@ struct characterInfo
 		chr_height = height;
 		chr_rc = RectMakeCenter(chr_x, chr_y, chr_width, chr_height);
 		shdrc = RectMakeCenter(shd_x, shd_y, 10, 10);
+		shdDistance = shd_y - chr_rc.bottom;
+		ptDistance = pt_y - chr_rc.bottom;
 		_push_width = push_width;
 		_push_height = push_height;
 	}
@@ -67,6 +69,13 @@ struct characterInfo
 	}
 	void shdRender(HDC hdc)
 	{
-		EllipseMakeCenter(hdc, shd_x, shd_y, 70 - shdDistance / 10, 30 - shdDistance / 10);
+		HBRUSH brush;
+		HBRUSH OldBrush;
+		brush = CreateSolidBrush(RGB(0, 0, 0));
+		OldBrush = (HBRUSH)SelectObject(hdc, brush);
+
+		EllipseMakeCenter(hdc, shd_x, shd_y, chr_width - shdDistance / 10, (chr_width / 2) - shdDistance / 10);
+		SelectObject(hdc, OldBrush);
+		DeleteObject(brush);
 	}
 };
