@@ -5283,23 +5283,27 @@ void Player::objGet()
 
 		if (_characterNum == 0)
 		{
-			if (_direction == RIGHT)
+			RECT temp;
+			if (IntersectRect(&temp, &_info.ptrc, &_ioRc))
 			{
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_state = LOBJGET;
-				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_GET");
-				_motion = KEYANIMANAGER->findAnimation("ScottRightLobjGet");
-				_motion->start();
-			}
-			else if (_direction == LEFT)
-			{
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_state = LOBJGET;
-				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_GET");
-				_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjGet");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+					_state = LOBJGET;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_LOBJ_GET");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightLobjGet");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+					_state = LOBJGET;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_LOBJ_GET");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftLobjGet");
+					_motion->start();
+				}
 			}
 		}
 		else if (_characterNum == 1)
@@ -5330,23 +5334,27 @@ void Player::objGet()
 
 		if (_characterNum == 0)
 		{
-			if (_direction == RIGHT)
+			RECT temp;
+			if (IntersectRect(&temp, &_info.ptrc, &_ioRc))
 			{
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_state = HOBJGET;
-				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_HOBJ_GET");
-				_motion = KEYANIMANAGER->findAnimation("ScottRightHobjGet");
-				_motion->start();
-			}
-			else if (_direction == LEFT)
-			{
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_state = HOBJGET;
-				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_HOBJ_GET");
-				_motion = KEYANIMANAGER->findAnimation("ScottLeftHobjGet");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+					_state = HOBJGET;
+					_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_HOBJ_GET");
+					_motion = KEYANIMANAGER->findAnimation("ScottRightHobjGet");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+					_state = HOBJGET;
+					_img = IMAGEMANAGER->findImage("SCOTT_LEFT_HOBJ_GET");
+					_motion = KEYANIMANAGER->findAnimation("ScottLeftHobjGet");
+					_motion->start();
+				}
 			}
 		}
 		else if (_characterNum == 1)

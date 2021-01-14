@@ -22,6 +22,10 @@ void enemy::update()
 
 }
 
+void enemy::objHit(characterInfo info)
+{
+}
+
 void enemy::render()
 {
 	

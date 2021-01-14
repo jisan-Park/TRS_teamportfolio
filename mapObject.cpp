@@ -157,14 +157,14 @@ HRESULT mapObject::init()
 	_vCube.push_back(_cube22);
 
 
-	cube* testbox1;
-	testbox1 = new cube;
-	testbox1->init(365, 465, 95, 35, 75);
-	_vCube.push_back(testbox1);
-	cube* testbox2;
-	testbox2 = new cube;
-	testbox2->init(455, 465, 85, 35, 150);
-	_vCube.push_back(testbox2);
+	//cube* testbox1;
+	//testbox1 = new cube;
+	//testbox1->init(365, 465, 95, 35, 75);
+	//_vCube.push_back(testbox1);
+	//cube* testbox2;
+	//testbox2 = new cube;
+	//testbox2->init(455, 465, 85, 35, 150);
+	//_vCube.push_back(testbox2);
 
 	stair* stair0;
 	stair0 = new stair;

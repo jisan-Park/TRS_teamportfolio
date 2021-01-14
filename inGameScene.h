@@ -1,6 +1,8 @@
 #pragma once
 #include "gameNode.h"
 #include"enemyManager.h"
+#include "ioManager.h"
+
 
 class inGameScene : public gameNode
 {
@@ -8,6 +10,7 @@ private:
 
 	image* _background;
 	enemyManager* _em;
+	ioManager* _io;
 	RECT _shop[4];
 	bool _isPaused;
 	RECT _pauseBox;

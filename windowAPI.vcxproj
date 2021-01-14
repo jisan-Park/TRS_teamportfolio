@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="baricadeLine.h" />
+    <ClInclude Include="bat.h" />
+    <ClInclude Include="bin.h" />
     <ClInclude Include="botLine.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cameraManager.h" />
@@ -170,6 +172,8 @@
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="inGameScene.h" />
+    <ClInclude Include="interactiveObject.h" />
+    <ClInclude Include="ioManager.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="jesse.h" />
     <ClInclude Include="keyAniManager.h" />
@@ -214,6 +218,8 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="baricadeLine.cpp" />
+    <ClCompile Include="bat.cpp" />
+    <ClCompile Include="bin.cpp" />
     <ClCompile Include="botLine.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cameraManager.cpp" />
@@ -233,6 +239,8 @@
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="inGameScene.cpp" />
+    <ClCompile Include="interactiveObject.cpp" />
+    <ClCompile Include="ioManager.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="jesse.cpp" />
     <ClCompile Include="keyAniManager.cpp" />

@@ -78,6 +78,7 @@ public:
 	virtual void atk() = 0;
 	virtual void move() = 0;
 	virtual void update() = 0;
+	virtual void objHit(characterInfo info);
 	//공통 함수
 	virtual void release();
 	virtual void render();

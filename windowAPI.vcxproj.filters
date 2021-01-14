@@ -73,6 +73,9 @@
     <Filter Include="2DGameFramework\subclass\picture">
       <UniqueIdentifier>{f9dda1c2-a6b5-4f90-9a86-959327b1e6f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\io">
+      <UniqueIdentifier>{db8f480c-ff6d-44c1-9f43-f298be43cccf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -264,6 +267,18 @@
     <ClInclude Include="Coin.h">
       <Filter>playGround</Filter>
     </ClInclude>
+    <ClInclude Include="bat.h">
+      <Filter>playGround\io</Filter>
+    </ClInclude>
+    <ClInclude Include="bin.h">
+      <Filter>playGround\io</Filter>
+    </ClInclude>
+    <ClInclude Include="interactiveObject.h">
+      <Filter>playGround\io</Filter>
+    </ClInclude>
+    <ClInclude Include="ioManager.h">
+      <Filter>playGround\io</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -436,6 +451,18 @@
     </ClCompile>
     <ClCompile Include="Coin.cpp">
       <Filter>playGround</Filter>
+    </ClCompile>
+    <ClCompile Include="bat.cpp">
+      <Filter>playGround\io</Filter>
+    </ClCompile>
+    <ClCompile Include="bin.cpp">
+      <Filter>playGround\io</Filter>
+    </ClCompile>
+    <ClCompile Include="interactiveObject.cpp">
+      <Filter>playGround\io</Filter>
+    </ClCompile>
+    <ClCompile Include="ioManager.cpp">
+      <Filter>playGround\io</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

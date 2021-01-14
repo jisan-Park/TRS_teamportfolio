@@ -45,6 +45,9 @@ HRESULT inGameScene::init()
 	_em = new enemyManager;
 	_em->init();
 
+	_io = new ioManager;
+	_io->init();
+
 	//camera 위치 초기화
 	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
 	_isPaused = false;
@@ -89,7 +92,16 @@ void inGameScene::update()
 	//camera 위치 초기화
 	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
 	CAMERAMANAGER->update();
+	_io->update();
+	for (int i = 0; i < _io->getVIO().size(); ++i)
+	{
+		for (int j = 0; j < _em->getVenemy().size(); ++j)
+		{
+			_io->getVIO()[i]->collision(_em->getVenemy()[j]->getInfo());
+			_em->getVenemy()[j]->objHit(_io->getVIO()[i]->getInfo());
+		}
 
+	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1)) {
 		SCENEMANAGER->changeScene("gameover");
 		SOUNDMANAGER->stop("메뉴");
@@ -124,7 +136,7 @@ void inGameScene::render()
 	PLAYER->render(getMemDC());
 
 	_em->render();
-
+	_io->render();
 	if (_isPaused) {
 		IMAGEMANAGER->findImage("로딩배경")->alphaRender(getMemDC(), CAMERAMANAGER->getCameraPoint().x, CAMERAMANAGER->getCameraPoint().y, 170);
 		//pause 이미지 띄워주기

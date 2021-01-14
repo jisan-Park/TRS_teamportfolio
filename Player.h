@@ -80,6 +80,7 @@ private:
 	RECT _enemyAtkRc; // 에너미 공격렉트 
 	RECT _temp; // 비교용
 	RECT _downRc; // 누웠을때 렉트
+	RECT _ioRc;
 	float _enemyDamage; // 에너미 데미지
 	float _atemp;
 
@@ -231,7 +232,9 @@ public:
 	void setWp(int i) { _wp = i; };
 	void setSpd(int i) { _spd = i; };
 	void setDmg(int i) { _dmg = i; }; // player가 줄 데미지
-	//
+	void setIORC(RECT rc) { _ioRc = rc; };
+									  
+									  //
 
 
 };
