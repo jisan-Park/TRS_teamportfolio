@@ -50,7 +50,7 @@ HRESULT inGameScene::init()
 	_io->init();
 
 	//camera 위치 초기화
-	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
+	CAMERAMANAGER->setCamera(PLAYER->getInfo().shd_x - WINSIZEX / 2, PLAYER->getInfo().shd_y - WINSIZEY / 2);
 	_isPaused = false;
 	_isSetting = false;
 
@@ -72,9 +72,12 @@ void inGameScene::release()
 
 void inGameScene::update()
 {
+	if (KEYMANAGER->isOnceKeyDown('I')) {
+		cout << "현재 phase = " << CAMERAMANAGER->getCameraPhase() << endl;
+	}
 	EFFECTMANAGER->update();
-	//보스 죽이면 phase - 21로 변경 - changeScene
-	if (CAMERAMANAGER->getCameraPhase() == 21) {
+	//보스 죽이면 phase - 23로 변경 - changeScene
+	if (CAMERAMANAGER->getCameraPhase() == 23) {
 		SCENEMANAGER->changeScene("gameclear");
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
@@ -99,7 +102,7 @@ void inGameScene::update()
 	MAPOBJECT->collisionMo(PLAYER->getInfo());
 	GAMEMANAGER->update();
 	//camera 위치 초기화
-	CAMERAMANAGER->setCamera(PLAYER->getInfo().pt_x - WINSIZEX / 2, PLAYER->getInfo().pt_y - WINSIZEY / 2);
+	CAMERAMANAGER->setCamera(PLAYER->getInfo().shd_x - WINSIZEX / 2, PLAYER->getInfo().shd_y - WINSIZEY / 2);
 	CAMERAMANAGER->update();
 	_io->update();
 	//weapon + Enemy 충돌처리
@@ -134,7 +137,7 @@ void inGameScene::update()
 void inGameScene::render()
 {
 	IMAGEMANAGER->findImage("인게임배경")->render(getMemDC(), 0, 0);
-
+	Rectangle(getMemDC(), _bossDoor);
 	GAMEMANAGER->render(getMemDC());
 	PLAYER->render(getMemDC());
 
@@ -263,7 +266,7 @@ void inGameScene::collisionShop()
 			SCENEMANAGER->changeScene("상점씬");
 		}
 	}
-	if (IntersectRect(&temp,&PLAYER->getInfo().ptrc,&_bossDoor)) {
-		CAMERAMANAGER->setPhase(20);
+	if (IntersectRect(&temp,&PLAYER->getInfo().shdrc, &_bossDoor)) {
+		CAMERAMANAGER->setPhase(21);
 	}
 }

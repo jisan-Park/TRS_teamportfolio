@@ -318,7 +318,7 @@ void william::collsion()
 				if (_direction == E_RIGHT && PLAYER->getInfo().chr_x < _info.chr_x) //오른쪽 보고있었는데 뒤에서 때릴때
 				{
 					//attack effect play
-					EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
 					_img = IMAGEMANAGER->findImage("william_damage");
 					_motion = william_DAMAGE_RIGHT;
@@ -333,7 +333,9 @@ void william::collsion()
 				if (_direction == E_RIGHT && PLAYER->getInfo().chr_x > _info.chr_x) //오른쪽 보고있었는데 앞에서 때릴때
 				{
 					//attack effect play
-					EFFECTMANAGER->play("defenceEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+					EFFECTMANAGER->play("defenceEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
+					
+					
 					_img = IMAGEMANAGER->findImage("william_defence");
 					_motion = william_DEFENCE_RIGHT;
 					_motion->start();
@@ -348,7 +350,7 @@ void william::collsion()
 				if (_direction == E_LEFT && PLAYER->getInfo().chr_x > _info.chr_x) //왼쪽 보고있었는데 뒤에서 때릴때
 				{
 					//attack effect play
-					EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 					_img = IMAGEMANAGER->findImage("william_damage");
 					_motion = william_DAMAGE_LEFT;
 					_motion->start();
@@ -362,7 +364,8 @@ void william::collsion()
 				if (_direction == E_LEFT && PLAYER->getInfo().chr_x < _info.chr_x) //왼쪽 보고있었는데 앞에서 때릴때
 				{
 					//attack effect play
-					EFFECTMANAGER->play("defenceEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+					EFFECTMANAGER->play("defenceEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
+					
 					_img = IMAGEMANAGER->findImage("william_defence");
 					_motion = william_DEFENCE_LEFT;
 					_motion->start();
@@ -382,7 +385,7 @@ void william::collsion()
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
 				//attack effect play
-				EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+				EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 				_img = IMAGEMANAGER->findImage("william_knockDown");
 				_motion = william_KNOCKDOWN_RIGHT;
 				_motion->start();
@@ -397,7 +400,7 @@ void william::collsion()
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
 				//attack effect play
-				EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+				EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
 				_img = IMAGEMANAGER->findImage("william_knockDown");
 				_motion = william_KNOCKDOWN_LEFT;
@@ -416,7 +419,7 @@ void william::collsion()
 			if (_direction == E_RIGHT)
 			{
 				//attack effect play
-				EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+				EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
 				_img = IMAGEMANAGER->findImage("william_damageDown");
 				_motion = william_DOWNDAMAGE_RIGHT;
@@ -430,7 +433,7 @@ void william::collsion()
 			if (_direction == E_LEFT)
 			{
 				//attack effect play
-				EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+				EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
 				_img = IMAGEMANAGER->findImage("william_damageDown");
 				_motion = william_DOWNDAMAGE_LEFT;
@@ -534,7 +537,7 @@ void william::objHit(characterInfo info)
 				if (_counttttt < 5)
 				{
 					//attack effect play
-					EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
 					_img = IMAGEMANAGER->findImage("william_damage");
 					_motion = william_DAMAGE_RIGHT;
@@ -563,7 +566,7 @@ void william::objHit(characterInfo info)
 				if (_counttttt < 5)
 				{
 					//attack effect play
-					EFFECTMANAGER->play("attackEffect", PLAYER->getAttackRc().left + (PLAYER->getAttackRc().right - PLAYER->getAttackRc().left), PLAYER->getAttackRc().top + (PLAYER->getAttackRc().bottom - PLAYER->getAttackRc().top));
+					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
 					_img = IMAGEMANAGER->findImage("william_damage");
 					_motion = william_DAMAGE_LEFT;

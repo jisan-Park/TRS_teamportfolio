@@ -77,24 +77,24 @@ void Player::update()
 	}
 	
 	//보스방 진입시, 위치 변경
-	if (CAMERAMANAGER->getCameraPhase() == 20) {
+	if (CAMERAMANAGER->getCameraPhase() == 21) {
 		PLAYER->_info.init(PLAYER->_info.renderNumber, 21460, 610,50,100,100,140);
-		CAMERAMANAGER->setPhase(21);
+		CAMERAMANAGER->setPhase(22);
 	}
 	//_enemyDamage = 40;
 
 	//snack에 따른 상태
-	if (GAMEMANAGER->getSnackNum() == 0) {
-		//응 없어
-	}
-	else if (GAMEMANAGER->getSnackNum() == 1) {
-		PLAYER->setStr(PLAYER->getStr() + 10);
-		PLAYER->setDef(PLAYER->getDef() + 10);
-	}
-	else if (GAMEMANAGER->getSnackNum() == 2) {
-		PLAYER->setSpd(PLAYER->getSpd() + 10);
-		PLAYER->setWp(PLAYER->getWp() + 10);
-	}
+	//if (GAMEMANAGER->getSnackNum() == 0) {
+	//	//응 없어
+	//}
+	//else if (GAMEMANAGER->getSnackNum() == 1) {
+	//	PLAYER->setStr(PLAYER->getStr() + 10);
+	//	PLAYER->setDef(PLAYER->getDef() + 10);
+	//}
+	//else if (GAMEMANAGER->getSnackNum() == 2) {
+	//	PLAYER->setSpd(PLAYER->getSpd() + 10);
+	//	PLAYER->setWp(PLAYER->getWp() + 10);
+	//}
 
 	if (_characterNum == 0)//스콧
 	{
@@ -1268,7 +1268,7 @@ void Player::sHittedManage()
 	if ((IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc)) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER || _state == UP))
 	{
 		//attack effect play
-		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left), _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top));
+		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
 		_hp -= (_enemyDamage - _reduceDamage);
 		_hitted = true;
 	}
@@ -1339,7 +1339,7 @@ void Player::sHittedManage()
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && _state == DEF)
 	{
 		//attack effect play
-		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left), _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top));
+		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
 		if (_direction == RIGHT)
 		{
 			_info.pt_x -= 20;
@@ -2624,7 +2624,7 @@ void Player::sHobjManage()
 
 void Player::sDie()
 {
-	GAMEMANAGER->setSnackNum(0);
+	
 	if (_hp <= 0 && _gp > 0)
 	{
 		_hp = 0;
@@ -2639,6 +2639,7 @@ void Player::sDie()
 
 	if (_die1)
 	{
+		GAMEMANAGER->setSnackNum(0);
 		_state = REVIVER;
 		_hitted = false;
 
@@ -2664,6 +2665,7 @@ void Player::sDie()
 
 	if (_die2)
 	{
+		GAMEMANAGER->setSnackNum(0);
 		_state = REVIVER;
 		_hitted = false;
 		_info.hPushPower = 0;
@@ -3837,7 +3839,7 @@ void Player::rHittedManage()
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && (_state != DEF && _state != HITTED && _state != DIE && _state != WIN && _state != REVIVER && _state != UP))
 	{
 		//attack effect play
-		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left), _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top));
+		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
 		_hp -= (_enemyDamage - _reduceDamage);
 		_hitted = true;
 	}
@@ -3908,7 +3910,7 @@ void Player::rHittedManage()
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && _state == DEF)
 	{
 		//attack effect play
-		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left), _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top));
+		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
 		if (_direction == RIGHT)
 		{
 			_info.pt_x -= 20;
@@ -5243,7 +5245,7 @@ void Player::skAtk()
 
 void Player::rDie()
 {
-	GAMEMANAGER->setSnackNum(0);
+	
 	if (_hp <= 0 && _gp > 0)
 	{
 		_hp = 0;
@@ -5258,6 +5260,7 @@ void Player::rDie()
 
 	if (_die1)
 	{
+		GAMEMANAGER->setSnackNum(0);
 		_state = REVIVER;
 		_hitted = false;
 
@@ -5283,6 +5286,7 @@ void Player::rDie()
 
 	if (_die2)
 	{
+		GAMEMANAGER->setSnackNum(0);
 		_state = REVIVER;
 		_hitted = false;
 		_info.hPushPower = 0;

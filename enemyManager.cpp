@@ -302,7 +302,7 @@ void enemyManager::remove()
 		if ((*_viMinion)->getIsDead())
 		{
 			//getMaxHP - makeCoin
-			COIN->makeCoin((*_viMinion)->getMaxHp(), (*_viMinion)->getInfo().chr_x, (*_viMinion)->getInfo().chr_y);
+			COIN->makeCoin((*_viMinion)->getMaxHp(), (*_viMinion)->getInfo().shd_x, (*_viMinion)->getInfo().shd_y);
 			GAMEMANAGER->deletePicture((*_viMinion)->getInfo().renderNumber);
 			_viMinion = _vMinion.erase(_viMinion);
 		}
