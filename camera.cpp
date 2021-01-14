@@ -94,10 +94,11 @@ void camera::checkPoint()
 //페이즈 관계없이 맵에 카메라 예외처리 (막기)
 void camera::update()
 {
-	//ingame아니면 0,0 고정
-	if (_phase == -1 || _phase > 21) {
-		setCamera(0, 0);
-	}
+	////ingame아니면 0,0 고정
+	//if (_phase == -1) {
+	//	setCamera(0, 0);
+	//}
+
 	if (_phase % 2 == 0) {
 		//짝수면 camera 고정 풀어주기
 		_stop = false;
@@ -162,14 +163,14 @@ void camera::update()
 		if (pt.x <= 21268) {
 			pt.x = 21268;
 		}
-		if (pt.x >= 22212) {
-			pt.x = 22212;
+		if (pt.x  >= 22212 - WINSIZEX) {
+			pt.x = 22212 - WINSIZEX;
 		}
 		if (pt.y <= 162) {
 			pt.y = 162;
 		}
-		if (pt.y >= 730) {
-			pt.y = 730;
+		if (pt.y >= 730 - WINSIZEY) {
+			pt.y = 730 - WINSIZEY;
 		}
 	}
 

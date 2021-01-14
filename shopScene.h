@@ -26,4 +26,6 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void setPlayer(string itemKeyName);
 };

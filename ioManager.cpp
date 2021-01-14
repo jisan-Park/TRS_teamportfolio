@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "ioManager.h"
-#include <iostream>
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-using namespace std;
+
 ioManager::ioManager()
 {
 }
@@ -26,7 +24,6 @@ void ioManager::release()
 
 void ioManager::update()
 {
-	cout << PLAYER->getState() << endl;
 	for (_viIO = _vIO.begin(); _viIO != _vIO.end(); ++_viIO)
 	{
 		(*_viIO)->update();

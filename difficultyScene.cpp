@@ -17,7 +17,7 @@ HRESULT difficultyScene::init()
 	_difficulty = 0;
 	_rc = RectMake(250, 234 + (_difficulty * 35),300,40);
 	
-
+  
 	return S_OK;
 }
 

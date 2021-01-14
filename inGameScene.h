@@ -12,6 +12,7 @@ private:
 	enemyManager* _em;
 	ioManager* _io;
 	RECT _shop[4];
+	RECT _bossDoor;
 	bool _isPaused;
 	RECT _pauseBox;
 	int _selectNum;

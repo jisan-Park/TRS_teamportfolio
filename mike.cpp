@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "mike.h"
-//
-#include <iostream>
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-using namespace std;
-//
+
 HRESULT mike::init(const char* imageName, float x, float y)
 {
 	setAnimation();
@@ -79,8 +75,6 @@ void mike::atk()
 			//_count = 0;
 		}
 	}
-
-	cout << "mike_hp = " << _hp << endl;
 
 }
 

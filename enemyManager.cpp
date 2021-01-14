@@ -26,6 +26,8 @@ void enemyManager::update()
 		}
 		if (_vMinion[0]->getState() == E_IDLE && _vMinion.size() == 1 && _vMinion[0]->getIsBus() == true)
 			setEnemy();
+	}else if (_vMinion.size() <= 0 && CAMERAMANAGER->getCameraPhase() % 2 == 1) {
+		setEnemy();
 	}
 	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); _viMinion++)
 	{
@@ -131,6 +133,19 @@ void enemyManager::setEnemy()
 	}
 	break;
 	case 9:
+	{
+		temp = new malcolm;
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 400);
+		_vMinion.push_back(temp);
+		temp = new malcolm;
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 500);
+		_vMinion.push_back(temp);
+		temp = new malcolm;
+		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 600);
+		_vMinion.push_back(temp);
+	}
+	break;
+	case 17:
 	{
 		temp = new malcolm;
 		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x, 400);

@@ -30,6 +30,7 @@ HRESULT inGameScene::init()
 	_shop[1] = RectMake(12660, 360, 100, 60);
 	_shop[2] = RectMake(13630, 360, 100, 60);
 	_shop[3] = RectMake(13970, 360, 100, 60);
+	_bossDoor = RectMake(20850,420,80,100);
 	_background_volume = IMAGEMANAGER->findImage("ingamevolumnFrontBar");
 	_SFX_volume = IMAGEMANAGER->findImage("ingamevolumnFrontBar");
 	//selectbox
@@ -67,7 +68,10 @@ void inGameScene::release()
 
 void inGameScene::update()
 {
-
+	//보스 죽이면 phase - 21로 변경 - changeScene
+	if (CAMERAMANAGER->getCameraPhase() == 21) {
+		SCENEMANAGER->changeScene("gameclear");
+	}
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
 		if (_isPaused) {
 			_isPaused = false;
@@ -238,11 +242,15 @@ void inGameScene::setPause()
 
 void inGameScene::collisionShop()
 {
+	RECT temp;
 	for (int i = 0; i < 4; i++) {
-		RECT temp;
+		
 		if (IntersectRect(&temp, &PLAYER->getInfo().ptrc, &_shop[i])) {
 			GAMEMANAGER->setShopNum(i + 1);
 			SCENEMANAGER->changeScene("상점씬");
 		}
+	}
+	if (IntersectRect(&temp,&PLAYER->getInfo().ptrc,&_bossDoor)) {
+		CAMERAMANAGER->setPhase(20);
 	}
 }

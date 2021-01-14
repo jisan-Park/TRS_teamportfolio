@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "Player.h"
-
+//
+#include <iostream>
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+using namespace std;
+//
 Player::Player()
 {
 }
@@ -17,8 +21,11 @@ HRESULT Player::init()
 	_def = 10;
 	_wp = 10;
 	_spd = 10;
-	_hp = 100 + _wp;
-	_gp = 100 + _wp;
+
+	_maxHP = 100 + _wp;
+	_maxGP = 100 + _wp;
+	_hp = _maxHP;
+	_gp = _maxGP;
 
 	_die1 = false;
 	_die2 = false;
@@ -65,7 +72,29 @@ void Player::release()
 
 void Player::update()
 {
+	if (_life <= 0) {
+		SCENEMANAGER->changeScene("gameover");
+	}
+	
+	//보스방 진입시, 위치 변경
+	if (CAMERAMANAGER->getCameraPhase() == 20) {
+		PLAYER->_info.init(PLAYER->_info.renderNumber, 21460, 610,50,100,100,140);
+		CAMERAMANAGER->setPhase(21);
+	}
 	//_enemyDamage = 40;
+
+	//snack에 따른 상태
+	if (GAMEMANAGER->getSnackNum() == 0) {
+		//응 없어
+	}
+	else if (GAMEMANAGER->getSnackNum() == 1) {
+		PLAYER->setStr(PLAYER->getStr() + 10);
+		PLAYER->setDef(PLAYER->getDef() + 10);
+	}
+	else if (GAMEMANAGER->getSnackNum() == 2) {
+		PLAYER->setSpd(PLAYER->getSpd() + 10);
+		PLAYER->setWp(PLAYER->getWp() + 10);
+	}
 
 	if (_characterNum == 0)//스콧
 	{
@@ -2591,7 +2620,7 @@ void Player::sHobjManage()
 
 void Player::sDie()
 {
-
+	GAMEMANAGER->setSnackNum(0);
 	if (_hp <= 0 && _gp > 0)
 	{
 		_hp = 0;
@@ -5206,7 +5235,7 @@ void Player::skAtk()
 
 void Player::rDie()
 {
-
+	GAMEMANAGER->setSnackNum(0);
 	if (_hp <= 0 && _gp > 0)
 	{
 		_hp = 0;

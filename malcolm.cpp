@@ -359,7 +359,7 @@ void malcolm::update()
 	{
 		_inattack = RectMakeCenter(-100, -100, 0, 0);
 	}
-	PLAYER->setEnemyAtkRc(_inattack, 8);
+	PLAYER->setEnemyAtkRc(_inattack, 50);
 	move();
 	_info.physics();
 

@@ -96,6 +96,8 @@ private:
 
 
 	int _money;//소지금
+	int _maxHP;
+	int _maxGP;
 	int _life;
 	int _hp;
 	int _gp;
@@ -214,6 +216,8 @@ public:
 	void atkRc();
 
 	//UI getter
+	int getMaxHP() { return _maxHP; };
+	int getMaxGP() { return _maxGP; };
 	int getMoney() { return _money; };//소지금
 	int getLife() { return _life; };
 	int getHp() { return _hp; };
@@ -224,6 +228,8 @@ public:
 	int getSpd() { return _spd; };
 	int getDmg() { return _dmg; }; // player가 줄 데미지
 	//UI setter
+	void setMaxHP(int i) { _maxHP = i; };
+	void setMaxGP(int i) { _maxGP = i; };
 	void setMoney(int i) { _money = i; };//소지금
 	void setLife(int i) { _life = i; };
 	void setHp(int i) { _hp = i; };
