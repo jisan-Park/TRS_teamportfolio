@@ -408,6 +408,9 @@ void malcolm::collsion()
 				_counttttt++;
 				if (_counttttt < 30)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					_img = IMAGEMANAGER->findImage("malcolm_damage1");
 					_motion = malcolm_DAMAGE_RIGHT;
 					_motion->start();
@@ -434,6 +437,9 @@ void malcolm::collsion()
 				_counttttt++;
 				if (_counttttt < 30)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					_img = IMAGEMANAGER->findImage("malcolm_damage1");
 					_motion = malcolm_DAMAGE_LEFT;
 					_motion->start();
@@ -457,6 +463,9 @@ void malcolm::collsion()
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("malcolm_down");
 				_motion = malcolm_KNOCKDOWN_RIGHT;
 				_motion->start();
@@ -469,6 +478,9 @@ void malcolm::collsion()
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("malcolm_down");
 				_motion = malcolm_KNOCKDOWN_LEFT;
 				_motion->start();
@@ -485,6 +497,9 @@ void malcolm::collsion()
 		{
 			if (_direction == E_RIGHT)
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("malcolm_downdamage");
 				_motion = malcolm_DOWNDAMAGE_RIGHT;
 				_motion->start();
@@ -496,6 +511,9 @@ void malcolm::collsion()
 			}
 			if (_direction == E_LEFT)
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("malcolm_downdamage");
 				_motion = malcolm_DOWNDAMAGE_LEFT;
 				_motion->start();
@@ -616,6 +634,9 @@ void malcolm::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
@@ -645,6 +666,9 @@ void malcolm::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 

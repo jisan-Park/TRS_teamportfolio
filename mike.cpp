@@ -331,6 +331,9 @@ void mike::collsion()
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					_img = IMAGEMANAGER->findImage("mike_damage");
 					_motion = mike_DAMAGE_RIGHT;
 					_motion->start();
@@ -357,6 +360,9 @@ void mike::collsion()
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					_img = IMAGEMANAGER->findImage("mike_damage");
 					_motion = mike_DAMAGE_LEFT;
 					_motion->start();
@@ -380,6 +386,9 @@ void mike::collsion()
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("mike_knockDown");
 				_motion = mike_KNOCKDOWN_RIGHT;
 				_motion->start();
@@ -394,6 +403,9 @@ void mike::collsion()
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("mike_knockDown");
 				_motion = mike_KNOCKDOWN_LEFT;
 				_motion->start();
@@ -412,6 +424,9 @@ void mike::collsion()
 		{
 			if (_direction == E_RIGHT)
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("mike_damageDown");
 				_motion = mike_DOWNDAMAGE_RIGHT;
 				_motion->start();
@@ -423,6 +438,9 @@ void mike::collsion()
 			}
 			if (_direction == E_LEFT)
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("mike_damageDown");
 				_motion = mike_DOWNDAMAGE_LEFT;
 				_motion->start();
@@ -522,6 +540,9 @@ void mike::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
@@ -551,6 +572,9 @@ void mike::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 

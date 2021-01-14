@@ -98,6 +98,7 @@ void inGameScene::update()
 	PLAYER->update();
 	COIN->update();
 	GAMEMANAGER->setUI();
+	DAMAGENUMBER->update();
 	//_em->update();
 	MAPOBJECT->collisionMo(PLAYER->getInfo());
 	GAMEMANAGER->update();
@@ -139,7 +140,8 @@ void inGameScene::render()
 	IMAGEMANAGER->findImage("인게임배경")->render(getMemDC(), 0, 0);
 	Rectangle(getMemDC(), _bossDoor);
 	GAMEMANAGER->render(getMemDC());
-	PLAYER->render(getMemDC());
+	DAMAGENUMBER->render(getMemDC());
+	//PLAYER->render(getMemDC());
 
 	EFFECTMANAGER->render();
 	//_em->render();

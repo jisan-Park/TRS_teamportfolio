@@ -7,7 +7,6 @@
 #include"lee.h"
 #include"luke.h"
 #include"malcolm.h"
-#include"richard.h"
 #include"william.h"
 #include"bus.h"
 #include"Coin.h"

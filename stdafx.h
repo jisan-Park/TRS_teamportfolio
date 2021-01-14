@@ -25,6 +25,7 @@
 #include "gameManager.h"
 #include "cameraManager.h"
 #include "Player.h"
+#include "damageNumber.h"
 #include"mapObject.h"
 #include "utils.h"
 #include "Coin.h"
@@ -59,6 +60,7 @@ using namespace TFIVE_UTIL;
 #define PLAYER Player::getSingleton()
 #define MAPOBJECT mapObject::getSingleton()
 #define COIN Coin::getSingleton()
+#define DAMAGENUMBER damageNumber::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p)=NULL;}}

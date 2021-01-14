@@ -317,6 +317,8 @@ void william::collsion()
 			{
 				if (_direction == E_RIGHT && PLAYER->getInfo().chr_x < _info.chr_x) //오른쪽 보고있었는데 뒤에서 때릴때
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
@@ -332,9 +334,9 @@ void william::collsion()
 				}
 				if (_direction == E_RIGHT && PLAYER->getInfo().chr_x > _info.chr_x) //오른쪽 보고있었는데 앞에서 때릴때
 				{
+					
 					//attack effect play
 					EFFECTMANAGER->play("defenceEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
-					
 					
 					_img = IMAGEMANAGER->findImage("william_defence");
 					_motion = william_DEFENCE_RIGHT;
@@ -349,6 +351,8 @@ void william::collsion()
 
 				if (_direction == E_LEFT && PLAYER->getInfo().chr_x > _info.chr_x) //왼쪽 보고있었는데 뒤에서 때릴때
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 					_img = IMAGEMANAGER->findImage("william_damage");
@@ -363,6 +367,7 @@ void william::collsion()
 				}
 				if (_direction == E_LEFT && PLAYER->getInfo().chr_x < _info.chr_x) //왼쪽 보고있었는데 앞에서 때릴때
 				{
+
 					//attack effect play
 					EFFECTMANAGER->play("defenceEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 					
@@ -384,6 +389,8 @@ void william::collsion()
 
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 				//attack effect play
 				EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 				_img = IMAGEMANAGER->findImage("william_knockDown");
@@ -399,6 +406,8 @@ void william::collsion()
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 				//attack effect play
 				EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
@@ -418,6 +427,9 @@ void william::collsion()
 		{
 			if (_direction == E_RIGHT)
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				//attack effect play
 				EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
@@ -432,6 +444,9 @@ void william::collsion()
 			}
 			if (_direction == E_LEFT)
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				//attack effect play
 				EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
@@ -536,6 +551,9 @@ void william::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
@@ -565,6 +583,9 @@ void william::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 

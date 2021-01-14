@@ -317,7 +317,9 @@ void dobeman::collsion()
 				_counttttt++;
 				if (_counttttt < 5)
 				{
-					
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
 					_motion = dobeman_DAMAGE_RIGHT;
 					_motion->start();
@@ -344,6 +346,9 @@ void dobeman::collsion()
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
 					_motion = dobeman_DAMAGE_LEFT;
 					_motion->start();
@@ -367,6 +372,9 @@ void dobeman::collsion()
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("dobeman_knockDown");
 				_motion = dobeman_KNOCKDOWN_RIGHT;
 				_motion->start();
@@ -381,6 +389,9 @@ void dobeman::collsion()
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				//damageNumber create
+				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 				_img = IMAGEMANAGER->findImage("dobeman_knockDown");
 				_motion = dobeman_KNOCKDOWN_LEFT;
 				_motion->start();
@@ -477,6 +488,9 @@ void dobeman::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
@@ -506,6 +520,9 @@ void dobeman::objHit(characterInfo info)
 				_counttttt++;
 				if (_counttttt < 5)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 

@@ -76,6 +76,9 @@
     <Filter Include="playGround\io">
       <UniqueIdentifier>{db8f480c-ff6d-44c1-9f43-f298be43cccf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\damageNumber">
+      <UniqueIdentifier>{7bb64fbf-97bc-40e3-bd76-ef6584824a73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -234,9 +237,6 @@
     <ClInclude Include="malcolm.h">
       <Filter>playGround\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="richard.h">
-      <Filter>playGround\enemy</Filter>
-    </ClInclude>
     <ClInclude Include="william.h">
       <Filter>playGround\enemy</Filter>
     </ClInclude>
@@ -284,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="imgObj.h">
       <Filter>playGround\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="damageNumber.h">
+      <Filter>2DGameFramework\damageNumber</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -425,9 +428,6 @@
     <ClCompile Include="malcolm.cpp">
       <Filter>playGround\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="richard.cpp">
-      <Filter>playGround\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="william.cpp">
       <Filter>playGround\enemy</Filter>
     </ClCompile>
@@ -475,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="imgObj.cpp">
       <Filter>playGround\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="damageNumber.cpp">
+      <Filter>2DGameFramework\damageNumber</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

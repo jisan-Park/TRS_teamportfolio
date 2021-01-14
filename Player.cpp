@@ -1267,6 +1267,9 @@ void Player::sHittedManage()
 	// 적에게 맞는 조건
 	if ((IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc)) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER || _state == UP))
 	{
+		//damageNumber create
+		DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)(_enemyDamage - _reduceDamage));
+
 		//attack effect play
 		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
 		_hp -= (_enemyDamage - _reduceDamage);
@@ -3838,6 +3841,9 @@ void Player::rHittedManage()
 	// 적에게 맞는 조건
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && (_state != DEF && _state != HITTED && _state != DIE && _state != WIN && _state != REVIVER && _state != UP))
 	{
+		//damageNumber create
+		DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)(_enemyDamage - _reduceDamage));
+
 		//attack effect play
 		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
 		_hp -= (_enemyDamage - _reduceDamage);

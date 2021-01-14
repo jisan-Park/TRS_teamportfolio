@@ -42,6 +42,7 @@ HRESULT gameNode::init(bool managerInit)
 		PLAYER->setAni();
 		//MAPOBJECT->init();
 		COIN->init();
+		DAMAGENUMBER->init();
 	}
 
 	return S_OK;
@@ -75,6 +76,8 @@ void gameNode::release()
 		MAPOBJECT->releaseSingleton();
 		COIN->release();
 		COIN->releaseSingleton();
+		DAMAGENUMBER->release();
+		DAMAGENUMBER->releaseSingleton();
 	}
 	ReleaseDC(_hWnd, _hdc);
 }

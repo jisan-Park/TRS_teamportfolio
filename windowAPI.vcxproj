@@ -159,6 +159,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="cube.h" />
+    <ClInclude Include="damageNumber.h" />
     <ClInclude Include="difficultyScene.h" />
     <ClInclude Include="dobeman.h" />
     <ClInclude Include="downSlope.h" />
@@ -194,7 +195,6 @@
     <ClInclude Include="playGround.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="richard.h" />
     <ClInclude Include="rightLine.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="selectScene.h" />
@@ -228,6 +228,7 @@
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="cube.cpp" />
+    <ClCompile Include="damageNumber.cpp" />
     <ClCompile Include="difficultyScene.cpp" />
     <ClCompile Include="dobeman.cpp" />
     <ClCompile Include="downSlope.cpp" />
@@ -261,7 +262,6 @@
     <ClCompile Include="picture.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playGround.cpp" />
-    <ClCompile Include="richard.cpp" />
     <ClCompile Include="rightLine.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="selectScene.cpp" />
