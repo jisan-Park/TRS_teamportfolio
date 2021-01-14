@@ -10,7 +10,8 @@ HRESULT mike::init(const char* imageName, float x, float y)
 	setAnimation();
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
-	_hp = 5;
+	_maxHp = 3;
+	_hp = 3;
 	_def = 5;
 	_spd = 5;
 	_str = 5;

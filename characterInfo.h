@@ -38,7 +38,7 @@ struct characterInfo
 		chr_width = width;
 		chr_height = height;
 		chr_rc = RectMakeCenter(chr_x, chr_y, chr_width, chr_height);
-
+		shdrc = RectMakeCenter(shd_x, shd_y, 10, 10);
 		_push_width = push_width;
 		_push_height = push_height;
 	}

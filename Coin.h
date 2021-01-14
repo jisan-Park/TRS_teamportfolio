@@ -1,45 +1,22 @@
 #pragma once
-#include "gameNode.h"
+#include "singletonBase.h"
 
 #define MAX_COIN 100
 
 struct tagCoin
 {
+	characterInfo _info;
 	image* img;
-	RECT rc;
-	bool isfire;
+	animation* ani;
+	int value;
 };
 
 
-class Coin : gameNode
+class Coin : public singletonBase<Coin>
 {
 private:
-	tagCoin _smallCoin[MAX_COIN];
-	tagCoin _mediumCoin[MAX_COIN];
-	tagCoin _largeCoin[MAX_COIN];
-
-	RECT temp; // 충돌용 렉트
-	RECT playerRc;
-
-	//함수용 변수
-	int smallC;
-	int mediumC;
-	int largeC;
-
-	float _sCoinX;
-	float _sCoinY;
-	float _mCoinX;
-	float _mCoinY;
-	float _lCoinX;
-	float _lCoinY;
-
-	//프레임 이미지를 위한 변수들
-	int _count1;
-	int _count2;
-	int _count3;
-	int _index1;
-	int _index2;
-	int _index3;
+	vector<tagCoin> _vCoin;
+	vector<tagCoin>::iterator _viCoin;
 
 public:
 	virtual HRESULT init();
@@ -47,15 +24,11 @@ public:
 	virtual void update();
 	virtual void render();
 
-	void moveCoin();
-	void rectCoin();
-
-	void setsCoin(int x) { smallC = x; }
-	void setmCoin(int x) { mediumC = x; }
-	void setlCoin(int x) { largeC = x; }
-
-	void setsfire(float x, float y) { _sCoinX = x, _sCoinY = y; }
-	void setmfire(float x, float y) { _mCoinX = x, _mCoinY = y; }
-	void setlfire(float x, float y) { _lCoinX = x, _lCoinY = y; }
+	//image set
+	void setImage();
+	//코인 - player 충돌처리 = 돈 올려줌 + render/vector에서 지워줌
+	void collisionCoin();
+	//코인을 만드는 함수 - enemyManager-delete에서 호출
+	void makeCoin(int num, float x, float y);
 };
 

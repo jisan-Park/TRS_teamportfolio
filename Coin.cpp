@@ -3,38 +3,7 @@
 
 HRESULT Coin::init()
 {
-	for (int i = 0; i < MAX_COIN; i++)
-	{
-		IMAGEMANAGER->addFrameImage("sCoin", "image/coin/smallCoin.bmp", 300, 50, 6, 1, true, RGB(255, 0, 255));
-		_smallCoin[i].img = new image;
-		_smallCoin[i].img->init("image/coin/smallCoin.bmp", 300, 50, 6, 1, true, RGB(255, 0, 255));
-		_smallCoin[i].img->setX(-1100);
-		_smallCoin[i].img->setY(-1100);
-		_smallCoin[i].img->setFrameY(0);
-
-		IMAGEMANAGER->addFrameImage("mCoin", "image/coin/mediumCoin.bmp", 360, 60, 6, 1, true, RGB(255, 0, 255));
-		_mediumCoin[i].img = new image;
-		_mediumCoin[i].img->init("image/coin/mediumCoin.bmp", 360, 60, 6, 1, true, RGB(255, 0, 255));
-		_mediumCoin[i].img->setX(-1100);
-		_mediumCoin[i].img->setY(-1100);
-		_mediumCoin[i].img->setFrameY(0);
-
-		IMAGEMANAGER->addFrameImage("lCoin", "image/coin/largeCoin.bmp", 384, 64, 6, 1, true, RGB(255, 0, 255));
-		_largeCoin[i].img = new image;
-		_largeCoin[i].img->init("image/coin/largeCoin.bmp", 384, 64, 6, 1, true, RGB(255, 0, 255));
-		_largeCoin[i].img->setX(-1100);
-		_largeCoin[i].img->setY(-1100);
-		_largeCoin[i].img->setFrameY(0);
-
-		_smallCoin[i].isfire = false;
-		_mediumCoin[i].isfire = false;
-		_largeCoin[i].isfire = false;
-	}
-
-	smallC = 0;
-	mediumC = 0;
-	largeC = 0;
-
+	setImage();
 	return S_OK;
 }
 
@@ -44,157 +13,114 @@ void Coin::release()
 
 void Coin::update()
 {
+	for (tagCoin t : _vCoin) {
 
-	moveCoin();
-	rectCoin();
-
-	if (smallC != 0)
-	{
-		for (int i = 0; i < smallC; i++)
-		{
-			if (!_smallCoin[i].isfire)
-			{
-				_smallCoin[i].isfire = true;
-			}
-			else
-			{
-				i++;
-				smallC++;
-				break;
-			}
-		}
-
-		smallC = 0;
+		t.ani->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
+		GAMEMANAGER->updatePicture(t._info, t.img, t.ani);
 	}
-	if (mediumC != 0)
-	{
-		for (int i = 0; i < mediumC; i++)
-		{
-			if (!_mediumCoin[i].isfire)
-			{
-				_mediumCoin[i].isfire = true;
-			}
-			else
-			{
-				i++;
-				mediumC++;
-				break;
-			}
-		}
-		mediumC = 0;
-	}
-	if (largeC != 0)
-	{
-		for (int i = 0; i < largeC; i++)
-		{
-			if (!_largeCoin[i].isfire)
-			{
-				_largeCoin[i].isfire = true;
-			}
-			else
-			{
-				i++;
-				largeC++;
-				break;
-			}
-		}
-		largeC = 0;
-	}
-
-
-
-
-
-	for (int i = 0; i < MAX_COIN; i++)
-	{
-		playerRc = PLAYER->getCharacterRc();
-
-		if (IntersectRect(&temp, &_smallCoin[i].rc, &playerRc) && _smallCoin[i].isfire)
-		{
-			PLAYER->setMoney(PLAYER->getMoney() + 1);
-			_smallCoin[i].isfire = false;
-		}
-		else if (IntersectRect(&temp, &_mediumCoin[i].rc, &playerRc) && _mediumCoin[i].isfire)
-		{
-			PLAYER->setMoney(PLAYER->getMoney() + 5);
-			_mediumCoin[i].isfire = false;
-		}
-		else if (IntersectRect(&temp, &_largeCoin[i].rc, &playerRc) && _largeCoin[i].isfire)
-		{
-			PLAYER->setMoney(PLAYER->getMoney() + 20);
-			_largeCoin[i].isfire = false;
-		}
-	}
-
+	
+	collisionCoin();
 }
 
 void Coin::render()
 {
-	for (int i = 0; i < MAX_COIN; i++)
-	{
-		_smallCoin[i].img->frameRender(getMemDC(), _sCoinX - 25, _sCoinY - 25);
-		//Rectangle(getMemDC(), _smallCoin[i].rc);
+	
+}
 
-		_mediumCoin[i].img->frameRender(getMemDC(), _mCoinX - 30, _mCoinY - 30);
-		//Rectangle(getMemDC(), _mediumCoin[i].rc);
+void Coin::setImage()
+{
+	IMAGEMANAGER->addFrameImage("sCoin", "image/coin/smallCoin.bmp", 300, 50., 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("mCoin", "image/coin/mediumCoin.bmp", 360, 60, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("lCoin", "image/coin/LargeCoin.bmp", 384, 64, 6, 1, true, RGB(255, 0, 255));
+}
 
-		_largeCoin[i].img->frameRender(getMemDC(), _lCoinX - 32, _lCoinY - 32);
-		//Rectangle(getMemDC(), _largeCoin[i].rc);
+void Coin::collisionCoin()
+{
+	RECT temp;
+	for (_viCoin = _vCoin.begin(); _viCoin != _vCoin.end();) {
+		if (IntersectRect(&temp,&PLAYER->getInfo().chr_rc,&_viCoin->_info.chr_rc)) {
+			PLAYER->setMoney(PLAYER->getMoney() + _viCoin->value);
+			GAMEMANAGER->deletePicture(_viCoin->_info.renderNumber);
+			_viCoin = _vCoin.erase(_viCoin);
+		}
+		else {
+			++_viCoin;
+		}
 	}
 }
 
-void Coin::moveCoin()
+
+void Coin::makeCoin(int num,float x,float y)
 {
-	for (int i = 0; i < MAX_COIN; i++)
-	{
-		if (_smallCoin[i].isfire)
-		{
-			_count1++;
+	//i를 20으로 나눈 값 + 나머지에서 5로 나눈 값 + 나머지에서 1로 나눈 값
+	int largeCount = num / 20;
+	num = num % 20;
+	int middleCount = num /5;
+	num = num % 5;
+	int smallCount  = num;
 
-			if (_count1 % 4 == 0)
-			{
-				if (_index1 >= 6) _index1 = 0;
-				_smallCoin[i].img->setFrameX(_index1);
-				_index1++;
-			}
-		}
-
-		if (_mediumCoin[i].isfire)
-		{
-			_count2++;
-
-			if (_count2 % 4 == 0)
-			{
-				if (_index2 >= 6) _index2 = 0;
-				_mediumCoin[i].img->setFrameX(_index2);
-				_index2++;
-			}
-		}
-
-		if (_largeCoin[i].isfire)
-		{
-			_count3++;
-
-			if (_count3 % 4 == 0)
-			{
-				if (_index3 >= 6) _index3 = 0;
-				_largeCoin[i].img->setFrameX(_index3);
-				_index3++;
-			}
-		}
-
-
+	for (int i = 0; i < largeCount;i++) {
+		tagCoin t;
+		t._info.init(GAMEMANAGER->getRenderNum(),
+			x + RND->getFromFloatTo(-20,20),
+			y + RND->getFromFloatTo(-20, 20),
+			64,64,0,0);
+		//t._info.jumpPower = 2;
+		t.img = new image;
+		t.img = IMAGEMANAGER->findImage("lCoin");
+		t.ani = new animation;
+		t.ani->init(IMAGEMANAGER->findImage("lCoin")->getWidth(),
+			IMAGEMANAGER->findImage("lCoin")->getHeight(),
+			IMAGEMANAGER->findImage("lCoin")->getFrameWidth(),
+			IMAGEMANAGER->findImage("lCoin")->getFrameHeight());
+		t.ani->setPlayFrame(0,5,false,true);
+		t.ani->setFPS(12);
+		t.ani->start();
+		t.value = 20;
+		_vCoin.push_back(t);
+		GAMEMANAGER->addPicture(t._info,t.img,t.ani);
 	}
-}
-
-void Coin::rectCoin()
-{
-	for (int i = 0; i < MAX_COIN; i++)
-	{
-		_smallCoin[i].rc = RectMakeCenter(_sCoinX, _sCoinY, 50, 50);
-		_mediumCoin[i].rc = RectMakeCenter(_mCoinX, _mCoinY, 60, 60);
-		_largeCoin[i].rc = RectMakeCenter(_lCoinX, _lCoinY, 64, 64);
-
+	for (int i = 0; i < middleCount; i++) {
+		tagCoin t;
+		t._info.init(GAMEMANAGER->getRenderNum(),
+			x + RND->getFromFloatTo(-20, 20),
+			y + RND->getFromFloatTo(-20, 20),
+			60, 60, 0, 0);
+		//t._info.jumpPower = 2;
+		t.img = new image;
+		t.img = IMAGEMANAGER->findImage("mCoin");
+		t.ani = new animation;
+		t.ani->init(IMAGEMANAGER->findImage("mCoin")->getWidth(),
+			IMAGEMANAGER->findImage("mCoin")->getHeight(),
+			IMAGEMANAGER->findImage("mCoin")->getFrameWidth(),
+			IMAGEMANAGER->findImage("mCoin")->getFrameHeight());
+		t.ani->setPlayFrame(0, 5, false, true);
+		t.ani->setFPS(12);
+		t.ani->start();
+		t.value = 5;
+		_vCoin.push_back(t);
+		GAMEMANAGER->addPicture(t._info, t.img, t.ani);
+	}
+	for (int i = 0; i < smallCount; i++) {
+		tagCoin t;
+		t._info.init(GAMEMANAGER->getRenderNum(),
+			x + RND->getFromFloatTo(-20, 20),
+			y + RND->getFromFloatTo(-20, 20),
+			50, 50, 0, 0);
+		//t._info.jumpPower = 2;
+		t.img = new image;
+		t.img = IMAGEMANAGER->findImage("sCoin");
+		t.ani = new animation;
+		t.ani->init(IMAGEMANAGER->findImage("sCoin")->getWidth(),
+			IMAGEMANAGER->findImage("sCoin")->getHeight(),
+			IMAGEMANAGER->findImage("sCoin")->getFrameWidth(),
+			IMAGEMANAGER->findImage("sCoin")->getFrameHeight());
+		t.ani->setPlayFrame(0, 5, false, true);
+		t.ani->setFPS(12);
+		t.ani->start();
+		t.value = 1;
+		_vCoin.push_back(t);
+		GAMEMANAGER->addPicture(t._info, t.img, t.ani);
 	}
 }
 

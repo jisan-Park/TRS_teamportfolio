@@ -1,7 +1,6 @@
 #pragma once
 #include "gameNode.h"
 #include "characterInfo.h"
-
 enum ENEMYDIRECTION
 {
 	E_LEFT,
@@ -49,6 +48,7 @@ protected:
 	image* _img;
 	RECT _inrange;
 	RECT _inattack;
+	int _maxHp;
 	int _hp;
 	int _def;
 	int _spd;
@@ -86,6 +86,7 @@ public:
 	void setIsDead(bool b) { _isDead = b; };
 	void setMakeDead(bool b) { _makeDead = b; };
 	//getter
+	int getMaxHp() { return _maxHp; };
 	int getHP() { return _hp; };
 	bool getIsDead() { return _isDead; };
 	bool getMakeDead() { return _makeDead; };

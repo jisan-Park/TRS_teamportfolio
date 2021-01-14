@@ -34,7 +34,7 @@ void picture::render(HDC hdc)
 	//_img->aniRender(hdc, _info.chr_rc.left - _info._push_width, _info.chr_rc.top - _info._push_height, _animation);
 	if (_isAnimation) {
 		_info.shdRender(hdc);
-		Rectangle(hdc, _info.chr_rc);
+		//Rectangle(hdc, _info.chr_rc);
 		_img->aniRender(hdc, _info.chr_rc.left - _info._push_width, _info.chr_rc.top - _info._push_height, _animation);
 	}
 	else {

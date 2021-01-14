@@ -5,9 +5,6 @@ HRESULT enemyManager::init()
 {
 	setimage();
 
-	coin = new Coin;
-	coin->init();
-	_coinCount = 0;
 	return S_OK;
 }
 
@@ -17,7 +14,6 @@ void enemyManager::release()
 
 void enemyManager::update()
 {
-	coin->update();
 
 	if (_vMinion.size() <= 0)
 	{
@@ -33,7 +29,6 @@ void enemyManager::update()
 
 void enemyManager::render()
 {
-	coin->render();
 
 	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); _viMinion++)
 	{
@@ -275,30 +270,16 @@ void enemyManager::setimage()
 
 void enemyManager::remove()
 {
-
-
 	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end();)
 	{
 
 		if ((*_viMinion)->getIsDead())
 		{
-			if (_coinCount == 0)
-			{
-				_lCoin = 1;
-				_mCoin = 1;
-				_sCoin = 1;
-				coin->setsfire(((*_viMinion)->getInfo().chr_x) - 20, ((*_viMinion)->getInfo().chr_y) + 20);
-				coin->setmfire(((*_viMinion)->getInfo().chr_x) + 10, ((*_viMinion)->getInfo().chr_y) - 10);
-				coin->setlfire((*_viMinion)->getInfo().chr_x, (*_viMinion)->getInfo().chr_y);
-				coin->setsCoin(_sCoin);
-				coin->setmCoin(_mCoin);
-				coin->setlCoin(_lCoin);
-				_coinCount++;
-			}
+			//getMaxHP - makeCoin
+			COIN->makeCoin((*_viMinion)->getMaxHp(), (*_viMinion)->getInfo().chr_x, (*_viMinion)->getInfo().chr_y);
 			GAMEMANAGER->deletePicture((*_viMinion)->getInfo().renderNumber);
 			_viMinion = _vMinion.erase(_viMinion);
 		}
 		else ++_viMinion;
 	}
-	_coinCount = 0;
 }

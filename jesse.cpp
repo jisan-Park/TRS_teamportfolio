@@ -6,6 +6,7 @@ HRESULT jesse::init(const char * imageName, float x, float y)
 	setAnimation();
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
+	_maxHp = 10;
 	_hp = 10;
 	_def = 5;
 	_spd = 5;

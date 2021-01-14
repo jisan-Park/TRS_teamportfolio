@@ -27,6 +27,7 @@
 #include "Player.h"
 #include"mapObject.h"
 #include "utils.h"
+#include "Coin.h"
 
 using namespace std;
 using namespace TFIVE_UTIL;
@@ -57,6 +58,7 @@ using namespace TFIVE_UTIL;
 #define CAMERAMANAGER cameraManager::getSingleton()
 #define PLAYER Player::getSingleton()
 #define MAPOBJECT mapObject::getSingleton()
+#define COIN Coin::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p)=NULL;}}

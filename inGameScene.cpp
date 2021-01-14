@@ -84,6 +84,7 @@ void inGameScene::update()
 
 	KEYANIMANAGER->update();
 	PLAYER->update();
+	COIN->update();
 	GAMEMANAGER->setUI();
 	//_em->update();
 	MAPOBJECT->collisionMo(PLAYER->getInfo());

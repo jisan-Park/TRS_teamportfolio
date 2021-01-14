@@ -41,6 +41,7 @@ HRESULT gameNode::init(bool managerInit)
 		PLAYER->setImage();
 		PLAYER->setAni();
 		MAPOBJECT->init();
+		COIN->init();
 	}
 
 	return S_OK;
@@ -72,6 +73,8 @@ void gameNode::release()
 		PLAYER->release();
 		PLAYER->releaseSingleton();
 		MAPOBJECT->releaseSingleton();
+		COIN->release();
+		COIN->releaseSingleton();
 	}
 	ReleaseDC(_hWnd, _hdc);
 }
