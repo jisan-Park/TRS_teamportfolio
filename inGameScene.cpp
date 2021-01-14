@@ -57,8 +57,7 @@ HRESULT inGameScene::init()
 	SOUNDMANAGER->stop("메뉴");
 	SOUNDMANAGER->stop("보스방");
 	SOUNDMANAGER->stop("상점");
-	SOUNDMANAGER->play("인게임", 1.0f);
-	
+	SOUNDMANAGER->play("인게임", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
 
 	return S_OK;
 }
@@ -70,6 +69,32 @@ void inGameScene::release()
 
 void inGameScene::update()
 {
+	if (KEYMANAGER->isOnceKeyDown(VK_F3)) {
+		CAMERAMANAGER->setPhase(21);
+	}
+	if (CAMERAMANAGER->getCameraPhase() <= 21) {
+		//background music - volume update
+		SOUNDMANAGER->setVolume("인게임", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
+	}
+	else if (CAMERAMANAGER->getCameraPhase() == 21) {
+		SOUNDMANAGER->stop("메뉴");
+		SOUNDMANAGER->stop("인게임");
+		SOUNDMANAGER->stop("상점");
+		SOUNDMANAGER->play("보스방", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
+	}
+	else if (CAMERAMANAGER->getCameraPhase() == 22) {
+		//background music - volume update
+		SOUNDMANAGER->setVolume("보스방", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
+	}
+	else {
+		SOUNDMANAGER->stop("메뉴");
+		SOUNDMANAGER->stop("인게임");
+		SOUNDMANAGER->stop("상점");
+		SOUNDMANAGER->stop("보스방");
+	}
+	//background music - volume update
+	
+
 	if (KEYMANAGER->isOnceKeyDown('I')) {
 		cout << "현재 phase = " << CAMERAMANAGER->getCameraPhase() << endl;
 	}

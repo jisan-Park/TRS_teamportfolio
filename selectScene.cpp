@@ -40,6 +40,9 @@ void selectScene::release()
 
 void selectScene::update()
 {
+	//background music - volume update
+	SOUNDMANAGER->setVolume("¸Þ´º", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
+
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT)) {
 		_isChanged = true;
 		_selectPosition--;

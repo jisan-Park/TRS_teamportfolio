@@ -16,6 +16,14 @@ HRESULT mainmenuScene::init()
 	
 	_selectNum = 0;
 	_rc = RectMake(380, 230 + (_selectNum * 45), 200, 50);
+
+	
+	//background music - volume update
+	SOUNDMANAGER->stop("보스방");
+	SOUNDMANAGER->stop("상점");
+	SOUNDMANAGER->stop("인게임");
+	SOUNDMANAGER->play("메뉴", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
+
 	return S_OK;
 }
 
@@ -25,6 +33,9 @@ void mainmenuScene::release()
 
 void mainmenuScene::update()
 {
+	//background music - volume update
+	SOUNDMANAGER->setVolume("메뉴", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
+
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) {
 		if (_selectNum == 0) {
 			SCENEMANAGER->changeScene("난이도씬");

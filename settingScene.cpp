@@ -24,6 +24,8 @@ HRESULT settingScene::init()
 	_selectNum = 0;
 	_rc = RectMake(190, 163 + (_selectNum * 67), 250, 50);
 	return S_OK;
+	//background music - volume update
+	
 }
 
 void settingScene::release()
@@ -32,6 +34,10 @@ void settingScene::release()
 
 void settingScene::update()
 {
+	//background music - volume update
+	SOUNDMANAGER->setVolume("메뉴", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
+	
+
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) {
 		SCENEMANAGER->changeScene("메인메뉴씬");
 	}

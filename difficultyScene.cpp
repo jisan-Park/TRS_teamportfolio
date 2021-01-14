@@ -27,6 +27,9 @@ void difficultyScene::release()
 
 void difficultyScene::update()
 {
+	//background music - volume update
+	SOUNDMANAGER->setVolume("¸Þ´º", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
+
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) {
 		//_difficulty 0-easy/1-normal/2-hard
 		GAMEMANAGER->setDifficulty(_difficulty);
