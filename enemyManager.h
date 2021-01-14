@@ -27,6 +27,7 @@ private:
 	int _sCoin;
 	int _mCoin;
 	int _lCoin;
+	int _coinCount;
 public:
 	enemyManager() {};
 	~enemyManager() {};

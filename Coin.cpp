@@ -8,16 +8,22 @@ HRESULT Coin::init()
 		IMAGEMANAGER->addFrameImage("sCoin", "image/coin/smallCoin.bmp", 300, 50, 6, 1, true, RGB(255, 0, 255));
 		_smallCoin[i].img = new image;
 		_smallCoin[i].img->init("image/coin/smallCoin.bmp", 300, 50, 6, 1, true, RGB(255, 0, 255));
+		_smallCoin[i].img->setX(-1100);
+		_smallCoin[i].img->setY(-1100);
 		_smallCoin[i].img->setFrameY(0);
 
-		_mediumCoin[i].img = IMAGEMANAGER->addFrameImage("mCoin", "image/coin/mediumCoin.bmp", 360, 60, 6, 1, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addFrameImage("mCoin", "image/coin/mediumCoin.bmp", 360, 60, 6, 1, true, RGB(255, 0, 255));
 		_mediumCoin[i].img = new image;
 		_mediumCoin[i].img->init("image/coin/mediumCoin.bmp", 360, 60, 6, 1, true, RGB(255, 0, 255));
+		_mediumCoin[i].img->setX(-1100);
+		_mediumCoin[i].img->setY(-1100);
 		_mediumCoin[i].img->setFrameY(0);
 
-		_largeCoin[i].img = IMAGEMANAGER->addFrameImage("lCoin", "image/coin/largeCoin.bmp", 384, 64, 6, 1, true, RGB(255, 0, 255));
+		IMAGEMANAGER->addFrameImage("lCoin", "image/coin/largeCoin.bmp", 384, 64, 6, 1, true, RGB(255, 0, 255));
 		_largeCoin[i].img = new image;
 		_largeCoin[i].img->init("image/coin/largeCoin.bmp", 384, 64, 6, 1, true, RGB(255, 0, 255));
+		_largeCoin[i].img->setX(-1100);
+		_largeCoin[i].img->setY(-1100);
 		_largeCoin[i].img->setFrameY(0);
 
 		_smallCoin[i].isfire = false;
@@ -46,22 +52,53 @@ void Coin::update()
 	{
 		for (int i = 0; i < smallC; i++)
 		{
-			_smallCoin[i].isfire = true;
+			if (!_smallCoin[i].isfire)
+			{
+				_smallCoin[i].isfire = true;
+			}
+			else
+			{
+				i++;
+				smallC++;
+				break;
+			}
 		}
+
+		smallC = 0;
 	}
 	if (mediumC != 0)
 	{
 		for (int i = 0; i < mediumC; i++)
 		{
-			_mediumCoin[i].isfire = true;
+			if (!_mediumCoin[i].isfire)
+			{
+				_mediumCoin[i].isfire = true;
+			}
+			else
+			{
+				i++;
+				mediumC++;
+				break;
+			}
 		}
+		mediumC = 0;
 	}
 	if (largeC != 0)
 	{
 		for (int i = 0; i < largeC; i++)
 		{
-			_largeCoin[i].isfire = true;
+			if (!_largeCoin[i].isfire)
+			{
+				_largeCoin[i].isfire = true;
+			}
+			else
+			{
+				i++;
+				largeC++;
+				break;
+			}
 		}
+		largeC = 0;
 	}
 
 
@@ -155,8 +192,8 @@ void Coin::rectCoin()
 	for (int i = 0; i < MAX_COIN; i++)
 	{
 		_smallCoin[i].rc = RectMakeCenter(_sCoinX, _sCoinY, 50, 50);
-		_mediumCoin[i].rc = RectMakeCenter(_sCoinX, _sCoinY, 60, 60);
-		_largeCoin[i].rc = RectMakeCenter(_sCoinX, _sCoinY, 64, 64);
+		_mediumCoin[i].rc = RectMakeCenter(_mCoinX, _mCoinY, 60, 60);
+		_largeCoin[i].rc = RectMakeCenter(_lCoinX, _lCoinY, 64, 64);
 
 	}
 }
