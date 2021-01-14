@@ -2640,6 +2640,11 @@ void Player::sDie()
 		_die2 = true;
 	}
 
+	if (_info.chr_y > 1000)
+	{
+		_die2 = true;
+	}
+
 	if (_die1)
 	{
 		GAMEMANAGER->setSnackNum(0);
@@ -2681,15 +2686,30 @@ void Player::sDie()
 		_life -= 1;
 		_hp = 100 + _wp;
 		_gp = 100 + _wp;
-		_info.pt_x -= 200;
-		_info.chr_y = -300;
+
+		if (_info.chr_y > 1000)
+		{
+			_info.pt_x -= 1000;
+		}
+		else
+		{
+			_info.pt_x -= 200;
+		}
+		_info.jumpPower = 0;
+		_info.pt_y = 550;
+		_info.shd_y = 550;
 		_info.shd_height = 0;
+		_info.chr_y = _info.pt_y - 600;
+		//_info.shd_height = 0;
+		_die1 = false;
 		_die2 = false;
+		_state = IDLE;
 	}
-
-
-
 }
+
+
+
+
 
 ////////////////////////////////////////// 여기부터 라모나입니다.
 
@@ -5264,6 +5284,12 @@ void Player::rDie()
 		_die2 = true;
 	}
 
+	if (_info.chr_y > 1000)
+	{
+		_die2 = true;
+	}
+
+
 	if (_die1)
 	{
 		GAMEMANAGER->setSnackNum(0);
@@ -5299,16 +5325,30 @@ void Player::rDie()
 		_info.vPushPower = 0;
 		_enemyDamage = 0;
 		_count = 0;
-		_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_IDLE");
-		_motion = KEYANIMANAGER->findAnimation("RamonaRightIdle");
+		_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_IDLE");
+		_motion = KEYANIMANAGER->findAnimation("ScottRightIdle");
 		_motion->start();
 		_life -= 1;
 		_hp = 100 + _wp;
 		_gp = 100 + _wp;
-		_info.pt_x -= 200;
-		_info.chr_y = -300;
+
+		if (_info.chr_y > 1000)
+		{
+			_info.pt_x -= 1000;
+		}
+		else
+		{
+			_info.pt_x -= 200;
+		}
+		_info.jumpPower = 0;
+		_info.pt_y = 550;
+		_info.shd_y = 550;
 		_info.shd_height = 0;
+		_info.chr_y = _info.pt_y - 600;
+		//_info.shd_height = 0;
+		_die1 = false;
 		_die2 = false;
+		_state = IDLE;
 	}
 }
 
@@ -5324,11 +5364,10 @@ void Player::objGet()
 {
 	if (KEYMANAGER->isOnceKeyDown('Q') && _state != LOBJ)
 	{
-
-		if (_characterNum == 0)
+		RECT temp;
+		if (IntersectRect(&temp, &_info.ptrc, &_ioRc))
 		{
-			RECT temp;
-			if (IntersectRect(&temp, &_info.ptrc, &_ioRc))
+			if (_characterNum == 0)
 			{
 				if (_direction == RIGHT)
 				{
@@ -5349,37 +5388,37 @@ void Player::objGet()
 					_motion->start();
 				}
 			}
-		}
-		else if (_characterNum == 1)
-		{
-			if (_direction == RIGHT)
+
+			else if (_characterNum == 1)
 			{
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_state = LOBJGET;
-				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_GET");
-				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjGet");
-				_motion->start();
-			}
-			else if (_direction == LEFT)
-			{
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_state = LOBJGET;
-				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_GET");
-				_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjGet");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+					_state = LOBJGET;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_GET");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjGet");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+					_state = LOBJGET;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_LOBJ_GET");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightLobjGet");
+					_motion->start();
+				}
 			}
 		}
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('W') && _state != HOBJ)
 	{
-
-		if (_characterNum == 0)
+		RECT temp;
+		if (IntersectRect(&temp, &_info.ptrc, &_ioRc))
 		{
-			RECT temp;
-			if (IntersectRect(&temp, &_info.ptrc, &_ioRc))
+			if (_characterNum == 0)
 			{
 				if (_direction == RIGHT)
 				{
@@ -5400,26 +5439,26 @@ void Player::objGet()
 					_motion->start();
 				}
 			}
-		}
-		else if (_characterNum == 1)
-		{
-			if (_direction == RIGHT)
+			else if (_characterNum == 1)
 			{
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_state = HOBJGET;
-				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_GET");
-				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjGet");
-				_motion->start();
-			}
-			else if (_direction == LEFT)
-			{
-				_info.hPushPower = 0;
-				_info.vPushPower = 0;
-				_state = HOBJGET;
-				_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_GET");
-				_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjGet");
-				_motion->start();
+				if (_direction == RIGHT)
+				{
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+					_state = HOBJGET;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_GET");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjGet");
+					_motion->start();
+				}
+				else if (_direction == LEFT)
+				{
+					_info.hPushPower = 0;
+					_info.vPushPower = 0;
+					_state = HOBJGET;
+					_img = IMAGEMANAGER->findImage("RAMONA_RIGHT_HOBJ_GET");
+					_motion = KEYANIMANAGER->findAnimation("RamonaRightHobjGet");
+					_motion->start();
+				}
 			}
 		}
 	}
