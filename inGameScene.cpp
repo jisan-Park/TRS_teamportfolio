@@ -169,7 +169,6 @@ void inGameScene::update()
 void inGameScene::render()
 {
 	IMAGEMANAGER->findImage("인게임배경")->render(getMemDC(), 0, 0);
-	Rectangle(getMemDC(), _bossDoor);
 
 	PLAYER->render(getMemDC());
 	GAMEMANAGER->render(getMemDC());
