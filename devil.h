@@ -22,6 +22,15 @@ private:
 	animation*devil_READY_RIGHT;
 	animation*devil_READY_LEFT;
 
+	animation*devil_CREATE_LEFT;
+	animation*devil_CREATE_RIGHT;
+	animation*devil_FIRE_LEFT1;
+	animation*devil_FIRE_RIGHT1;
+	animation*devil_ERASE_LEFT1;
+	animation*devil_ERASE_RIGHT1;
+	animation*devil_RESETY_LEFT1;
+	animation*devil_RESETY_RIGHT1;
+
 
 public:
 
@@ -57,4 +66,16 @@ public:
 	static void resetyright(void * obj);
 	static void readyright(void * obj);
 	static void readyleft(void * obj);
+
+	static void fireright1(void* obj);
+	static void fireleft1(void* obj);
+
+	static void eraseright1(void* obj);
+	static void eraseleft1(void* obj);
+
+	static void resetYright1(void* obj);
+	static void resetYleft1(void* obj);
+
+	static void createright(void* obj);
+	static void createleft(void* obj);
 };

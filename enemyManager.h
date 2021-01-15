@@ -30,6 +30,7 @@ private:
 	int _lCoin;
 	int _coinCount;
 	int _firecount;
+	int _firecountt;
 public:
 	enemyManager() {};
 	~enemyManager() {};

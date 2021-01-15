@@ -31,6 +31,7 @@ public:
 
 	//총알을 만드는 함수 - enemyManager-update에 호출
 	void firebullet(float pt_x, float pt_y, float chr_y, float pp);
+	void firebullet1(float pt_x, float pt_y, float chr_y, float pp);
 
 };
 

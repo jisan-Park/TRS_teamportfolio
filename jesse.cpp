@@ -216,7 +216,7 @@ void jesse::move()
 					{
 						if (PLAYER->getInfo().pt_x < _info.pt_x)
 						{
-							_info.hPushPower = -2;
+							_info.hPushPower = -3;
 							_img = IMAGEMANAGER->findImage("jesse_walk");
 							_direction = E_LEFT;
 							_state = E_WALK;
@@ -228,7 +228,7 @@ void jesse::move()
 						}
 						if (PLAYER->getInfo().pt_x > _info.pt_x)
 						{
-							_info.hPushPower = 2;
+							_info.hPushPower = 3;
 							_img = IMAGEMANAGER->findImage("jesse_walk");
 							_direction = E_RIGHT;
 							_state = E_WALK;
@@ -247,7 +247,7 @@ void jesse::move()
 					{
 						if (PLAYER->getInfo().pt_y < _info.pt_y)
 						{
-							_info.vPushPower = -1;
+							_info.vPushPower = -2;
 							if (PLAYER->getInfo().chr_x < _info.chr_x)
 							{
 
@@ -275,7 +275,7 @@ void jesse::move()
 						}
 						if (PLAYER->getInfo().pt_y > _info.pt_y)
 						{
-							_info.vPushPower = 1;
+							_info.vPushPower = 2;
 							if (PLAYER->getInfo().chr_x < _info.chr_x)
 							{
 
@@ -523,7 +523,7 @@ void jesse::collsion()
 			}
 		}
 
-		if (_counttt > 50 && _counttt < 300 && _state == E_DOWN)
+		if (_counttt > 50 && _counttt < 100 && _state == E_DOWN)
 		{
 			SOUNDMANAGER->play("¾à°ø°Ý", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 
@@ -580,7 +580,7 @@ void jesse::collsion()
 			_info.hPushPower = 0;
 		}
 
-		if (_counttt > 300)
+		if (_counttt > 100)
 		{
 			if (_direction == E_RIGHT)
 			{
@@ -615,7 +615,7 @@ void jesse::collsion()
 
 void jesse::inrange()
 {
-	if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 60)
+	if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 90)
 	{
 		_inrangeX = true;
 	}

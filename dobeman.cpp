@@ -98,7 +98,7 @@ void dobeman::move()
 					{
 						if (PLAYER->getInfo().pt_x < _info.pt_x)
 						{
-							_info.hPushPower = -2;
+							_info.hPushPower = -3;
 							_img = IMAGEMANAGER->findImage("dobeman_run");
 							_direction = E_LEFT;
 							_state = E_WALK;
@@ -110,7 +110,7 @@ void dobeman::move()
 						}
 						if (PLAYER->getInfo().pt_x > _info.pt_x)
 						{
-							_info.hPushPower = 2;
+							_info.hPushPower = 3;
 							_img = IMAGEMANAGER->findImage("dobeman_run");
 							_direction = E_RIGHT;
 							_state = E_WALK;
@@ -129,7 +129,7 @@ void dobeman::move()
 					{
 						if (PLAYER->getInfo().pt_y < _info.pt_y)
 						{
-							_info.vPushPower = -1;
+							_info.vPushPower = -2;
 							if (PLAYER->getInfo().chr_x < _info.chr_x)
 							{
 
@@ -157,7 +157,7 @@ void dobeman::move()
 						}
 						if (PLAYER->getInfo().pt_y > _info.pt_y)
 						{
-							_info.vPushPower = 1;
+							_info.vPushPower = 2;
 							if (PLAYER->getInfo().chr_x < _info.chr_x)
 							{
 
@@ -457,7 +457,7 @@ void dobeman::collsion()
 
 void dobeman::inrange()
 {
-	if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 60)
+	if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 90)
 	{
 		_inrangeX = true;
 	}

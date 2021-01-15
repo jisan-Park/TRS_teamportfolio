@@ -82,7 +82,7 @@ void devil::update()
 
 	if(_pattern == PATTERN2)
 	{ 
-		//_inattack = RectMakeCenter(_info.chr_x, _info.chr_y, 100, 100);
+		_inattack = RectMakeCenter(_info.chr_x, _info.chr_y, 100, 100);
 	}
 }
 
@@ -121,21 +121,23 @@ void devil::pattern3()
 	{
 		if (_state == IDLE)
 		{
-			if (CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 < _info.pt_x)
+			if (21630 < _info.pt_x)
 			{
 
-				_img = IMAGEMANAGER->findImage("devil_state3");
-				_motion = devil_READY_LEFT;
+				_img = IMAGEMANAGER->findImage("devil_create");
+				_motion = devil_CREATE_LEFT;
+
 				if (!_motion->isPlay())
 				{
 					_motion->start();
 				}
 			}
-			if (CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 > _info.pt_x)
+			if (21630 >= _info.pt_x)
 			{
 
-				_img = IMAGEMANAGER->findImage("devil_state3");
-				_motion = devil_READY_RIGHT;
+				_img = IMAGEMANAGER->findImage("devil_create");
+				_motion = devil_CREATE_RIGHT;
+
 				if (!_motion->isPlay())
 				{
 					_motion->start();
@@ -293,6 +295,72 @@ void devil::setAnimation()
 	devil_READY_LEFT->setPlayFrame(20, 28, false, false, fireleft, this);
 	devil_READY_LEFT->setFPS(10);
 
+
+
+	devil_CREATE_RIGHT = new animation;
+	devil_CREATE_RIGHT->init(IMAGEMANAGER->findImage("devil_create")->getWidth(),
+		IMAGEMANAGER->findImage("devil_create")->getHeight(),
+		IMAGEMANAGER->findImage("devil_create")->getFrameWidth(),
+		IMAGEMANAGER->findImage("devil_create")->getFrameHeight());
+	devil_CREATE_RIGHT->setPlayFrame(0, 12, false, false, fireright1, this);
+	devil_CREATE_RIGHT->setFPS(10);
+
+	devil_CREATE_LEFT = new animation;
+	devil_CREATE_LEFT->init(IMAGEMANAGER->findImage("devil_create")->getWidth(),
+		IMAGEMANAGER->findImage("devil_create")->getHeight(),
+		IMAGEMANAGER->findImage("devil_create")->getFrameWidth(),
+		IMAGEMANAGER->findImage("devil_create")->getFrameHeight());
+	devil_CREATE_LEFT->setPlayFrame(25, 13, false, false, fireleft1, this);
+	devil_CREATE_LEFT->setFPS(10);
+
+	devil_FIRE_RIGHT1 = new animation;
+	devil_FIRE_RIGHT1->init(IMAGEMANAGER->findImage("devil_fire")->getWidth(),
+		IMAGEMANAGER->findImage("devil_fire")->getHeight(),
+		IMAGEMANAGER->findImage("devil_fire")->getFrameWidth(),
+		IMAGEMANAGER->findImage("devil_fire")->getFrameHeight());
+	devil_FIRE_RIGHT1->setPlayFrame(0, 1, false, false, eraseright1, this);
+	devil_FIRE_RIGHT1->setFPS(10);
+
+	devil_FIRE_LEFT1 = new animation;
+	devil_FIRE_LEFT1->init(IMAGEMANAGER->findImage("devil_fire")->getWidth(),
+		IMAGEMANAGER->findImage("devil_fire")->getHeight(),
+		IMAGEMANAGER->findImage("devil_fire")->getFrameWidth(),
+		IMAGEMANAGER->findImage("devil_fire")->getFrameHeight());
+	devil_FIRE_LEFT1->setPlayFrame(3, 2, false, false, eraseleft1, this);
+	devil_FIRE_LEFT1->setFPS(10);
+
+	devil_ERASE_RIGHT1 = new animation;
+	devil_ERASE_RIGHT1->init(IMAGEMANAGER->findImage("devil_erase")->getWidth(),
+		IMAGEMANAGER->findImage("devil_erase")->getHeight(),
+		IMAGEMANAGER->findImage("devil_erase")->getFrameWidth(),
+		IMAGEMANAGER->findImage("devil_erase")->getFrameHeight());
+	devil_ERASE_RIGHT1->setPlayFrame(0, 8, false, false, resetYright1, this);
+	devil_ERASE_RIGHT1->setFPS(10);
+
+	devil_ERASE_LEFT1 = new animation;
+	devil_ERASE_LEFT1->init(IMAGEMANAGER->findImage("devil_erase")->getWidth(),
+		IMAGEMANAGER->findImage("devil_erase")->getHeight(),
+		IMAGEMANAGER->findImage("devil_erase")->getFrameWidth(),
+		IMAGEMANAGER->findImage("devil_erase")->getFrameHeight());
+	devil_ERASE_LEFT1->setPlayFrame(17, 9, false, false, resetYleft1, this);
+	devil_ERASE_LEFT1->setFPS(10);
+
+	devil_RESETY_RIGHT1 = new animation;
+	devil_RESETY_RIGHT1->init(IMAGEMANAGER->findImage("devil_resetY")->getWidth(),
+		IMAGEMANAGER->findImage("devil_resetY")->getHeight(),
+		IMAGEMANAGER->findImage("devil_resetY")->getFrameWidth(),
+		IMAGEMANAGER->findImage("devil_resetY")->getFrameHeight());
+	devil_RESETY_RIGHT1->setPlayFrame(0, 1, false, false, createright, this);
+	devil_RESETY_RIGHT1->setFPS(10);
+
+	devil_RESETY_LEFT1 = new animation;
+	devil_RESETY_LEFT1->init(IMAGEMANAGER->findImage("devil_resetY")->getWidth(),
+		IMAGEMANAGER->findImage("devil_resetY")->getHeight(),
+		IMAGEMANAGER->findImage("devil_resetY")->getFrameWidth(),
+		IMAGEMANAGER->findImage("devil_resetY")->getFrameHeight());
+	devil_RESETY_LEFT1->setPlayFrame(3, 2, false, false, createleft, this);
+	devil_RESETY_LEFT1->setFPS(10);
+
 }
 
 void devil::devilIdle(void * obj)
@@ -411,6 +479,92 @@ void devil::readyleft(void * obj)
 	m->setState(D_READY);
 	m->setImage(IMAGEMANAGER->findImage("devil_state3"));
 	m->setteMotion(m->devil_READY_LEFT);
+	m->getMotion()->start();
+}
+
+void devil::fireright1(void * obj)
+{
+	devil*m = (devil*)obj;
+	m->setDirection(E_RIGHT);
+	m->setState(D_FIRE);
+	m->setImage(IMAGEMANAGER->findImage("devil_fire"));
+	m->setteMotion(m->devil_FIRE_RIGHT1);
+	m->getMotion()->start();
+	m->setIsfire(true);
+}
+
+void devil::fireleft1(void * obj)
+{
+	devil*m = (devil*)obj;
+	m->setDirection(E_LEFT);
+	m->setState(D_FIRE);
+	m->setImage(IMAGEMANAGER->findImage("devil_fire"));
+	m->setteMotion(m->devil_FIRE_LEFT1);
+	m->getMotion()->start();
+	m->setIsfire(true);
+}
+
+void devil::eraseright1(void * obj)
+{
+	devil*m = (devil*)obj;
+	m->setDirection(E_RIGHT);
+	m->setState(D_ERASE);
+	m->setImage(IMAGEMANAGER->findImage("devil_erase"));
+	m->setteMotion(m->devil_ERASE_RIGHT1);
+	m->getMotion()->start();
+	m->setIsfire(false);
+}
+
+void devil::eraseleft1(void * obj)
+{
+	devil*m = (devil*)obj;
+	m->setDirection(E_LEFT);
+	m->setState(D_ERASE);
+	m->setImage(IMAGEMANAGER->findImage("devil_erase"));
+	m->setteMotion(m->devil_ERASE_LEFT1);
+	m->getMotion()->start();
+	m->setIsfire(false);
+}
+
+void devil::resetYright1(void * obj)
+{
+	devil*m = (devil*)obj;
+	m->_info.pt_y = RND->getFromFloatTo(500, 700);
+	m->setDirection(E_RIGHT);
+	m->setState(D_RESETY);
+	m->setImage(IMAGEMANAGER->findImage("devil_resetY"));
+	m->setteMotion(m->devil_RESETY_RIGHT1);
+	m->getMotion()->start();
+}
+
+void devil::resetYleft1(void * obj)
+{
+	devil*m = (devil*)obj;
+	m->_info.pt_y = RND->getFromFloatTo(500, 700);
+	m->setDirection(E_LEFT);
+	m->setState(D_RESETY);
+	m->setImage(IMAGEMANAGER->findImage("devil_resetY"));
+	m->setteMotion(m->devil_RESETY_LEFT1);
+	m->getMotion()->start();
+}
+
+void devil::createright(void * obj)
+{
+	devil*m = (devil*)obj;
+	m->setDirection(E_RIGHT);
+	m->setState(D_READY);
+	m->setImage(IMAGEMANAGER->findImage("devil_create"));
+	m->setteMotion(m->devil_CREATE_RIGHT);
+	m->getMotion()->start();
+}
+
+void devil::createleft(void * obj)
+{
+	devil*m = (devil*)obj;
+	m->setDirection(E_LEFT);
+	m->setState(D_READY);
+	m->setImage(IMAGEMANAGER->findImage("devil_create"));
+	m->setteMotion(m->devil_CREATE_LEFT);
 	m->getMotion()->start();
 }
 

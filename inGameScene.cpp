@@ -116,11 +116,11 @@ void inGameScene::update()
 	if (_isPaused) {
 		return;
 	}
-
+	BULLET->update();
 	KEYANIMANAGER->update();
 	PLAYER->update();
 	COIN->update();
-	BULLET->update();
+	
 	GAMEMANAGER->setUI();
 	DAMAGENUMBER->update();
 	//_em->update();
@@ -150,7 +150,11 @@ void inGameScene::update()
 
 	if (CAMERAMANAGER->getCameraPhase() % 2 == 1 || CAMERAMANAGER->getCameraPhase() > 21) {
 		_em->update();
-		if (_em->getVenemy().size() == 0)
+		if (CAMERAMANAGER->getCameraPhase() % 2 == 1&&_em->getVenemy().size() == 0)
+		{
+			CAMERAMANAGER->setPhase(CAMERAMANAGER->getCameraPhase() + 1);
+		}
+		if (CAMERAMANAGER->getCameraPhase() % 2 == 1 && _em->getVenemy().size() == 1)
 		{
 			CAMERAMANAGER->setPhase(CAMERAMANAGER->getCameraPhase() + 1);
 		}

@@ -43,10 +43,13 @@ void bullet::collisionBullet()
 		}
 		else if (IntersectRect(&temp, &PLAYER->getInfo().chr_rc, &_viBullet->_info.chr_rc)) {
 
+			if(abs(PLAYER->getInfo().pt_y-_viBullet->_info.pt_y)<50)
+			{ 
 			PLAYER->setEnemyAtkRc(_viBullet->_info.chr_rc, 8);
 	
 			GAMEMANAGER->deletePicture(_viBullet->_info.renderNumber);
 			_viBullet = _vBullet.erase(_viBullet);
+			}
 
 		}
 		else {
@@ -82,6 +85,35 @@ void bullet::firebullet(float pt_x, float pt_y, float chr_y, float pp)
 	GAMEMANAGER->addPicture(bullet._info, bullet.img, bullet.ani);
 
 }
+
+void bullet::firebullet1(float pt_x, float pt_y, float chr_y, float pp)
+{
+	tagBullet bullet;
+	ZeroMemory(&bullet, sizeof(tagBullet));
+	bullet._info.init(GAMEMANAGER->getRenderNum(),
+		pt_x, pt_y, 50, 50, 50, 50);
+
+	bullet._info.hPushPower = pp;
+	bullet._info.jumpPower = -abs(pp);
+	bullet._info.gravity = 0;
+	bullet._info.pt_y += chr_y;
+
+	bullet.img = new image;
+	bullet.img = IMAGEMANAGER->findImage("devil_bullet");
+	bullet.ani = new animation;
+	bullet.ani->init(IMAGEMANAGER->findImage("devil_bullet")->getWidth(),
+		IMAGEMANAGER->findImage("devil_bullet")->getHeight(),
+		IMAGEMANAGER->findImage("devil_bullet")->getFrameWidth(),
+		IMAGEMANAGER->findImage("devil_bullet")->getFrameHeight());
+	bullet.ani->setPlayFrame(15, 13, false, true);
+	bullet.ani->setFPS(10);
+	bullet.ani->start();
+	bullet.isFire = false;
+	_vBullet.push_back(bullet);
+	GAMEMANAGER->addPicture(bullet._info, bullet.img, bullet.ani);
+}
+
+
 
 
 

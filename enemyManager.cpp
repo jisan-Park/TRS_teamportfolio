@@ -57,16 +57,25 @@ void enemyManager::update()
 
 			setEnemy();
 			_vMinion[1]->setBosspattern(PATTERN3);
-			//_vMinion[2]->setBosspattern(PATTERN3);
+			_vMinion[2]->setBosspattern(PATTERN3);
 
 		}
 		if (_vMinion[0]->getBosspattern() == PATTERN3 && _vMinion[1]->getIsfire())
 		{
 			_firecount++;
-			if (_firecount % 4 == 0)
+			if (_firecount % 5 == 0)
 			{
 				BULLET->firebullet(_vMinion[1]->getInfo().chr_x, _vMinion[1]->getInfo().chr_y, 200, 6);
 				_firecount = 0;
+			}
+		}
+		if (_vMinion[0]->getBosspattern() == PATTERN3 && _vMinion[2]->getIsfire())
+		{
+			_firecountt++;
+			if (_firecountt % 10 == 0)
+			{
+				BULLET->firebullet1(_vMinion[2]->getInfo().chr_x, _vMinion[2]->getInfo().chr_y, 200, -6);
+				_firecountt = 0;
 			}
 		}
 	}
@@ -256,11 +265,11 @@ void enemyManager::setEnemy()
 		if (_vMinion[0]->getBosspattern() == PATTERN3)
 		{
 			temp = new devil;
-			temp->init("devil_set", CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 - 200, CAMERAMANAGER->getCameraPoint().y + WINSIZEY / 2 + 100);
+			temp->init("devil_set", 21630 - 200, CAMERAMANAGER->getCameraPoint().y + WINSIZEY / 2 + 100);
 			_vMinion.push_back(temp);
-			//temp = new devil;
-			//temp->init("devil_set", CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 + 200, CAMERAMANAGER->getCameraPoint().y + WINSIZEY / 2 + 130);
-			//_vMinion.push_back(temp);
+			temp = new devil;
+			temp->init("devil_set",21630 + 200, CAMERAMANAGER->getCameraPoint().y + WINSIZEY / 2 + 130);
+			_vMinion.push_back(temp);
 		}
 
 
@@ -400,6 +409,12 @@ void enemyManager::setimage()
 	IMAGEMANAGER->addFrameImage("bus_move", "image/iobject/bus/bus_move.bmp", 2340, 350, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("bus_stop", "image/iobject/bus/bus_stop.bmp", 7020, 350, 9, 1, true, RGB(255, 0, 255));
 
+
+	//devil2
+	IMAGEMANAGER->addFrameImage("devil_create", "image/BOSS/devil/devil_create.bmp", 2600, 400, 13, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("devil_fire", "image/BOSS/devil/devil_fire.bmp", 400, 400, 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("devil_erase", "image/BOSS/devil/devil_erase.bmp", 1800, 400, 9, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("devil_resetY", "image/BOSS/devil/devil_resetY.bmp", 400, 400, 2, 2, true, RGB(255, 0, 255));
 }
 
 void enemyManager::remove()

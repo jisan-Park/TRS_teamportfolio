@@ -192,7 +192,7 @@ void malcolm::move()
 					{
 						if (PLAYER->getInfo().pt_x < _info.pt_x)
 						{
-							_info.hPushPower = -2;
+							_info.hPushPower = -3;
 							_img = IMAGEMANAGER->findImage("malcolm_walk");
 							_direction = E_LEFT;
 							_state = E_WALK;
@@ -204,7 +204,7 @@ void malcolm::move()
 						}
 						if (PLAYER->getInfo().pt_x > _info.pt_x)
 						{
-							_info.hPushPower = 2;
+							_info.hPushPower = 3;
 							_img = IMAGEMANAGER->findImage("malcolm_walk");
 							_direction = E_RIGHT;
 							_state = E_WALK;
@@ -223,7 +223,7 @@ void malcolm::move()
 					{
 						if (PLAYER->getInfo().pt_y < _info.pt_y)
 						{
-							_info.vPushPower = -1;
+							_info.vPushPower = -2;
 							if (PLAYER->getInfo().chr_x < _info.chr_x)
 							{
 
@@ -251,7 +251,7 @@ void malcolm::move()
 						}
 						if (PLAYER->getInfo().pt_y > _info.pt_y)
 						{
-							_info.vPushPower = 1;
+							_info.vPushPower = 2;
 							if (PLAYER->getInfo().chr_x < _info.chr_x)
 							{
 
@@ -497,7 +497,7 @@ void malcolm::collsion()
 			}
 		}
 
-		if (_counttt > 50 && _counttt < 300 && _state == E_DOWN)
+		if (_counttt > 50 && _counttt < 150 && _state == E_DOWN)
 		{
 			SOUNDMANAGER->play("¾à°ø°Ý", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			if (_direction == E_RIGHT)
@@ -553,7 +553,7 @@ void malcolm::collsion()
 			_info.hPushPower = 0;
 		}
 
-		if (_counttt > 300)
+		if (_counttt > 150)
 		{
 			if (_direction == E_RIGHT)
 			{
@@ -607,7 +607,7 @@ void malcolm::collsion()
 
 void malcolm::inrange()
 {
-	if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 60)
+	if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 98)
 	{
 		_inrangeX = true;
 	}
@@ -945,7 +945,7 @@ void malcolm::setAnimation()
 		IMAGEMANAGER->findImage("malcolm_jump")->getFrameWidth(),
 		IMAGEMANAGER->findImage("malcolm_jump")->getFrameHeight());
 	malcolm_JUMP_RIGHT->setPlayFrame(0, 12, false, false, rightAttack, this);
-	malcolm_JUMP_RIGHT->setFPS(10);
+	malcolm_JUMP_RIGHT->setFPS(15);
 
 	//KEYANIMANAGER->addCoordinateFrameAnimation("malcolm_JUMP_LEFT", "malcolm_jump", 25, 13, 20, false, false, leftAttack, this);
 	malcolm_JUMP_LEFT = new animation;
@@ -954,7 +954,7 @@ void malcolm::setAnimation()
 		IMAGEMANAGER->findImage("malcolm_jump")->getFrameWidth(),
 		IMAGEMANAGER->findImage("malcolm_jump")->getFrameHeight());
 	malcolm_JUMP_LEFT->setPlayFrame(25, 13, false, false, leftAttack, this);
-	malcolm_JUMP_LEFT->setFPS(10);
+	malcolm_JUMP_LEFT->setFPS(15);
 
 	//KEYANIMANAGER->addCoordinateFrameAnimation("malcolm_DEAD_RIGHT", "malcolm_down", 0, 13, 10, false, false, makeDead, this);
 	malcolm_DEAD_RIGHT = new animation;

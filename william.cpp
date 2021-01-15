@@ -429,7 +429,7 @@ void william::collsion()
 			}
 		}
 
-		if (_counttt > 50 && _counttt < 300 && _state == E_DOWN)
+		if (_counttt > 50 && _counttt < 200 && _state == E_DOWN)
 		{
 			SOUNDMANAGER->play("¾à°ø°İ", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 
@@ -492,7 +492,7 @@ void william::collsion()
 			_info.hPushPower = 0;
 		}
 
-		if (_counttt > 300)
+		if (_counttt > 200)
 		{
 			if (_direction == E_RIGHT)
 			{
@@ -527,7 +527,7 @@ void william::collsion()
 
 void william::inrange()
 {
-	if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 60)
+	if (abs(PLAYER->getInfo().pt_x - _info.pt_x) > 90)
 	{
 		_inrangeX = true;
 	}
