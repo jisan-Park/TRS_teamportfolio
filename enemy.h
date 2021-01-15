@@ -82,6 +82,7 @@ protected:
 	bool _makeDead;
 	bool _isBus;
 	bool _isfire;
+	bool _isBoss;
 	float _angle;
 	animation* _motion;
 
@@ -110,6 +111,7 @@ public:
 	void setMakeDead(bool b) { _makeDead = b; };
 	void setIsfire(bool b) { _isfire = b; };
 	//getter
+	bool getIsBoss() { return _isBoss; };
 	int getMaxHp() { return _maxHp; };
 	int getHP() { return _hp; };
 	bool getIsDead() { return _isDead; };

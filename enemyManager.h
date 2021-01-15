@@ -31,6 +31,7 @@ private:
 	int _coinCount;
 	int _firecount;
 	int _firecountt;
+	bool _isBossDead;
 public:
 	enemyManager() {};
 	~enemyManager() {};

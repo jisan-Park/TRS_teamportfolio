@@ -4,6 +4,8 @@
 
 HRESULT luke::init(const char * imageName, float x, float y)
 {
+	_isBoss = false;
+
 	setAnimation();
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);

@@ -3,6 +3,7 @@
 
 HRESULT william::init(const char* imageName, float x, float y)
 {
+	_isBoss = false;
 	setAnimation();
 
 

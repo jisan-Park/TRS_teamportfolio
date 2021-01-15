@@ -37,7 +37,7 @@ HRESULT playGround::init()
 	SOUNDMANAGER->addSound("스킬1", "music/효과음/구름키스.mp3", false, false);
 	SOUNDMANAGER->addSound("스킬2", "music/효과음/휘리릭킥.mp3", false, false);
 	SOUNDMANAGER->addSound("허공펀치", "music/효과음/허공펀치.mp3", false, false);
-
+	SOUNDMANAGER->addSound("고고", "music/효과음/고고.mp3", false, false);
 
 
 
@@ -52,6 +52,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("gameover", new gameoverScene);
 	SCENEMANAGER->addScene("gameclear", new gameclearScene);
 	SCENEMANAGER->addScene("상점씬", new shopScene);
+	SCENEMANAGER->addScene("보스로딩씬", new bossLoadingScene);
 
 	SCENEMANAGER->changeScene("시작씬");
 

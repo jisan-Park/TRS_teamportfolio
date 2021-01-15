@@ -4,10 +4,11 @@
 #include "ioManager.h"
 
 
+
 class inGameScene : public gameNode
 {
 private:
-
+	HWND _bossIntro; //비디오 출력을 위한 핸들
 	image* _background;
 	enemyManager* _em;
 	ioManager* _io;

@@ -63,6 +63,8 @@ HRESULT Player::init()
 
 	_info.init(GAMEMANAGER->getRenderNum(), PLAYER_START_X, PLAYER_START_Y, 50, 100, 100, 140);
 	GAMEMANAGER->addPicture(_info, _img, _motion);
+	_isVideoEnd = false;
+
 	return S_OK;
 }
 
@@ -78,9 +80,9 @@ void Player::update()
 	}
 
 	//보스방 진입시, 위치 변경
-	if (CAMERAMANAGER->getCameraPhase() == 21) {
+	if (_isVideoEnd) {
 		PLAYER->_info.init(PLAYER->_info.renderNumber, 21460, 610, 50, 100, 100, 140);
-		CAMERAMANAGER->setPhase(22);
+		_isVideoEnd = false;
 	}
 	//_enemyDamage = 40;
 

@@ -152,6 +152,7 @@
     <ClInclude Include="bat.h" />
     <ClInclude Include="bin.h" />
     <ClInclude Include="boss.h" />
+    <ClInclude Include="bossLoadingScene.h" />
     <ClInclude Include="botLine.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="bus.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="bat.cpp" />
     <ClCompile Include="bin.cpp" />
     <ClCompile Include="boss.cpp" />
+    <ClCompile Include="bossLoadingScene.cpp" />
     <ClCompile Include="botLine.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="bus.cpp" />

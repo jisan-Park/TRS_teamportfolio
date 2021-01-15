@@ -16,6 +16,7 @@ HRESULT inGameScene::init()
 {
 	//GAMEMANAGER->resetPicture();
 	//PLAYER->init();
+
 	MAPOBJECT->init();
 	GAMEMANAGER->setUI();
 	IMAGEMANAGER->addImage("인게임배경", "image/scene/ingame배경.bmp", 22220, 754, true, RGB(255, 0, 255));
@@ -72,17 +73,14 @@ void inGameScene::update()
 	if (KEYMANAGER->isOnceKeyDown(VK_F3)) {
 		CAMERAMANAGER->setPhase(21);
 	}
+
+	//MUSIC volume
 	if (CAMERAMANAGER->getCameraPhase() < 21) {
 		//background music - volume update
 		SOUNDMANAGER->setVolume("인게임", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
 	}
-	else if (CAMERAMANAGER->getCameraPhase() == 21) {
-		SOUNDMANAGER->stop("메뉴");
-		SOUNDMANAGER->stop("인게임");
-		SOUNDMANAGER->stop("상점");
-		SOUNDMANAGER->play("보스방", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
-	}
 	else if (CAMERAMANAGER->getCameraPhase() == 22) {
+
 		//background music - volume update
 		SOUNDMANAGER->setVolume("보스방", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
 	}
@@ -94,15 +92,21 @@ void inGameScene::update()
 	}
 	//background music - volume update
 
+	if (CAMERAMANAGER->getCameraPhase() == 21) {
+		SCENEMANAGER->changeScene("보스로딩씬");
+	}
 
 	if (KEYMANAGER->isOnceKeyDown('I')) {
 		cout << "현재 phase = " << CAMERAMANAGER->getCameraPhase() << endl;
 	}
+
 	EFFECTMANAGER->update();
+
 	//보스 죽이면 phase - 23로 변경 - changeScene
 	if (CAMERAMANAGER->getCameraPhase() == 23) {
 		SCENEMANAGER->changeScene("gameclear");
 	}
+
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB)) {
 		if (_isPaused) {
 			_isPaused = false;
@@ -147,16 +151,16 @@ void inGameScene::update()
 		SOUNDMANAGER->stop("상점");
 		SOUNDMANAGER->stop("인게임");
 	}
+	_em->update();
 
-	if (CAMERAMANAGER->getCameraPhase() % 2 == 1 || CAMERAMANAGER->getCameraPhase() > 21) {
-		_em->update();
-		if (CAMERAMANAGER->getCameraPhase() % 2 == 1&&_em->getVenemy().size() == 0)
+	//phase 별 카메라, 사운드, 이펙트 처리 + enemyManager-update;
+	if (CAMERAMANAGER->getCameraPhase() % 2 == 1 || CAMERAMANAGER->getCameraPhase() >= 21) {
+		
+		if (CAMERAMANAGER->getCameraPhase() % 2 == 1 && _em->getVenemy().size() == 0 && CAMERAMANAGER->getCameraPhase() < 21)
 		{
 			CAMERAMANAGER->setPhase(CAMERAMANAGER->getCameraPhase() + 1);
-		}
-		if (CAMERAMANAGER->getCameraPhase() % 2 == 1 && _em->getVenemy().size() == 1)
-		{
-			CAMERAMANAGER->setPhase(CAMERAMANAGER->getCameraPhase() + 1);
+			SOUNDMANAGER->play("고고", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
+			EFFECTMANAGER->play("goEffect",CAMERAMANAGER->getCameraPoint().x + WINSIZEX - 300,CAMERAMANAGER->getCameraPoint().y + 100);
 		}
 	}
 	//상점 rect와 충돌

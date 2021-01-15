@@ -10,6 +10,7 @@
 //InGameScene
 #include "inGameScene.h"
 //
+#include "bossLoadingScene.h"
 #include "gameclearScene.h"
 #include "gameoverScene.h"
 //Shop Scene

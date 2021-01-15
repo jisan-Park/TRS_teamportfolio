@@ -4,6 +4,7 @@
 HRESULT enemyManager::init()
 {
 	setimage();
+	_isBossDead = false;
 
 	return S_OK;
 }
@@ -14,6 +15,11 @@ void enemyManager::release()
 
 void enemyManager::update()
 {
+	if (_isBossDead) {
+		_vMinion.clear();
+		CAMERAMANAGER->setPhase(23);
+		_isBossDead = false;
+	}
 
 	if (CAMERAMANAGER->getCameraPhase() == 1 || CAMERAMANAGER->getCameraPhase() == 5 || CAMERAMANAGER->getCameraPhase() == 15)
 	{
@@ -32,6 +38,7 @@ void enemyManager::update()
 	}
 	if (CAMERAMANAGER->getCameraPhase() == 22)
 	{
+		
 		if (_vMinion.size() < 1)
 		{
 			boss* boss1;
@@ -40,42 +47,44 @@ void enemyManager::update()
 			boss1->init("boss_idle", 21826, 600);
 			_vMinion.push_back(boss1);
 		}
-		if (_vMinion[0]->getBosspattern() == PATTERN1 && _vMinion.size() == 1 && _vMinion[0]->getHP() < 800)
-		{
-
-			_vMinion[0]->setBosspattern(PATTERN2);
-			setEnemy();
-			_vMinion[1]->setBosspattern(PATTERN2);
-			_vMinion[2]->setBosspattern(PATTERN2);
-			_vMinion[3]->setBosspattern(PATTERN2);
-			_vMinion[4]->setBosspattern(PATTERN2);
-
-		}
-		if (_vMinion[0]->getBosspattern() == PATTERN2 && _vMinion.size() == 1 && _vMinion[0]->getHP() < 800)
-		{
-			_vMinion[0]->setBosspattern(PATTERN3);
-
-			setEnemy();
-			_vMinion[1]->setBosspattern(PATTERN3);
-			_vMinion[2]->setBosspattern(PATTERN3);
-
-		}
-		if (_vMinion[0]->getBosspattern() == PATTERN3 && _vMinion[1]->getIsfire())
-		{
-			_firecount++;
-			if (_firecount % 5 == 0)
+		if (!_isBossDead) {
+			if (_vMinion[0]->getBosspattern() == PATTERN1 && _vMinion.size() == 1 && _vMinion[0]->getHP() < 800)
 			{
-				BULLET->firebullet(_vMinion[1]->getInfo().chr_x, _vMinion[1]->getInfo().chr_y, 200, 6);
-				_firecount = 0;
+
+				_vMinion[0]->setBosspattern(PATTERN2);
+				setEnemy();
+				_vMinion[1]->setBosspattern(PATTERN2);
+				_vMinion[2]->setBosspattern(PATTERN2);
+				_vMinion[3]->setBosspattern(PATTERN2);
+				_vMinion[4]->setBosspattern(PATTERN2);
+
 			}
-		}
-		if (_vMinion[0]->getBosspattern() == PATTERN3 && _vMinion[2]->getIsfire())
-		{
-			_firecountt++;
-			if (_firecountt % 10 == 0)
+			if (_vMinion[0]->getBosspattern() == PATTERN2 && _vMinion.size() == 1 && _vMinion[0]->getHP() < 800)
 			{
-				BULLET->firebullet1(_vMinion[2]->getInfo().chr_x, _vMinion[2]->getInfo().chr_y, 200, -6);
-				_firecountt = 0;
+				_vMinion[0]->setBosspattern(PATTERN3);
+
+				setEnemy();
+				_vMinion[1]->setBosspattern(PATTERN3);
+				_vMinion[2]->setBosspattern(PATTERN3);
+
+			}
+			if (_vMinion[0]->getBosspattern() == PATTERN3 && _vMinion[1]->getIsfire())
+			{
+				_firecount++;
+				if (_firecount % 5 == 0)
+				{
+					BULLET->firebullet(_vMinion[1]->getInfo().chr_x, _vMinion[1]->getInfo().chr_y, 200, 6);
+					_firecount = 0;
+				}
+			}
+			if (_vMinion[0]->getBosspattern() == PATTERN3 && _vMinion[2]->getIsfire())
+			{
+				_firecountt++;
+				if (_firecountt % 10 == 0)
+				{
+					BULLET->firebullet1(_vMinion[2]->getInfo().chr_x, _vMinion[2]->getInfo().chr_y, 200, -6);
+					_firecountt = 0;
+				}
 			}
 		}
 	}
@@ -424,6 +433,9 @@ void enemyManager::remove()
 
 		if ((*_viMinion)->getIsDead())
 		{
+			if ((*_viMinion)->getIsBoss()) {
+				_isBossDead = true;
+			}
 			//getMaxHP - makeCoin
 			COIN->makeCoin((*_viMinion)->getMaxHp(), (*_viMinion)->getInfo().shd_x, (*_viMinion)->getInfo().shd_y);
 			GAMEMANAGER->deletePicture((*_viMinion)->getInfo().renderNumber);

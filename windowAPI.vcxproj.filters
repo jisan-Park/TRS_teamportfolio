@@ -297,6 +297,9 @@
     <ClInclude Include="bullet.h">
       <Filter>playGround</Filter>
     </ClInclude>
+    <ClInclude Include="bossLoadingScene.h">
+      <Filter>playGround\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -496,6 +499,9 @@
     </ClCompile>
     <ClCompile Include="bullet.cpp">
       <Filter>playGround</Filter>
+    </ClCompile>
+    <ClCompile Include="bossLoadingScene.cpp">
+      <Filter>playGround\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,7 +33,7 @@ void gameclearScene::update()
 	else {
 		if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) {
 			//gameover
-			PostQuitMessage(0);
+			SCENEMANAGER->changeScene("메인메뉴씬");
 		}
 	}
 }

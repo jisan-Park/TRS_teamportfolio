@@ -17,6 +17,7 @@ HRESULT effectManager::init()
 	addEffect("attackEffect", "image/effect/attackEffect.bmp", 350, 50, 50, 50, 14.0f, 0.1f, 1000);
 	addEffect("defenceEffect", "image/effect/defenceEffect.bmp", 350, 50, 50, 50, 14.0f, 0.1f, 1000);
 	addEffect("coinEffect", "image/effect/coinEffect.bmp", 264, 54, 66, 54, 10.0f, 0.1f, 1000);
+	addEffect("goEffect", "image/effect/go.bmp", 2160, 240, 240, 240, 1.0f, 0.1f, 1000);
 	return S_OK;
 }
 

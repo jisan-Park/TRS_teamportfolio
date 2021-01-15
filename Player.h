@@ -112,6 +112,8 @@ private:
 	bool _die1;
 	bool _die2;
 
+	bool _isVideoEnd;
+
 	int _characterNum;
 
 	int _xAtk;
@@ -194,7 +196,7 @@ public:
 	void setState(PLAYER_STATE state) { _state = state; }
 	void setImage(image* img) { _img = img; };
 	void setMotion(animation* any) { _motion = any; }
-
+	void setIsVideoEnd(bool b) { _isVideoEnd = b; };
 
 	//에너미 관련 겟셋
 	void setEnemyAtkRc(RECT rc, int Damage) { _enemyAtkRc = rc, _enemyDamage = Damage; }// 에너미 공격렉트, 데미지 가져옴
