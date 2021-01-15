@@ -15,7 +15,7 @@ Player::~Player()
 
 HRESULT Player::init()
 {
-	_life = 3;
+	_life = 1;
 	_money = 0;
 	_str = 10;
 	_def = 10;
@@ -74,7 +74,7 @@ void Player::update()
 {
 	if (_life <= 0) {
 		SCENEMANAGER->changeScene("gameover");
-		SOUNDMANAGER->play("오버", 1.0f);
+		SOUNDMANAGER->play("오버", (GAMEMANAGER->getBackgroundVolume() / 100.0f) *1.0f);
 	}
 
 	//보스방 진입시, 위치 변경
@@ -678,8 +678,8 @@ void Player::sAtkManage()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN) && KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			SOUNDMANAGER->play("허공펀치", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			_dmg = _str;
-
 			if (_state == WALK)
 			{
 				_info.vPushPower = 0;
@@ -717,6 +717,7 @@ void Player::sAtkManage()
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN) && KEYMANAGER->isOnceKeyDown('X'))
 		{
 			_dmg = _str;
+			SOUNDMANAGER->play("허공펀치", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 
 			if (_state == WALK)
 			{
@@ -754,7 +755,7 @@ void Player::sAtkManage()
 		if (KEYMANAGER->isOnceKeyDown('Z') && !KEYMANAGER->isStayKeyDown(VK_DOWN))
 		{
 			_dmg = _str;
-
+			SOUNDMANAGER->play("허공펀치", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			if (_state == WALK)
 			{
 				_info.hPushPower = 0;
@@ -866,6 +867,7 @@ void Player::sAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('X') && !KEYMANAGER->isStayKeyDown(VK_DOWN))
 		{
+			SOUNDMANAGER->play("허공펀치", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			if (_state == WALK)
 			{
 				_info.hPushPower = 0;
@@ -956,6 +958,7 @@ void Player::sAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('A') && _gp >= 20)
 		{
+			SOUNDMANAGER->play("스킬1", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			_gp -= 20;
 
 			_sk = true;
@@ -999,6 +1002,7 @@ void Player::sAtkManage()
 
 		if (KEYMANAGER->isOnceKeyDown('S') && _gp >= 10)
 		{
+			SOUNDMANAGER->play("스킬2", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			_gp -= 10;
 			_dmg = _str * PLAYER_SK;
 
@@ -3250,7 +3254,7 @@ void Player::rAtkManage()
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN) && KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			_dmg = _str;
-
+			SOUNDMANAGER->play("허공펀치", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			if (_state == WALK)
 			{
 				_info.vPushPower = 0;
@@ -3288,6 +3292,7 @@ void Player::rAtkManage()
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN) && KEYMANAGER->isOnceKeyDown('X'))
 		{
 			_dmg = _str;
+			SOUNDMANAGER->play("허공펀치", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 
 			if (_state == WALK)
 			{
@@ -3325,7 +3330,7 @@ void Player::rAtkManage()
 		if (KEYMANAGER->isOnceKeyDown('Z') && !KEYMANAGER->isStayKeyDown(VK_DOWN))
 		{
 			_dmg = _str;
-
+			SOUNDMANAGER->play("허공펀치", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			if (_state == WALK)
 			{
 				_info.hPushPower = 0;
@@ -3444,7 +3449,7 @@ void Player::rAtkManage()
 				_info.hPushPower = 0;
 				_info.vPushPower = 0;
 			}
-
+			SOUNDMANAGER->play("허공펀치", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 
 			if (_s_Gatk_Count == 0)
 			{
@@ -3563,6 +3568,7 @@ void Player::rAtkManage()
 			_sk = true;
 			_gp -= 20;
 			_ySK = _info.chr_rc.top - 250;
+			SOUNDMANAGER->play("스킬1", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 
 			if (_direction == RIGHT)
 			{
@@ -3604,6 +3610,8 @@ void Player::rAtkManage()
 		{
 			_dmg = _str * PLAYER_SK;
 			_gp -= 10;
+			SOUNDMANAGER->play("스킬2", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
+
 			if (_direction == RIGHT)
 			{
 				if (_state == WALK)

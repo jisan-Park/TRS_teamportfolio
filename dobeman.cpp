@@ -312,14 +312,15 @@ void dobeman::collsion()
 		EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 		if (_state == E_WALK || _state == E_IDLE)
 		{
+
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
+				SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_counttttt++;
 				if (_counttttt < 5)
 				{
 					//damageNumber create
 					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
-					SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
 					_motion = dobeman_DAMAGE_RIGHT;
 					_motion->start();
@@ -343,12 +344,12 @@ void dobeman::collsion()
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
+				SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_counttttt++;
 				if (_counttttt < 5)
 				{
 					//damageNumber create
 					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
-					SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 					_img = IMAGEMANAGER->findImage("dobeman_damage");
 					_motion = dobeman_DAMAGE_LEFT;
 					_motion->start();

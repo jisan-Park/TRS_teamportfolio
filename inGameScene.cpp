@@ -72,7 +72,7 @@ void inGameScene::update()
 	if (KEYMANAGER->isOnceKeyDown(VK_F3)) {
 		CAMERAMANAGER->setPhase(21);
 	}
-	if (CAMERAMANAGER->getCameraPhase() <= 21) {
+	if (CAMERAMANAGER->getCameraPhase() < 21) {
 		//background music - volume update
 		SOUNDMANAGER->setVolume("ÀÎ°ÔÀÓ", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
 	}

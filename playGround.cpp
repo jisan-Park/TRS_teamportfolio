@@ -27,12 +27,16 @@ HRESULT playGround::init()
 	SOUNDMANAGER->addSound("문열기", "music/효과음/문열기.mp3", false, false);
 	SOUNDMANAGER->addSound("버스", "music/효과음/버스.mp3", false, false);
 	SOUNDMANAGER->addSound("약공격", "music/효과음/펀치.mp3", false, false);
+	SOUNDMANAGER->addSound("오버", "music/효과음/엔딩효과음.mp3", false, false);
 
 	SOUNDMANAGER->addSound("악마패턴3", "music/효과음/악마누나쏘고사라지는소리.mp3", false, false);
 	SOUNDMANAGER->addSound("악마패턴2", "music/효과음/악마패턴1.mp3", false, false);
 	SOUNDMANAGER->addSound("윌리엄배", "music/효과음/윌리엄배방어.mp3", false, false);
 	SOUNDMANAGER->addSound("보스에네르기파", "music/효과음/보스에네르기파.mp3", false, false);
 
+	SOUNDMANAGER->addSound("스킬1", "music/효과음/구름키스.mp3", false, false);
+	SOUNDMANAGER->addSound("스킬2", "music/효과음/휘리릭킥.mp3", false, false);
+	SOUNDMANAGER->addSound("허공펀치", "music/효과음/허공펀치.mp3", false, false);
 
 
 

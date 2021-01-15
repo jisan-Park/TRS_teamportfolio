@@ -333,7 +333,7 @@ void william::collsion()
 					_info.vPushPower = 0;
 					_hp -= PLAYER->getAttackDamege();
 				}
-				if (_direction == E_RIGHT && PLAYER->getInfo().chr_x > _info.chr_x) //오른쪽 보고있었는데 앞에서 때릴때
+				if (_direction == E_RIGHT && _state != E_DEFENCE && PLAYER->getInfo().chr_x > _info.chr_x) //오른쪽 보고있었는데 앞에서 때릴때
 				{
 
 					//attack effect play
@@ -368,7 +368,7 @@ void william::collsion()
 					_info.vPushPower = 0;
 					_hp -= PLAYER->getAttackDamege();
 				}
-				if (_direction == E_LEFT && PLAYER->getInfo().chr_x < _info.chr_x) //왼쪽 보고있었는데 앞에서 때릴때
+				if (_direction == E_LEFT && _state != E_DEFENCE && PLAYER->getInfo().chr_x < _info.chr_x) //왼쪽 보고있었는데 앞에서 때릴때
 				{
 
 					//attack effect play
@@ -721,7 +721,7 @@ void william::setAnimation()
 		IMAGEMANAGER->findImage("william_defence")->getFrameWidth(),
 		IMAGEMANAGER->findImage("william_defence")->getFrameHeight());
 	william_DEFENCE_LEFT->setPlayFrame(13, 7, false, false);
-	william_DEFENCE_LEFT->setFPS(10);
+	william_DEFENCE_LEFT->setFPS(7);
 	//KEYANIMANAGER->addCoordinateFrameAnimation("william_KNOCKDOWN_RIGHT", "william_knockDown", 0, 13, 10, false, false);
 	william_KNOCKDOWN_RIGHT = new animation;
 	william_KNOCKDOWN_RIGHT->init(IMAGEMANAGER->findImage("william_knockDown")->getWidth(),
