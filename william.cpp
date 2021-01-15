@@ -5,7 +5,7 @@ HRESULT william::init(const char* imageName, float x, float y)
 {
 	setAnimation();
 
-	
+
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
 	_maxHp = 10;
 	_hp = 10;
@@ -322,6 +322,7 @@ void william::collsion()
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 
+					SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 					_img = IMAGEMANAGER->findImage("william_damage");
 					_motion = william_DAMAGE_RIGHT;
 					_motion->start();
@@ -334,10 +335,11 @@ void william::collsion()
 				}
 				if (_direction == E_RIGHT && PLAYER->getInfo().chr_x > _info.chr_x) //오른쪽 보고있었는데 앞에서 때릴때
 				{
-					
+
 					//attack effect play
 					EFFECTMANAGER->play("defenceEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
-					
+
+					SOUNDMANAGER->play("윌리엄배", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 					_img = IMAGEMANAGER->findImage("william_defence");
 					_motion = william_DEFENCE_RIGHT;
 					_motion->start();
@@ -355,6 +357,7 @@ void william::collsion()
 					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 					//attack effect play
 					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
+					SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 					_img = IMAGEMANAGER->findImage("william_damage");
 					_motion = william_DAMAGE_LEFT;
 					_motion->start();
@@ -370,7 +373,8 @@ void william::collsion()
 
 					//attack effect play
 					EFFECTMANAGER->play("defenceEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
-					
+
+					SOUNDMANAGER->play("윌리엄배", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 					_img = IMAGEMANAGER->findImage("william_defence");
 					_motion = william_DEFENCE_LEFT;
 					_motion->start();
@@ -389,6 +393,7 @@ void william::collsion()
 
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				SOUNDMANAGER->play("강공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				//damageNumber create
 				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 				//attack effect play
@@ -406,6 +411,7 @@ void william::collsion()
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				SOUNDMANAGER->play("강공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				//damageNumber create
 				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 				//attack effect play
@@ -425,6 +431,8 @@ void william::collsion()
 
 		if (_counttt > 50 && _counttt < 300 && _state == E_DOWN)
 		{
+			SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
+
 			if (_direction == E_RIGHT)
 			{
 				//damageNumber create

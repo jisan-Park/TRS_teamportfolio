@@ -18,13 +18,13 @@ void Coin::update()
 		t.ani->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 		GAMEMANAGER->updatePicture(t._info, t.img, t.ani);
 	}
-	
+
 	collisionCoin();
 }
 
 void Coin::render()
 {
-	
+
 }
 
 void Coin::setImage()
@@ -38,9 +38,10 @@ void Coin::collisionCoin()
 {
 	RECT temp;
 	for (_viCoin = _vCoin.begin(); _viCoin != _vCoin.end();) {
-		if (IntersectRect(&temp,&PLAYER->getInfo().chr_rc,&_viCoin->_info.chr_rc)) {
+		if (IntersectRect(&temp, &PLAYER->getInfo().chr_rc, &_viCoin->_info.chr_rc)) {
 			EFFECTMANAGER->play("coinEffect", _viCoin->_info.chr_x, _viCoin->_info.chr_y);
 			PLAYER->setMoney(PLAYER->getMoney() + _viCoin->value);
+			SOUNDMANAGER->play("동전먹기", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			GAMEMANAGER->deletePicture(_viCoin->_info.renderNumber);
 			_viCoin = _vCoin.erase(_viCoin);
 		}
@@ -51,21 +52,21 @@ void Coin::collisionCoin()
 }
 
 
-void Coin::makeCoin(int num,float x,float y)
+void Coin::makeCoin(int num, float x, float y)
 {
 	//i를 20으로 나눈 값 + 나머지에서 5로 나눈 값 + 나머지에서 1로 나눈 값
 	int largeCount = num / 20;
 	num = num % 20;
-	int middleCount = num /5;
+	int middleCount = num / 5;
 	num = num % 5;
-	int smallCount  = num;
+	int smallCount = num;
 
-	for (int i = 0; i < largeCount;i++) {
+	for (int i = 0; i < largeCount; i++) {
 		tagCoin t;
 		t._info.init(GAMEMANAGER->getRenderNum(),
-			x + RND->getFromFloatTo(-20,20),
+			x + RND->getFromFloatTo(-20, 20),
 			y + RND->getFromFloatTo(-20, 20),
-			64,64,0,0);
+			64, 64, 0, 0);
 		//t._info.jumpPower = 2;
 		t.img = new image;
 		t.img = IMAGEMANAGER->findImage("lCoin");
@@ -74,12 +75,12 @@ void Coin::makeCoin(int num,float x,float y)
 			IMAGEMANAGER->findImage("lCoin")->getHeight(),
 			IMAGEMANAGER->findImage("lCoin")->getFrameWidth(),
 			IMAGEMANAGER->findImage("lCoin")->getFrameHeight());
-		t.ani->setPlayFrame(0,5,false,true);
+		t.ani->setPlayFrame(0, 5, false, true);
 		t.ani->setFPS(12);
 		t.ani->start();
 		t.value = 20;
 		_vCoin.push_back(t);
-		GAMEMANAGER->addPicture(t._info,t.img,t.ani);
+		GAMEMANAGER->addPicture(t._info, t.img, t.ani);
 	}
 	for (int i = 0; i < middleCount; i++) {
 		tagCoin t;

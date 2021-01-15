@@ -75,10 +75,10 @@ void Player::update()
 	if (_life <= 0) {
 		SCENEMANAGER->changeScene("gameover");
 	}
-	
+
 	//보스방 진입시, 위치 변경
 	if (CAMERAMANAGER->getCameraPhase() == 21) {
-		PLAYER->_info.init(PLAYER->_info.renderNumber, 21460, 610,50,100,100,140);
+		PLAYER->_info.init(PLAYER->_info.renderNumber, 21460, 610, 50, 100, 100, 140);
 		CAMERAMANAGER->setPhase(22);
 	}
 	//_enemyDamage = 40;
@@ -1271,7 +1271,7 @@ void Player::sHittedManage()
 		DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)(_enemyDamage - _reduceDamage));
 
 		//attack effect play
-		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
+		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left) / 2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top) / 2);
 		_hp -= (_enemyDamage - _reduceDamage);
 		_hitted = true;
 	}
@@ -1342,7 +1342,8 @@ void Player::sHittedManage()
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && _state == DEF)
 	{
 		//attack effect play
-		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
+		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left) / 2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top) / 2);
+		SOUNDMANAGER->play("막기", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 		if (_direction == RIGHT)
 		{
 			_info.pt_x -= 20;
@@ -2627,7 +2628,7 @@ void Player::sHobjManage()
 
 void Player::sDie()
 {
-	
+
 	if (_hp <= 0 && _gp > 0)
 	{
 		_hp = 0;
@@ -3865,7 +3866,7 @@ void Player::rHittedManage()
 		DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)(_enemyDamage - _reduceDamage));
 
 		//attack effect play
-		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
+		EFFECTMANAGER->play("attackEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left) / 2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top) / 2);
 		_hp -= (_enemyDamage - _reduceDamage);
 		_hitted = true;
 	}
@@ -3936,7 +3937,8 @@ void Player::rHittedManage()
 	if (IntersectRect(&_temp, &_info.chr_rc, &_enemyAtkRc) && _state == DEF)
 	{
 		//attack effect play
-		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left)/2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top)/2);
+		EFFECTMANAGER->play("defenceEffect", _enemyAtkRc.left + (_enemyAtkRc.right - _enemyAtkRc.left) / 2, _enemyAtkRc.top + (_enemyAtkRc.bottom - _enemyAtkRc.top) / 2);
+		SOUNDMANAGER->play("막기", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 		if (_direction == RIGHT)
 		{
 			_info.pt_x -= 20;
@@ -5271,7 +5273,7 @@ void Player::skAtk()
 
 void Player::rDie()
 {
-	
+
 	if (_hp <= 0 && _gp > 0)
 	{
 		_hp = 0;

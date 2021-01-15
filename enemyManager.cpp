@@ -19,6 +19,7 @@ void enemyManager::update()
 	{
 		if (_vMinion.size() < 1)
 		{
+			SOUNDMANAGER->play("¹ö½º", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			bus* bus1;
 			bus1 = new bus;
 			bus1->init("bus_move", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 700, 550);
@@ -26,7 +27,8 @@ void enemyManager::update()
 		}
 		if (_vMinion[0]->getState() == E_IDLE && _vMinion.size() == 1 && _vMinion[0]->getIsBus() == true)
 			setEnemy();
-	}else if (_vMinion.size() <= 0 && CAMERAMANAGER->getCameraPhase() % 2 == 1) {
+	}
+	else if (_vMinion.size() <= 0 && CAMERAMANAGER->getCameraPhase() % 2 == 1) {
 		setEnemy();
 	}
 	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); _viMinion++)
@@ -102,7 +104,7 @@ void enemyManager::setEnemy()
 	case 5:
 	{
 		temp = new william;
-		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX/2 + 100, 400);
+		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 + 100, 400);
 		_vMinion.push_back(temp);
 		temp = new william;
 		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 - 100, 400);
@@ -112,7 +114,7 @@ void enemyManager::setEnemy()
 	case 7:
 	{
 		temp = new jesse;
-		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x -100, 200);
+		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x - 100, 200);
 		_vMinion.push_back(temp);
 		temp = new luke;
 		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 500);
@@ -127,7 +129,7 @@ void enemyManager::setEnemy()
 		temp = new dobeman;
 		temp->init("dobeman_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 500);
 		_vMinion.push_back(temp);
-		
+
 	}
 	break;
 	case 11: {
@@ -164,7 +166,7 @@ void enemyManager::setEnemy()
 	case 17:
 	{
 		temp = new luke;
-		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x-100, 315);
+		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x - 100, 315);
 		temp->setShdHeight(135);
 		temp->setChrY(temp->getInfo().chr_y - 135);
 		_vMinion.push_back(temp);
@@ -176,7 +178,7 @@ void enemyManager::setEnemy()
 		_vMinion.push_back(temp);
 
 		temp = new jesse;
-		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x-100, 500);
+		temp->init("jesse_idle", CAMERAMANAGER->getCameraPoint().x - 100, 500);
 		_vMinion.push_back(temp);
 		temp = new malcolm;
 		temp->init("malcolm_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 600);
@@ -185,7 +187,7 @@ void enemyManager::setEnemy()
 	break;
 	case 19: {
 		temp = new william;
-		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX  + 100, 500);
+		temp->init("william_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 500);
 		_vMinion.push_back(temp);
 		temp = new dobeman;
 		temp->init("dobeman_idle", CAMERAMANAGER->getCameraPoint().x - 100, 500);

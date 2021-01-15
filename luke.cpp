@@ -452,6 +452,7 @@ void luke::collsion()
 		{
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
+				SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_counttttt++;
 				if (_counttttt < 5)
 				{
@@ -480,6 +481,7 @@ void luke::collsion()
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() == PLAYER->getStr())
 			{
+				SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_counttttt++;
 				if (_counttttt < 5)
 				{
@@ -508,6 +510,7 @@ void luke::collsion()
 			}
 			if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				SOUNDMANAGER->play("강공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				//damageNumber create
 				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 
@@ -523,6 +526,7 @@ void luke::collsion()
 			}
 			if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 			{
+				SOUNDMANAGER->play("강공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				//damageNumber create
 				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 
@@ -542,6 +546,7 @@ void luke::collsion()
 		{
 			if (_direction == E_RIGHT)
 			{
+				SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				//damageNumber create
 				DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
 
