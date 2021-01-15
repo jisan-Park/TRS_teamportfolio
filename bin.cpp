@@ -25,7 +25,7 @@ void bin::aniControl()
 	{
 		_info.jumpPower = 0;
 		_info.pt_x = PLAYER->getInfo().pt_x;
-		_info.pt_y = PLAYER->getInfo().pt_y;
+		_info.pt_y = PLAYER->getInfo().pt_y + 1;
 		_info.chr_y = PLAYER->getInfo().chr_rc.bottom - _info.chr_height / 2;
 		if (PLAYER->getDirection() == LEFT)
 		{
@@ -154,6 +154,20 @@ void bin::update()
 	MAPOBJECT->collisionMo(_info);
 	_motion->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
+	if (_state != IO_NEUTRAL)
+	{
+		_info.chr_width = 1;
+		_info.chr_height = 1;
+		_info._push_width = 125;
+		_info._push_height = 240;
+	}
+	else
+	{
+		_info.chr_width = 80;
+		_info.chr_height = 50;
+		_info._push_width = 75;
+		_info._push_height = 190;
+	}
 	if (PLAYER->getHit() && _state != IO_NEUTRAL)
 	{
 		_state = IO_NEUTRAL;

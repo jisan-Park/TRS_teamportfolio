@@ -223,13 +223,13 @@ void enemyManager::setEnemy()
 	case 17:
 	{
 		temp = new luke;
-		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x - 100, 315);
+		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x - 100, 510);
 		temp->setShdHeight(135);
 		temp->setChrY(temp->getInfo().chr_y - 135);
 		_vMinion.push_back(temp);
 
 		temp = new luke;
-		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 315);
+		temp->init("luke_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 100, 510);
 		temp->setShdHeight(135);
 		temp->setChrY(temp->getInfo().chr_y - 135);
 		_vMinion.push_back(temp);

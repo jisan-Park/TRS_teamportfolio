@@ -37,10 +37,15 @@ void ioManager::setBat()
 	bat1->init("bat_right_neutral", 500, 600);
 	_vIO.push_back(bat1);
 
-	//interactiveObject* bat2;
-	//bat2 = new bat;
-	//bat2->init("bat_right_neutral", 300, 600);
-	//_vIO.push_back(bat2);
+	interactiveObject* bat2;
+	bat2 = new bat;
+	bat2->init("bat_right_neutral", 5850, 500);
+	_vIO.push_back(bat2);
+
+	interactiveObject* bat3;
+	bat3 = new bat;
+	bat3->init("bat_right_neutral", 17900, 633);
+	_vIO.push_back(bat3);
 }
 
 void ioManager::setBin()
@@ -49,6 +54,10 @@ void ioManager::setBin()
 	bin1 = new bin;
 	bin1->init("bin_right_neutral", 300, 600);
 	_vIO.push_back(bin1);
+	interactiveObject* bin2;
+	bin2 = new bin;
+	bin2->init("bin_right_neutral", 7350, 400);
+	_vIO.push_back(bin2);
 }
 
 

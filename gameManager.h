@@ -68,7 +68,7 @@ public:
 	void setSFXVolume(float f) { _SFX_volume = f; };
 	void setUI();
 	void setUIimage();
-	void setDifficulty(int i) { _difficulty = (DIFFICULTY)i; _hp = ((i + 1)*1.0f); _str = ((i + 1) * 0.5f); };
+	void setDifficulty(int i) { _difficulty = (DIFFICULTY)i; _hp = ((i + 1)*1.0f); _str = ((i + 2) * 0.5f); };
 	//getter
 	int getSnackNum() { return _snackNum; };
 	vector<tagItem> getItemList(int i);

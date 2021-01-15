@@ -13,12 +13,16 @@ HRESULT mapObject::init()
 {
 	IMAGEMANAGER->addImage("±âµÕ1", "image/±âµÕ1.bmp", 120, 125, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("±âµÕ2", "image/±âµÕ2.bmp", 120, 125, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("¿ì¹°", "image/¿ì¹°.bmp", 120, 195, true, RGB(255, 0, 255));
 
 
 	fence1 = new imgObj;
 	fence2 = new imgObj;
 	fence1->init("±âµÕ1", 5429, 493);
 	fence2->init("±âµÕ2", 7080, 493);
+	imgObj* well;
+	well = new imgObj;
+	well->init("¿ì¹°", 6015, 489);
 	_ds = new downSlope;
 	_us = new upSlope;
 	_ds->init(16730, 430, 450, 300);
