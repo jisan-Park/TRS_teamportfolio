@@ -74,6 +74,7 @@ void Player::update()
 {
 	if (_life <= 0) {
 		SCENEMANAGER->changeScene("gameover");
+		SOUNDMANAGER->play("오버", 1.0f);
 	}
 
 	//보스방 진입시, 위치 변경

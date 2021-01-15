@@ -18,6 +18,12 @@ HRESULT gameoverScene::init()
 	IMAGEMANAGER->addImage("gameoverBox", "image/scene/gameoverBox.bmp", 100, 40, true, RGB(255, 0, 255));
 	_selectNum = 0;
 	_rc = RectMake(280 + (_selectNum * 147), 390, 100, 40);
+
+	SOUNDMANAGER->stop("메뉴");
+	SOUNDMANAGER->stop("인게임");
+	SOUNDMANAGER->stop("상점");
+	SOUNDMANAGER->stop("보스방");
+
 	return S_OK;
 }
 

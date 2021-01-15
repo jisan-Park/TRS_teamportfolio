@@ -19,7 +19,6 @@ void enemyManager::update()
 	{
 		if (_vMinion.size() < 1)
 		{
-			SOUNDMANAGER->play("¹ö½º", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 			bus* bus1;
 			bus1 = new bus;
 			bus1->init("bus_move", CAMERAMANAGER->getCameraPoint().x + WINSIZEX + 700, 550);

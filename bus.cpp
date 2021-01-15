@@ -45,6 +45,7 @@ void bus::move()
 	}
 	if (buscnt > 100 && _state == E_IDLE)
 	{
+		SOUNDMANAGER->play("¹ö½º", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 		buscnt = 0;
 		busdeadcnt = 0;
 		_state = E_WALK;
