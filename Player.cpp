@@ -15,12 +15,12 @@ Player::~Player()
 
 HRESULT Player::init()
 {
-	_life = 1;
+	_life = 3;
 	_money = 0;
-	_str = 10;
-	_def = 10;
-	_wp = 10;
-	_spd = 10;
+	_str = 15;
+	_def = 15;
+	_wp = 15;
+	_spd = 15;
 
 	_maxHP = 100 + _wp;
 	_maxGP = 100 + _wp;
