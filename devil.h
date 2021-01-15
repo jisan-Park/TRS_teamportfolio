@@ -31,6 +31,7 @@ private:
 	animation*devil_RESETY_LEFT1;
 	animation*devil_RESETY_RIGHT1;
 
+	int _musicCount;
 
 public:
 

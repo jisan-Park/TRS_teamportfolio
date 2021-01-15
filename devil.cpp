@@ -15,7 +15,7 @@ HRESULT devil::init(const char * imageName, float x, float y)
 	_motion->start();
 	_angle = 0;
 	_hp = 100;
-
+	_musicCount = 0;
 	GAMEMANAGER->addPicture(_info, _img, _motion);
 
 	return S_OK;
@@ -59,7 +59,6 @@ void devil::move()
 
 void devil::update()
 {
-
 	if (_makeDead)
 	{
 		_info.hPushPower = 0;
@@ -81,10 +80,26 @@ void devil::update()
 	_motion->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 	pattern3();
 
-	if(_pattern == PATTERN2)
-	{ 
+	if (_pattern == PATTERN2)
+	{
 		_inattack = RectMakeCenter(_info.chr_x, _info.chr_y, 100, 100);
+
+		if (_musicCount == 0)
+		{
+			SOUNDMANAGER->play("¾Ç¸¶ÆÐÅÏ2", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
+		}
+
+		if (_musicCount < 1)
+		{
+			_musicCount++;
+		}
 	}
+	else
+	{
+		SOUNDMANAGER->stop("¾Ç¸¶ÆÐÅÏ2");
+	}
+
+
 }
 
 void devil::collsion()
@@ -135,6 +150,7 @@ void devil::pattern3()
 				if (!_motion->isPlay())
 				{
 					_motion->start();
+
 				}
 			}
 			if (21630 >= _info.pt_x)
@@ -493,6 +509,7 @@ void devil::fireright1(void * obj)
 	m->setDirection(E_RIGHT);
 	m->setState(D_FIRE);
 	m->setImage(IMAGEMANAGER->findImage("devil_fire"));
+	SOUNDMANAGER->play("¾Ç¸¶ÆÐÅÏ3", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 	m->setteMotion(m->devil_FIRE_RIGHT1);
 	m->getMotion()->start();
 	m->setIsfire(true);
@@ -504,6 +521,7 @@ void devil::fireleft1(void * obj)
 	m->setDirection(E_LEFT);
 	m->setState(D_FIRE);
 	m->setImage(IMAGEMANAGER->findImage("devil_fire"));
+	SOUNDMANAGER->play("¾Ç¸¶ÆÐÅÏ3", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 	m->setteMotion(m->devil_FIRE_LEFT1);
 	m->getMotion()->start();
 	m->setIsfire(true);

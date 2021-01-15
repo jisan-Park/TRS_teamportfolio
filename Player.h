@@ -84,6 +84,9 @@ private:
 	int _enemyDamage; // 에너미 데미지
 	float _atemp;
 
+	RECT _bulletRc;
+	int _bulletDamage;
+
 	//count
 	int _down_Count;
 	int _s_Yatk_Count;
@@ -200,6 +203,7 @@ public:
 
 	//에너미 관련 겟셋
 	void setEnemyAtkRc(RECT rc, int Damage) { _enemyAtkRc = rc, _enemyDamage = Damage; }// 에너미 공격렉트, 데미지 가져옴
+	void setBulletAtkRc(RECT rc, int Damage) { _bulletRc = rc, _bulletDamage = Damage; }
 	inline RECT getAttackRc() { return _rcAtk; }
 	inline int getAttackDamege() { return _dmg; }
 
@@ -243,8 +247,9 @@ public:
 	void setDmg(int i) { _dmg = i; }; // player가 줄 데미지
 	void setIORC(RECT rc) { _ioRc = rc; };
 	void setObjDmg(int i) { _objDmg = i; };
-									  
-									  //
+
+	//
+
 
 
 };

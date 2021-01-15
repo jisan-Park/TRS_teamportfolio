@@ -260,7 +260,7 @@ void boss::update()
 		{
 			_inattack = RectMakeCenter(-100, -100, 0, 0);
 		}
-	
+
 	}
 	/*else
 	{
@@ -609,6 +609,7 @@ void boss::pattern1atk()
 		{
 			if (_direction == E_LEFT)
 			{
+				SOUNDMANAGER->play("보스에네르기파", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_img = IMAGEMANAGER->findImage("boss_specialattack");
 				_direction = E_LEFT;
 				_state = E_PUNCH4;
@@ -618,6 +619,7 @@ void boss::pattern1atk()
 			}
 			if (_direction == E_RIGHT)
 			{
+				SOUNDMANAGER->play("보스에네르기파", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_img = IMAGEMANAGER->findImage("boss_specialattack");
 				_direction = E_RIGHT;
 				_state = E_PUNCH4;

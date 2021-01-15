@@ -30,7 +30,7 @@ HRESULT playGround::init()
 	SOUNDMANAGER->addSound("오버", "music/효과음/엔딩효과음.mp3", false, false);
 
 	SOUNDMANAGER->addSound("악마패턴3", "music/효과음/악마누나쏘고사라지는소리.mp3", false, false);
-	SOUNDMANAGER->addSound("악마패턴2", "music/효과음/악마패턴1.mp3", false, false);
+	SOUNDMANAGER->addSound("악마패턴2", "music/효과음/악마패턴1.mp3", true, true);
 	SOUNDMANAGER->addSound("윌리엄배", "music/효과음/윌리엄배방어.mp3", false, false);
 	SOUNDMANAGER->addSound("보스에네르기파", "music/효과음/보스에네르기파.mp3", false, false);
 

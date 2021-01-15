@@ -1283,6 +1283,20 @@ void Player::sHittedManage()
 		_hitted = true;
 	}
 
+	if ((IntersectRect(&_temp, &_info.chr_rc, &_bulletRc)) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER || _state == UP))
+	{
+		//damageNumber create
+		DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)(_bulletDamage - _reduceDamage));
+
+		//attack effect play
+		EFFECTMANAGER->play("attackEffect", _bulletRc.left + (_bulletRc.right - _bulletRc.left) / 2, _bulletRc.top + (_bulletRc.bottom - _bulletRc.top) / 2);
+		_hp -= (_bulletDamage - _reduceDamage);
+		_hitted = true;
+	}
+
+
+
+
 	if (_hitted && (_state == WALK || _state == IDLE || _state == RUN || _state == ATK || _state == JUMP || _state == JUMPATK ||
 		_state == LOBJ || _state == LOBJWALK || _state == LOBJRUN || _state == LOBJATK || _state == LOBJJUMP || _state == LOBJJUMPATK
 		|| _state == HOBJ || _state == HOBJWALK || _state == HOBJRUN || _state == HOBJATK || _state == HOBJJUMP || _state == HOBJJUMPATK || _state == STUN || _state == TIRED))
@@ -3888,6 +3902,17 @@ void Player::rHittedManage()
 		_hitted = true;
 	}
 
+	if ((IntersectRect(&_temp, &_info.chr_rc, &_bulletRc)) && !(_state == DEF || _state == HITTED || _state == DIE || _state == WIN || _state == REVIVER || _state == UP))
+	{
+		//damageNumber create
+		DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)(_bulletDamage - _reduceDamage));
+
+		//attack effect play
+		EFFECTMANAGER->play("attackEffect", _bulletRc.left + (_bulletRc.right - _bulletRc.left) / 2, _bulletRc.top + (_bulletRc.bottom - _bulletRc.top) / 2);
+		_hp -= (_bulletDamage - _reduceDamage);
+		_hitted = true;
+	}
+
 	if (_hitted && (_state == WALK || _state == IDLE || _state == RUN || _state == ATK
 		|| _state == JUMP || _state == JUMPATK || _state == LOBJ
 		|| _state == HOBJ || _state == STUN || _state == TIRED))
@@ -3965,6 +3990,8 @@ void Player::rHittedManage()
 			_info.pt_x += 20;
 		}
 	}
+
+
 
 	//다운설정
 	if (_state == DOWN)
