@@ -84,62 +84,62 @@ void gameManager::setItem()
 
 	temp.img = IMAGEMANAGER->findImage("계란초밥");
 	temp.itemName = "계란초밥";
-	temp.price = 3;
+	temp.price = 300;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("장어초밥");
 	temp.itemName = "장어초밥";
-	temp.price = 3;
+	temp.price = 300;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("연어초밥");
 	temp.itemName = "연어초밥";
-	temp.price = 3;
+	temp.price = 300;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("육회초밥");
 	temp.itemName = "육회초밥";
-	temp.price = 3;
+	temp.price = 300;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("스테이크");
 	temp.itemName = "스테이크";
-	temp.price = 3;
+	temp.price = 300;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("치킨");
 	temp.itemName = "치킨";
-	temp.price = 3;
+	temp.price = 300;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("피자");
 	temp.itemName = "피자";
-	temp.price = 3;
+	temp.price = 300;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("햄버거");
 	temp.itemName = "햄버거";
-	temp.price = 3;
+	temp.price = 300;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("아메리카노");
 	temp.itemName = "아메리카노";
-	temp.price = 1;
+	temp.price = 100;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("카페라떼");
 	temp.itemName = "카페라떼";
-	temp.price = 1;
+	temp.price = 100;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("풍선껌");
 	temp.itemName = "풍선껌";
-	temp.price = 2;
+	temp.price = 200;
 	_vItem.push_back(temp);
 
 	temp.img = IMAGEMANAGER->findImage("초콜릿");
 	temp.itemName = "초콜릿";
-	temp.price = 2;
+	temp.price = 200;
 	_vItem.push_back(temp);
 }
 void gameManager::setUI()
