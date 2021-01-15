@@ -81,7 +81,7 @@ private:
 	RECT _temp; // 비교용
 	RECT _downRc; // 누웠을때 렉트
 	RECT _ioRc;
-	float _enemyDamage; // 에너미 데미지
+	int _enemyDamage; // 에너미 데미지
 	float _atemp;
 
 	//count
@@ -197,7 +197,7 @@ public:
 
 
 	//에너미 관련 겟셋
-	void setEnemyAtkRc(RECT rc, float Damage) { _enemyAtkRc = rc, _enemyDamage = Damage; }// 에너미 공격렉트, 데미지 가져옴
+	void setEnemyAtkRc(RECT rc, int Damage) { _enemyAtkRc = rc, _enemyDamage = Damage; }// 에너미 공격렉트, 데미지 가져옴
 	inline RECT getAttackRc() { return _rcAtk; }
 	inline int getAttackDamege() { return _dmg; }
 

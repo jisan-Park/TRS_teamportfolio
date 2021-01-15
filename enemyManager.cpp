@@ -30,6 +30,46 @@ void enemyManager::update()
 	else if (_vMinion.size() <= 0 && CAMERAMANAGER->getCameraPhase() % 2 == 1) {
 		setEnemy();
 	}
+	if (CAMERAMANAGER->getCameraPhase() == 22)
+	{
+		if (_vMinion.size() < 1)
+		{
+			boss* boss1;
+			boss1 = new boss;
+			//boss1->init("boss_idle", CAMERAMANAGER->getCameraPoint().x + WINSIZEX, 500);
+			boss1->init("boss_idle", 21826, 600);
+			_vMinion.push_back(boss1);
+		}
+		if (_vMinion[0]->getBosspattern() == PATTERN1 && _vMinion.size() == 1 && _vMinion[0]->getHP() < 800)
+		{
+
+			_vMinion[0]->setBosspattern(PATTERN2);
+			setEnemy();
+			_vMinion[1]->setBosspattern(PATTERN2);
+			_vMinion[2]->setBosspattern(PATTERN2);
+			_vMinion[3]->setBosspattern(PATTERN2);
+			_vMinion[4]->setBosspattern(PATTERN2);
+
+		}
+		if (_vMinion[0]->getBosspattern() == PATTERN2 && _vMinion.size() == 1 && _vMinion[0]->getHP() < 800)
+		{
+			_vMinion[0]->setBosspattern(PATTERN3);
+
+			setEnemy();
+			_vMinion[1]->setBosspattern(PATTERN3);
+			//_vMinion[2]->setBosspattern(PATTERN3);
+
+		}
+		if (_vMinion[0]->getBosspattern() == PATTERN3 && _vMinion[1]->getIsfire())
+		{
+			_firecount++;
+			if (_firecount % 4 == 0)
+			{
+				BULLET->firebullet(_vMinion[1]->getInfo().chr_x, _vMinion[1]->getInfo().chr_y, 200, 6);
+				_firecount = 0;
+			}
+		}
+	}
 	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); _viMinion++)
 	{
 		(*_viMinion)->update();
@@ -192,6 +232,40 @@ void enemyManager::setEnemy()
 		temp->init("dobeman_idle", CAMERAMANAGER->getCameraPoint().x - 100, 500);
 		_vMinion.push_back(temp);
 	}break;
+	case 22: {
+		if (_vMinion[0]->getBosspattern() == PATTERN2)
+		{
+			temp = new devil;
+			temp->init("devil_set", 21610 + 70, 624 + 100);
+			temp->setAngle(PI / 2);
+			_vMinion.push_back(temp);
+			temp = new devil;
+			temp->init("devil_set", 21610 - 130, 624 + 100);
+			temp->setAngle(-PI / 2);
+			_vMinion.push_back(temp);
+			temp = new devil;
+			temp->init("devil_set", 21610 - 30, 624 + 200);
+			temp->setAngle(0);
+			_vMinion.push_back(temp);
+			temp = new devil;
+			temp->init("devil_set", 21610 - 30, 624);
+			temp->setAngle(PI);
+			_vMinion.push_back(temp);
+			break;
+		}
+		if (_vMinion[0]->getBosspattern() == PATTERN3)
+		{
+			temp = new devil;
+			temp->init("devil_set", CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 - 200, CAMERAMANAGER->getCameraPoint().y + WINSIZEY / 2 + 100);
+			_vMinion.push_back(temp);
+			//temp = new devil;
+			//temp->init("devil_set", CAMERAMANAGER->getCameraPoint().x + WINSIZEX / 2 + 200, CAMERAMANAGER->getCameraPoint().y + WINSIZEY / 2 + 130);
+			//_vMinion.push_back(temp);
+		}
+
+
+	}
+			 break;
 	default:
 		break;
 	}
@@ -317,8 +391,8 @@ void enemyManager::setimage()
 	IMAGEMANAGER->addFrameImage("boss_up", "image/BOSS/BOSS UP.bmp", 2785, 400, 11, 2, true, RGB(255, 0, 255));
 
 	//devil
-	IMAGEMANAGER->addFrameImage("devil_set", "image/BOSS/2ÆÐÅÏ ¾Ç¸¶´©´Ô»ý¼º.bmp", 1900, 156, 4, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("devil_bullet", "image/BOSS/devil bullet.bmp", 1200, 304, 8, 2, true, RGB(255, 0, 255));
+	//IMAGEMANAGER->addFrameImage("devil_set", "image/BOSS/2ÆÐÅÏ ¾Ç¸¶´©´Ô»ý¼º.bmp", 1900, 156, 10, 1, true, RGB(255, 0, 255));
+	//IMAGEMANAGER->addFrameImage("devil_bullet", "image/BOSS/devil bullet.bmp", 1200, 304, 8, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("devil_death", "image/BOSS/devil die.bmp", 1520, 312, 8, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("devil_damage", "image/BOSS/devil hited.bmp", 950, 312, 5, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("devil_set", "image/BOSS/devil set.bmp", 1900, 312, 10, 2, true, RGB(255, 0, 255));

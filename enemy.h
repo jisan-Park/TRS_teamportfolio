@@ -27,7 +27,10 @@ enum ENEMYSTATE
 	E_HOBJ_IDLE,
 	E_HOBJ_RUN,
 	E_HOBJ_PICK,
+	E_PUNCH4,
 	E_PUNCH,
+	E_PUNCH2,
+	E_PUNCH3,
 	E_KICK,
 	E_DOWNKICK,
 	E_ROUNDKICK,
@@ -37,9 +40,22 @@ enum ENEMYSTATE
 	E_DEFENCE,
 
 	E_HOBJ_ATK,
-	E_LOBJ_ATK
-};
+	E_LOBJ_ATK,
+	E_READY,
+	E_START,
 
+	D_FSREADY,
+	D_FIRE,
+	D_ERASE,
+	D_RESETY,
+	D_READY,
+};
+enum BOSSPATTERN
+{
+	PATTERN1,
+	PATTERN2,
+	PATTERN3
+};
 class enemy : public gameNode
 {
 protected:
@@ -65,8 +81,11 @@ protected:
 	bool _isDead;
 	bool _makeDead;
 	bool _isBus;
+	bool _isfire;
+	float _angle;
 	animation* _motion;
 
+	BOSSPATTERN _pattern;
 	ENEMYSTATE _state;
 	ENEMYDIRECTION _direction;
 
@@ -89,13 +108,18 @@ public:
 	void setChrY(float f) { _info.chr_y = f; };
 	void setIsDead(bool b) { _isDead = b; };
 	void setMakeDead(bool b) { _makeDead = b; };
+	void setIsfire(bool b) { _isfire = b; };
 	//getter
 	int getMaxHp() { return _maxHp; };
 	int getHP() { return _hp; };
 	bool getIsDead() { return _isDead; };
 	bool getMakeDead() { return _makeDead; };
 	bool getIsBus() { return _isBus; };
+	bool getIsfire() { return _isfire; };
 	ENEMYSTATE getState() { return _state; };
+	BOSSPATTERN getBosspattern() { return _pattern; };
+	void setBosspattern(BOSSPATTERN pattern) { _pattern = pattern; };
 	characterInfo getInfo() { return _info; };
+	void setAngle(float a) { _angle = a; };
 };
 

@@ -10,6 +10,9 @@
 #include"william.h"
 #include"bus.h"
 #include"Coin.h"
+#include"boss.h"
+#include"bullet.h"
+#include"devil.h"
 
 class enemyManager : public gameNode
 {
@@ -26,6 +29,7 @@ private:
 	int _mCoin;
 	int _lCoin;
 	int _coinCount;
+	int _firecount;
 public:
 	enemyManager() {};
 	~enemyManager() {};

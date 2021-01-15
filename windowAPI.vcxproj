@@ -151,7 +151,9 @@
     <ClInclude Include="baricadeLine.h" />
     <ClInclude Include="bat.h" />
     <ClInclude Include="bin.h" />
+    <ClInclude Include="boss.h" />
     <ClInclude Include="botLine.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="bus.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cameraManager.h" />
@@ -160,6 +162,7 @@
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="damageNumber.h" />
+    <ClInclude Include="devil.h" />
     <ClInclude Include="difficultyScene.h" />
     <ClInclude Include="dobeman.h" />
     <ClInclude Include="downSlope.h" />
@@ -222,13 +225,16 @@
     <ClCompile Include="baricadeLine.cpp" />
     <ClCompile Include="bat.cpp" />
     <ClCompile Include="bin.cpp" />
+    <ClCompile Include="boss.cpp" />
     <ClCompile Include="botLine.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="bus.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="damageNumber.cpp" />
+    <ClCompile Include="devil.cpp" />
     <ClCompile Include="difficultyScene.cpp" />
     <ClCompile Include="dobeman.cpp" />
     <ClCompile Include="downSlope.cpp" />

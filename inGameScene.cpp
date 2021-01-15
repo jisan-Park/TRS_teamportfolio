@@ -120,6 +120,7 @@ void inGameScene::update()
 	KEYANIMANAGER->update();
 	PLAYER->update();
 	COIN->update();
+	BULLET->update();
 	GAMEMANAGER->setUI();
 	DAMAGENUMBER->update();
 	//_em->update();
@@ -147,7 +148,7 @@ void inGameScene::update()
 		SOUNDMANAGER->stop("ÀÎ°ÔÀÓ");
 	}
 
-	if (CAMERAMANAGER->getCameraPhase() % 2 == 1) {
+	if (CAMERAMANAGER->getCameraPhase() % 2 == 1 || CAMERAMANAGER->getCameraPhase() > 21) {
 		_em->update();
 		if (_em->getVenemy().size() == 0)
 		{

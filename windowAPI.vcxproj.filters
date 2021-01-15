@@ -288,6 +288,15 @@
     <ClInclude Include="damageNumber.h">
       <Filter>2DGameFramework\damageNumber</Filter>
     </ClInclude>
+    <ClInclude Include="boss.h">
+      <Filter>playGround\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="devil.h">
+      <Filter>playGround\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>playGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -478,6 +487,15 @@
     </ClCompile>
     <ClCompile Include="damageNumber.cpp">
       <Filter>2DGameFramework\damageNumber</Filter>
+    </ClCompile>
+    <ClCompile Include="boss.cpp">
+      <Filter>playGround\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="devil.cpp">
+      <Filter>playGround\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>playGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

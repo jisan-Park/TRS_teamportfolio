@@ -29,6 +29,8 @@
 #include"mapObject.h"
 #include "utils.h"
 #include "Coin.h"
+#include "bullet.h"
+
 
 using namespace std;
 using namespace TFIVE_UTIL;
@@ -61,6 +63,7 @@ using namespace TFIVE_UTIL;
 #define MAPOBJECT mapObject::getSingleton()
 #define COIN Coin::getSingleton()
 #define DAMAGENUMBER damageNumber::getSingleton()
+#define BULLET bullet::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p)=NULL;}}

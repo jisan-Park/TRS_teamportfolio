@@ -43,6 +43,7 @@ HRESULT gameNode::init(bool managerInit)
 		//MAPOBJECT->init();
 		COIN->init();
 		DAMAGENUMBER->init();
+		BULLET->init();
 	}
 
 	return S_OK;
@@ -78,6 +79,8 @@ void gameNode::release()
 		COIN->releaseSingleton();
 		DAMAGENUMBER->release();
 		DAMAGENUMBER->releaseSingleton();
+		BULLET->release();
+		BULLET->releaseSingleton();
 	}
 	ReleaseDC(_hWnd, _hdc);
 }
