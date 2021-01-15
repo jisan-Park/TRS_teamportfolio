@@ -1284,6 +1284,7 @@ void Player::sHittedManage()
 		{
 			if (_direction == RIGHT)
 			{
+				SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_state = HITTED;
 				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_HITTED");
 				_motion = KEYANIMANAGER->findAnimation("ScottRightHitted");
@@ -1292,6 +1293,7 @@ void Player::sHittedManage()
 
 			if (_direction == LEFT)
 			{
+				SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_state = HITTED;
 				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_HITTED");
 				_motion = KEYANIMANAGER->findAnimation("ScottLeftHitted");
@@ -1302,6 +1304,7 @@ void Player::sHittedManage()
 		{
 			if (_direction == RIGHT)
 			{
+				SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_state = HITTED;
 				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_HITTED2");
 				_motion = KEYANIMANAGER->findAnimation("ScottRightHitted2");
@@ -1310,6 +1313,7 @@ void Player::sHittedManage()
 
 			if (_direction == LEFT)
 			{
+				SOUNDMANAGER->play("약공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_state = HITTED;
 				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_HITTED2");
 				_motion = KEYANIMANAGER->findAnimation("ScottLeftHitted2");
@@ -1320,6 +1324,7 @@ void Player::sHittedManage()
 		{
 			if (_direction == RIGHT)
 			{
+				SOUNDMANAGER->play("강공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_state = HITTED;
 				_info.hPushPower = -2;
 				_img = IMAGEMANAGER->findImage("SCOTT_RIGHT_G_HITTED");
@@ -1329,6 +1334,7 @@ void Player::sHittedManage()
 
 			if (_direction == LEFT)
 			{
+				SOUNDMANAGER->play("강공격", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 				_state = HITTED;
 				_info.hPushPower = 2;
 				_img = IMAGEMANAGER->findImage("SCOTT_LEFT_G_HITTED");
