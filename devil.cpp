@@ -77,7 +77,7 @@ void devil::update()
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
-	//PLAYER->setEnemyAtkRc(_inattack, 8);
+	PLAYER->setEnemyAtkRc(_inattack, 8);
 	_motion->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 	pattern3();
 
@@ -99,6 +99,10 @@ void devil::collsion()
 			{
 				if (PLAYER->getAttackDamege() == PLAYER->getStr())
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+					//attack effect play
+					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 					_img = IMAGEMANAGER->findImage("devil_damage");
 					_motion = devil_DAMAGE_RIGHT;
 					if (!_motion->isPlay())

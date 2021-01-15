@@ -56,7 +56,6 @@ HRESULT inGameScene::init()
 	_isSetting = false;
 
 	SOUNDMANAGER->stop("메뉴");
-	SOUNDMANAGER->stop("보스방");
 	SOUNDMANAGER->stop("상점");
 	SOUNDMANAGER->play("인게임", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
 
@@ -80,7 +79,7 @@ void inGameScene::update()
 		SOUNDMANAGER->setVolume("인게임", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
 	}
 	else if (CAMERAMANAGER->getCameraPhase() == 22) {
-
+		SOUNDMANAGER->stop("인게임");
 		//background music - volume update
 		SOUNDMANAGER->setVolume("보스방", (GAMEMANAGER->getBackgroundVolume() / 100.0f)*1.0f);
 	}

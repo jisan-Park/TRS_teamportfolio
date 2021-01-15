@@ -232,43 +232,43 @@ void boss::update()
 		}
 	}
 
-	//if (_pattern == PATTERN1 || _pattern == PATTERN3)
-	//{
-	//	if (_state == E_PUNCH || _state == E_PUNCH2 || _state == E_PUNCH3)
-	//	{
-	//		if (_direction == E_LEFT)
-	//		{
-	//			_inattack = RectMakeCenter(_info.chr_x - 50, _info.chr_y - 25, 50, 50);
-	//		}
-	//		if (_direction == E_RIGHT)
-	//		{
-	//			_inattack = RectMakeCenter(_info.chr_x + 50, _info.chr_y - 25, 50, 50);
-	//		}
-	//	}
-	//	else if (_state == E_PUNCH4)
-	//	{
-	//		if (_direction == E_LEFT)
-	//		{
-	//			_inattack = RectMakeCenter(_info.chr_x - 50, _info.chr_y - 25, 200, 200);
-	//		}
-	//		if (_direction == E_RIGHT)
-	//		{
-	//			_inattack = RectMakeCenter(_info.chr_x + 50, _info.chr_y - 25, 200, 200);
-	//		}
-	//	}
-	//	else
-	//	{
-	//		_inattack = RectMakeCenter(-100, -100, 0, 0);
-	//	}
-	//
-	//}
-	//else
-	//{
-	//	if (_state = E_START)
-	//	{
-	//		_inattack = RectMakeCenter(_info.chr_x, _info.chr_y, 100, 700);
-	//	}
-	//}
+	if (_pattern == PATTERN1 || _pattern == PATTERN3)
+	{
+		if (_state == E_PUNCH || _state == E_PUNCH2 || _state == E_PUNCH3)
+		{
+			if (_direction == E_LEFT)
+			{
+				_inattack = RectMakeCenter(_info.chr_x - 50, _info.chr_y - 25, 50, 50);
+			}
+			if (_direction == E_RIGHT)
+			{
+				_inattack = RectMakeCenter(_info.chr_x + 50, _info.chr_y - 25, 50, 50);
+			}
+		}
+		else if (_state == E_PUNCH4)
+		{
+			if (_direction == E_LEFT)
+			{
+				_inattack = RectMakeCenter(_info.chr_x - 50, _info.chr_y - 25, 200, 200);
+			}
+			if (_direction == E_RIGHT)
+			{
+				_inattack = RectMakeCenter(_info.chr_x + 50, _info.chr_y - 25, 200, 200);
+			}
+		}
+		else
+		{
+			_inattack = RectMakeCenter(-100, -100, 0, 0);
+		}
+	
+	}
+	/*else
+	{
+		if (_state = E_START)
+		{
+			_inattack = RectMakeCenter(_info.chr_x, _info.chr_y, 100, 700);
+		}
+	}*/
 	//TEST
 	PLAYER->setEnemyAtkRc(_inattack, 2);
 
@@ -344,6 +344,10 @@ void boss::collsion()
 						_counttttt++;
 						if (_counttttt < 5)
 						{
+							//damageNumber create
+							DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+							//attack effect play
+							EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 							_img = IMAGEMANAGER->findImage("boss_damage");
 							_motion = KEYANIMANAGER->findAnimation("boss_DAMAGE_RIGHT");
 							_motion->start();
@@ -370,6 +374,10 @@ void boss::collsion()
 						_counttttt++;
 						if (_counttttt < 5)
 						{
+							//damageNumber create
+							DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+							//attack effect play
+							EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 							_img = IMAGEMANAGER->findImage("boss_damage");
 							_motion = KEYANIMANAGER->findAnimation("boss_DAMAGE_LEFT");
 							_motion->start();
@@ -393,6 +401,10 @@ void boss::collsion()
 					}
 					if (_direction == E_RIGHT && PLAYER->getAttackDamege() > PLAYER->getStr())
 					{
+						//damageNumber create
+						DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+						//attack effect play
+						EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 						_img = IMAGEMANAGER->findImage("boss_down");
 						_motion = KEYANIMANAGER->findAnimation("boss_DOWN_RIGHT");
 						_motion->start();
@@ -406,6 +418,10 @@ void boss::collsion()
 					}
 					if (_direction == E_LEFT && PLAYER->getAttackDamege() > PLAYER->getStr())
 					{
+						//damageNumber create
+						DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+						//attack effect play
+						EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 						_img = IMAGEMANAGER->findImage("boss_down");
 						_motion = KEYANIMANAGER->findAnimation("boss_DOWN_LEFT");
 						_motion->start();
@@ -423,6 +439,10 @@ void boss::collsion()
 			{
 				if (_direction == E_RIGHT)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+					//attack effect play
+					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 					_img = IMAGEMANAGER->findImage("boss_downdamage");
 					_motion = KEYANIMANAGER->findAnimation("boss_DOWNDAMAGE_RIGHT");
 					_motion->start();
@@ -434,6 +454,10 @@ void boss::collsion()
 				}
 				if (_direction == E_LEFT)
 				{
+					//damageNumber create
+					DAMAGENUMBER->makeDamageNumber(_info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top, (int)PLAYER->getAttackDamege());
+					//attack effect play
+					EFFECTMANAGER->play("attackEffect", _info.chr_rc.left + (_info.chr_rc.right - _info.chr_rc.left) / 2, _info.chr_rc.top + (_info.chr_rc.bottom - _info.chr_rc.top) / 2);
 					_img = IMAGEMANAGER->findImage("boss_downdamage");
 					_motion = KEYANIMANAGER->findAnimation("boss_DOWNDAMAGE_LEFT");
 					_motion->start();

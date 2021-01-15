@@ -209,7 +209,7 @@ vector<tagItem> gameManager::getItemList(int i)
 	for (tagItem t : _vItem) {
 		if (i == 1) {
 			if (t.itemName == "¾Æ¸Þ¸®Ä«³ë" ||
-				t.itemName == "Ä«¶ó¸á ¸¶³¢¾Æ¶Ç") {
+				t.itemName == "Ä«Æä¶ó¶¼") {
 				items.push_back(t);
 			}
 		}
