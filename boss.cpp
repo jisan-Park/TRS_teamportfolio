@@ -6,7 +6,7 @@ HRESULT boss::init(const char * imageName, float x, float y)
 	_isBoss = true;
 	setAnimation();
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
-	_hp = 1000;
+	_hp = 1000 * GAMEMANAGER->getHp();
 	_def = 5;
 	_spd = 5;
 	_str = 5;
@@ -231,9 +231,9 @@ void boss::update()
 			_motion->start();
 		}
 	}
+	PLAYER->setEnemyAtkRc(_inattack, 14 * GAMEMANAGER->getStr());
 
-	if (_pattern == PATTERN1 || _pattern == PATTERN3)
-	{
+	
 		if (_state == E_PUNCH || _state == E_PUNCH2 || _state == E_PUNCH3)
 		{
 			if (_direction == E_LEFT)
@@ -260,8 +260,10 @@ void boss::update()
 		{
 			_inattack = RectMakeCenter(-100, -100, 0, 0);
 		}
+		
+	
+	
 
-	}
 	/*else
 	{
 		if (_state = E_START)
@@ -270,9 +272,10 @@ void boss::update()
 		}
 	}*/
 	//TEST
-	PLAYER->setEnemyAtkRc(_inattack, 2);
+	
 
-
+	
+	
 
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);

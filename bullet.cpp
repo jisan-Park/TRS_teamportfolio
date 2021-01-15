@@ -45,7 +45,7 @@ void bullet::collisionBullet()
 
 			if(abs(PLAYER->getInfo().pt_y-_viBullet->_info.pt_y)<50)
 			{ 
-			PLAYER->setEnemyAtkRc(_viBullet->_info.chr_rc, 8);
+			PLAYER->setBulletAtkRc(_viBullet->_info.chr_rc, 8 * GAMEMANAGER->getStr());
 	
 			GAMEMANAGER->deletePicture(_viBullet->_info.renderNumber);
 			_viBullet = _vBullet.erase(_viBullet);

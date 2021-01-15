@@ -64,6 +64,7 @@ protected:
 	image* _img;
 	RECT _inrange;
 	RECT _inattack;
+	RECT _inaattack2;
 	int _maxHp;
 	int _hp;
 	int _def;

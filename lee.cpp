@@ -7,8 +7,8 @@ HRESULT lee::init(const char* imageName, float x, float y)
 	setAnimation();
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
-	_maxHp = 34;
-	_hp = 34;
+	_maxHp = 34 * GAMEMANAGER->getHp();
+	_hp = 34 * GAMEMANAGER->getHp();
 	_def = 5;
 	_spd = 5;
 	_str = 5;
@@ -270,7 +270,7 @@ void lee::update()
 	}
 
 	//TEST
-	PLAYER->setEnemyAtkRc(_inattack, 8);
+	PLAYER->setEnemyAtkRc(_inattack, 8 * GAMEMANAGER->getStr());
 
 
 	move();

@@ -76,12 +76,14 @@ void devil::update()
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
-	PLAYER->setEnemyAtkRc(_inattack, 8);
 	_motion->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 	pattern3();
 
 	if (_pattern == PATTERN2)
 	{
+		PLAYER->setEnemyAtkRc(_inattack, 8 * GAMEMANAGER->getStr());
+		
+
 		_inattack = RectMakeCenter(_info.chr_x, _info.chr_y, 100, 100);
 
 		if (_musicCount == 0)

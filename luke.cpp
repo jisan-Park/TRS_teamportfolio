@@ -9,8 +9,8 @@ HRESULT luke::init(const char * imageName, float x, float y)
 	setAnimation();
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
-	_maxHp = 10;
-	_hp = 10;
+	_maxHp = 39 * GAMEMANAGER->getHp();
+	_hp = 39 * GAMEMANAGER->getHp();
 	_def = 5;
 	_spd = 5;
 	_str = 5;
@@ -398,7 +398,7 @@ void luke::update()
 	_info.physics();
 	MAPOBJECT->collisionMo(_info);
 	GAMEMANAGER->updatePicture(_info, _img, _motion);
-	PLAYER->setEnemyAtkRc(_inattack, 8);
+	PLAYER->setEnemyAtkRc(_inattack, 8 * GAMEMANAGER->getStr());
 	inrange();
 	collsion();
 	_motion->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);

@@ -8,8 +8,8 @@ HRESULT william::init(const char* imageName, float x, float y)
 
 
 	_info.init(GAMEMANAGER->getRenderNum(), x, y, 50, 100, 50, 50);
-	_maxHp = 10;
-	_hp = 10;
+	_maxHp = 87 * GAMEMANAGER->getHp();
+	_hp = 87 * GAMEMANAGER->getHp();
 	_def = 5;
 	_spd = 5;
 	_str = 5;
@@ -271,7 +271,7 @@ void william::update()
 	}
 
 	//TEST
-	PLAYER->setEnemyAtkRc(_inattack, 8);
+	PLAYER->setEnemyAtkRc(_inattack, 8 * GAMEMANAGER->getStr());
 
 
 	move();
