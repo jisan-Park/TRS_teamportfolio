@@ -15,6 +15,7 @@ HRESULT bus::init(const char * imageName, float x, float y)
 	{
 		_motion->start();
 	}
+	SOUNDMANAGER->play("¹ö½º", (GAMEMANAGER->getSFXVolume() / 100.0f)*1.0f);
 	GAMEMANAGER->addPicture(_info, _img, _motion);
 	return S_OK;
 }
